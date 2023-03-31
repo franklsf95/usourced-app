@@ -1,37 +1,48 @@
-import { Meteor } from 'meteor/meteor';
-import { Link, LinksCollection } from '/imports/api/links';
+import { Meteor } from "meteor/meteor";
+import { Task, TasksCollection } from "/imports/api/tasks";
+import Airtable from "airtable";
 
-async function insertLink({ title, url }: Pick<Link, 'title' | 'url'>) {
-  await LinksCollection.insertAsync({ title, url, createdAt: new Date() });
-}
+// Meteor.startup(() => {
+//   Airtable.configure({ apiKey: process.env.AIRTABLE_API_KEY });
+//   const airbase = Airtable.base(process.env.AIRTABLE_BASE_ID!);
+//   const tasksTable = airbase("Tasks");
+//   console.log("table", tasksTable);
+//   const record = await tasksTable.find("recehHIrPcAX2qqbi");
+//   console.log("find", record);
+//   const data = await tasksTable.select().all();
+//   console.log("fetched airtable data", data);
+//   Meteor.publish("tasks", async () => {
+//     const publishedKeys = {};
+//     const poll = async () => {
+//       const data = await tasksTable.select().all();
+//       console.log("fetched airtable data", data);
+//     };
+//     await poll();
+//     this.ready();
+//     const interval = Meteor.setInterval(poll, POLL_INTERVAL);
+//     this.onStop(() => {
+//       Meteor.clearInterval(interval);
+//     });
+//   });
+// });
 
-Meteor.startup(async () => {
-  // If the Links collection is empty, add some data.
-  if (await LinksCollection.find().countAsync() === 0) {
-    await insertLink({
-      title: 'Do the Tutorial',
-      url: 'https://www.meteor.com/tutorials/react/creating-an-app',
-    });
-
-    await insertLink({
-      title: 'Follow the Guide',
-      url: 'https://guide.meteor.com',
-    });
-
-    await insertLink({
-      title: 'Read the Docs',
-      url: 'https://docs.meteor.com',
-    });
-
-    await insertLink({
-      title: 'Discussions',
-      url: 'https://forums.meteor.com',
-    });
-  }
-
-  // We publish the entire Links collection to all clients.
-  // In order to be fetched in real-time to the clients
-  Meteor.publish("links", function () {
-    return LinksCollection.find();
+const insertTask = (taskText: string) =>
+  TasksCollection.insert({
+    text: taskText,
+    createdAt: new Date(),
+    checked: false,
   });
+
+Meteor.startup(() => {
+  if (TasksCollection.find().count() === 0) {
+    [
+      "First Task",
+      "Second Task",
+      "Third Task",
+      "Fourth Task",
+      "Fifth Task",
+      "Sixth Task",
+      "Seventh Task",
+    ].forEach(insertTask);
+  }
 });
