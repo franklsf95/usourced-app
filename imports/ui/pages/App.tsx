@@ -1,31 +1,41 @@
 import * as React from "react";
+
+import { Task, TasksCollection } from "/imports/api/tasks";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import { GlobalFooter } from "../components/GlobalFooter";
+import { GlobalNavBar } from "../components/GlobalNavBar";
+import { NewTaskFormView } from "../components/tasks/NewTaskFormView";
+import Stack from "@mui/material/Stack";
+import { TaskView } from "../components/tasks/TaskView";
+import { ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import { appTheme } from "../common/theme";
 import { useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { ThemeProvider } from "@mui/material/styles";
-
-import { appTheme } from "./common/theme";
-import { GlobalNavBar } from "./components/GlobalNavBar";
-import { GlobalFooter } from "./components/GlobalFooter";
-import { Task, TasksCollection } from "/imports/api/tasks";
-import { NewTaskFormView } from "./components/tasks/NewTaskFormView";
-import { TaskView } from "./components/tasks/TaskView";
 
 export const App = () => {
   const [hideCompleted, setHideCompleted] = useState(false);
+  const currentUser = useTracker(() => Meteor.user());
   const hideCompletedFilter = { isChecked: { $ne: true } };
+  const currentUserFilter = currentUser ? { userId: currentUser._id } : {};
+  const currentUserHideCompletedFilter = {
+    ...currentUserFilter,
+    ...hideCompletedFilter,
+  };
   const tasks = useTracker(() =>
-    TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
-      sort: { createdAt: -1 },
-    }).fetch()
+    TasksCollection.find(
+      hideCompleted ? currentUserHideCompletedFilter : currentUserFilter,
+      {
+        sort: { createdAt: -1 },
+      }
+    ).fetch()
   );
   const pendingTasksCount = useTracker(() =>
-    TasksCollection.find(hideCompletedFilter).count()
+    TasksCollection.find(currentUserHideCompletedFilter).count()
   );
   const pendingTasksTitle = `${
     pendingTasksCount ? ` (${pendingTasksCount})` : ""

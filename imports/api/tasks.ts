@@ -3,6 +3,7 @@ import { Mongo } from "meteor/mongo";
 export interface Task {
   _id: string;
   text: String;
+  userId: string;
   createdAt: Date;
   checked: boolean;
 }

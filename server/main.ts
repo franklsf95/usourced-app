@@ -1,6 +1,11 @@
-import { Meteor } from "meteor/meteor";
-import { Task, TasksCollection } from "/imports/api/tasks";
 import Airtable from "airtable";
+import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
+
+import { Task, TasksCollection } from "/imports/api/tasks";
+
+const SEED_USERNAME = "user";
+const SEED_PASSWORD = "user";
 
 // Meteor.startup(() => {
 //   Airtable.configure({ apiKey: process.env.AIRTABLE_API_KEY });
@@ -26,23 +31,29 @@ import Airtable from "airtable";
 //   });
 // });
 
-const insertTask = (taskText: string) =>
+const insertTask = (taskText: string, user: Meteor.User) =>
   TasksCollection.insert({
     text: taskText,
+    userId: user._id,
     createdAt: new Date(),
     checked: false,
   });
 
 Meteor.startup(() => {
-  if (TasksCollection.find().count() === 0) {
-    [
-      "First Task",
-      "Second Task",
-      "Third Task",
-      "Fourth Task",
-      "Fifth Task",
-      "Sixth Task",
-      "Seventh Task",
-    ].forEach(insertTask);
+  if (!Accounts.findUserByUsername(SEED_USERNAME)) {
+    Accounts.createUser({
+      username: SEED_USERNAME,
+      password: SEED_PASSWORD,
+    });
   }
+  const firstUser = Accounts.findUserByUsername(SEED_USERNAME)!;
+  [
+    "First Task",
+    "Second Task",
+    "Third Task",
+    "Fourth Task",
+    "Fifth Task",
+    "Sixth Task",
+    "Seventh Task",
+  ].forEach((text) => insertTask(text, firstUser));
 });
