@@ -1,8 +1,9 @@
-import Airtable from "airtable";
-import { Meteor } from "meteor/meteor";
-import { Accounts } from "meteor/accounts-base";
+import "/imports/api/tasks";
 
-import { Task, TasksCollection } from "/imports/api/tasks";
+import { TasksCollection } from "/imports/db/tasks";
+import Airtable from "airtable";
+import { Accounts } from "meteor/accounts-base";
+import { Meteor } from "meteor/meteor";
 
 const SEED_USERNAME = "user";
 const SEED_PASSWORD = "user";
@@ -46,14 +47,14 @@ Meteor.startup(() => {
       password: SEED_PASSWORD,
     });
   }
-  const firstUser = Accounts.findUserByUsername(SEED_USERNAME)!;
-  [
-    "First Task",
-    "Second Task",
-    "Third Task",
-    "Fourth Task",
-    "Fifth Task",
-    "Sixth Task",
-    "Seventh Task",
-  ].forEach((text) => insertTask(text, firstUser));
+  // const firstUser = Accounts.findUserByUsername(SEED_USERNAME)!;
+  // [
+  //   "First Task",
+  //   "Second Task",
+  //   "Third Task",
+  //   "Fourth Task",
+  //   "Fifth Task",
+  //   "Sixth Task",
+  //   "Seventh Task",
+  // ].forEach((text) => insertTask(text, firstUser));
 });

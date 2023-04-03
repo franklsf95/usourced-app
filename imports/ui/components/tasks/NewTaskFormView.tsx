@@ -1,4 +1,3 @@
-import { TasksCollection } from "/imports/api/tasks";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 
@@ -7,16 +6,8 @@ export const NewTaskFormView = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!text) return;
-
-    TasksCollection.insert({
-      text: text.trim(),
-      userId: Meteor.userId()!,
-      createdAt: new Date(),
-      checked: false,
-    });
-
+    Meteor.call("tasks.insert", text);
     setText("");
   };
 

@@ -1,4 +1,6 @@
-import { Task, TasksCollection } from "/imports/api/tasks";
+import "/imports/api/tasks";
+
+import { Task, TasksCollection } from "/imports/db/tasks";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
@@ -47,11 +49,7 @@ export const App = () => {
     _id: string;
     checked: boolean;
   }) => {
-    TasksCollection.update(_id, {
-      $set: {
-        checked: !checked,
-      },
-    });
+    Meteor.call("tasks.setChecked", _id, !checked);
   };
   return (
     <ThemeProvider theme={appTheme}>
@@ -99,7 +97,7 @@ export const App = () => {
                     key={task._id}
                     task={task}
                     onCheckboxClick={toggleChecked}
-                    onDeleteClick={() => TasksCollection.remove(task._id)}
+                    onDeleteClick={() => Meteor.call("tasks.remove", task._id)}
                   />
                 ))}
               </ul>
