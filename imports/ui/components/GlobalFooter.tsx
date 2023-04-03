@@ -5,7 +5,11 @@ import Typography from "@mui/material/Typography";
 
 export const GlobalFooter = () => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      sx={{ mt: 12, mb: 6 }}>
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         USourced, Inc

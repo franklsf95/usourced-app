@@ -1,3 +1,3 @@
-export const ROOT = "/";
+export const HOME = "/";
+export const HOME_SIGN_UP = "/#signup";
 export const SIGN_IN = "/signin";
-export const SIGN_UP = "/signup";

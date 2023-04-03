@@ -1,4 +1,4 @@
-import { ROOT, SIGN_IN, SIGN_UP } from "/imports/ui/common/routes";
+import { HOME, SIGN_IN } from "/imports/ui/common/routes";
 import { App } from "/imports/ui/pages/App";
 import { SignIn } from "/imports/ui/pages/SignIn";
 import { Meteor } from "meteor/meteor";
@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 Meteor.startup(() => {
   const router = createBrowserRouter([
     {
-      path: ROOT,
+      path: HOME,
       element: <App />,
     },
     {

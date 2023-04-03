@@ -4,10 +4,10 @@ export const appTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#F5CCB6",
+      main: "#183439",
     },
     secondary: {
-      main: "#183439",
+      main: "#F5CCB6",
     },
   },
 });

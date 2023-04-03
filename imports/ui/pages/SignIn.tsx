@@ -1,4 +1,4 @@
-import { ROOT } from "/imports/ui/common/routes";
+import { HOME } from "/imports/ui/common/routes";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ export const SignIn = () => {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     Meteor.loginWithPassword(username, password);
-    navigate(ROOT);
+    navigate(HOME);
   };
 
   return (
