@@ -1,21 +1,21 @@
-import * as React from "react";
-
 import { Task, TasksCollection } from "/imports/api/tasks";
+import { Meteor } from "meteor/meteor";
+import { useTracker } from "meteor/react-meteor-data";
+import React, { useState } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
+import Stack from "@mui/material/Stack";
+import { ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+
+import { appTheme } from "../common/theme";
 import { GlobalFooter } from "../components/GlobalFooter";
 import { GlobalNavBar } from "../components/GlobalNavBar";
 import { NewTaskFormView } from "../components/tasks/NewTaskFormView";
-import Stack from "@mui/material/Stack";
 import { TaskView } from "../components/tasks/TaskView";
-import { ThemeProvider } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { appTheme } from "../common/theme";
-import { useState } from "react";
-import { useTracker } from "meteor/react-meteor-data";
 
 export const App = () => {
   const [hideCompleted, setHideCompleted] = useState(false);

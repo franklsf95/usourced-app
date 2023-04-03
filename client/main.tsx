@@ -1,11 +1,10 @@
 import { ROOT, SIGN_IN, SIGN_UP } from "/imports/ui/common/routes";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
 import { App } from "/imports/ui/pages/App";
+import { SignIn } from "/imports/ui/pages/SignIn";
 import { Meteor } from "meteor/meteor";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { SignIn } from "/imports/ui/pages/SignIn";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 Meteor.startup(() => {
   const router = createBrowserRouter([

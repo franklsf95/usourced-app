@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import { TasksCollection } from "/imports/api/tasks";
 import { Meteor } from "meteor/meteor";
+import React, { useState } from "react";
 
 export const NewTaskFormView = () => {
   const [text, setText] = useState("");

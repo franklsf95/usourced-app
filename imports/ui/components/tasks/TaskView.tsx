@@ -1,6 +1,5 @@
-import React from "react";
-
 import { Task } from "/imports/api/tasks";
+import React from "react";
 
 export const TaskView = ({
   task,

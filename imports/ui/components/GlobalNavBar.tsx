@@ -1,14 +1,15 @@
+import { ROOT } from "/imports/ui/common/routes";
+import { Meteor } from "meteor/meteor";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { Meteor } from "meteor/meteor";
-import { SIGN_IN } from "../common/routes";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
-import { ROOT } from "/imports/ui/common/routes";
+
+import { SIGN_IN } from "../common/routes";
 
 export const GlobalNavBar = () => {
   const navigate = useNavigate();
