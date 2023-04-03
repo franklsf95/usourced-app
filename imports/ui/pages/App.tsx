@@ -1,6 +1,6 @@
-import "/imports/api/tasks";
+import "../../api/task_methods";
 
-import { Task, TasksCollection } from "/imports/db/tasks";
+import { Task, TasksCollection } from "/imports/api/tasks";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
@@ -28,17 +28,24 @@ export const App = () => {
     ...currentUserFilter,
     ...hideCompletedFilter,
   };
-  const tasks = useTracker(() =>
-    TasksCollection.find(
+  const { tasks, pendingTasksCount, isLoading } = useTracker(() => {
+    const nullState = { tasks: [], pendingTasksCount: 0, isLoading: false };
+    if (!Meteor.user()) {
+      return nullState;
+    }
+    const handler = Meteor.subscribe("tasks");
+    if (!handler.ready()) {
+      return { ...nullState, isLoading: true };
+    }
+    const tasks = TasksCollection.find(
       hideCompleted ? currentUserHideCompletedFilter : currentUserFilter,
       {
         sort: { createdAt: -1 },
       }
-    ).fetch()
-  );
-  const pendingTasksCount = useTracker(() =>
-    TasksCollection.find(currentUserHideCompletedFilter).count()
-  );
+    ).fetch();
+    const pendingTasksCount = TasksCollection.find(hideCompletedFilter).count();
+    return { tasks, pendingTasksCount, isLoading: false };
+  });
   const pendingTasksTitle = `${
     pendingTasksCount ? ` (${pendingTasksCount})` : ""
   }`;
@@ -85,6 +92,7 @@ export const App = () => {
                 📝️ To Do List
                 {pendingTasksTitle}
               </h1>
+              {isLoading && <div className="loading">loading...</div>}
               <NewTaskFormView />
               <div className="filter">
                 <button onClick={() => setHideCompleted(!hideCompleted)}>

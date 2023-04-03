@@ -1,6 +1,7 @@
-import "/imports/api/tasks";
+import "../imports/api/task_methods";
+import "/imports/api/server/task_publications";
 
-import { TasksCollection } from "/imports/db/tasks";
+import { TasksCollection } from "/imports/api/tasks";
 import Airtable from "airtable";
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
