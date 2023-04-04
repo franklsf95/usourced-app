@@ -37,14 +37,20 @@ export const SignUpView = () => {
     }
   };
   return (
-    <Container maxWidth="sm" id="signup" sx={{ pt: 6 }}>
+    <Container maxWidth="sm" sx={{ pt: 6 }}>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}>
-        <Typography component="h1" variant="h5">
+        <Box
+          component="img"
+          src="/assets/img/usourced-logo.png"
+          width={160}
+          sx={{ mb: 2 }}
+        />
+        <Typography component="h1" variant="h4">
           Sign up
         </Typography>
         {errorMessage ? (

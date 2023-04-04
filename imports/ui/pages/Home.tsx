@@ -19,32 +19,9 @@ import { SignUpView } from "../components/home/SignUpView";
 
 const HeroView = () => {
   return (
-    <Box
-      sx={{
-        bgcolor: "background.paper",
-        pt: 8,
-        pb: 6,
-      }}>
-      <Container maxWidth="sm">
-        <Typography
-          component="h1"
-          variant="h2"
-          align="center"
-          color="text.primary"
-          gutterBottom>
-          USourced
-        </Typography>
-        <Stack
-          sx={{ pt: 4 }}
-          direction="row"
-          spacing={2}
-          justifyContent="center">
-          <Button variant="contained" color="secondary" href="#signup">
-            Try it now!
-          </Button>
-        </Stack>
-      </Container>
-    </Box>
+    <a href="#signup">
+      <Box component="img" src="/assets/img/homepage-banner.gif" width="100%" />
+    </a>
   );
 };
 
@@ -56,7 +33,11 @@ export const Home = () => {
       <GlobalNavBar />
       <main>
         <HeroView />
-        {currentUser ? null : <SignUpView />}
+        {currentUser ? null : (
+          <Box id="signup">
+            <SignUpView />
+          </Box>
+        )}
       </main>
       <GlobalFooter />
     </ThemeProvider>
