@@ -1,5 +1,3 @@
-import "../../api/task_methods";
-
 import { Project, ProjectsCollection } from "/imports/api/projects";
 import { HOME } from "/imports/ui/common/routes";
 import { Meteor } from "meteor/meteor";
@@ -20,22 +18,32 @@ import Stack from "@mui/material/Stack";
 import { ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
+import { currentUserEmail } from "../common/account_utils";
 import { appTheme } from "../common/theme";
 import { GlobalFooter } from "../components/GlobalFooter";
 import { GlobalNavBar } from "../components/GlobalNavBar";
+import { ProjectsKanbanView } from "../components/projects/ProjectsKanbanView";
+
+const myProjectsSubscription = () => {
+  const email = currentUserEmail();
+  if (!email) {
+    return { projects: [], isLoading: false };
+  }
+  const handler = Meteor.subscribe("my_projects");
+  if (!handler.ready()) {
+    return { projects: [], isLoading: true };
+  }
+  const projects = ProjectsCollection.find({
+    // clientEmail: email,
+  }).fetch();
+  return { projects, isLoading: false };
+};
 
 export const MyProjects = () => {
   useEffect(() => {
     document.title = "My Projects | USourced";
   }, []);
-  const { projects, isLoading } = useTracker(() => {
-    const handler = Meteor.subscribe("my_projects");
-    if (!handler.ready()) {
-      return { projects: [], isLoading: true };
-    }
-    const projects = ProjectsCollection.find({}).fetch();
-    return { projects, isLoading: false };
-  });
+  const { projects, isLoading } = useTracker(myProjectsSubscription);
   return (
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
@@ -46,39 +54,7 @@ export const MyProjects = () => {
             My Projects
           </Typography>
         </Container>
-        <Container sx={{ py: 0 }} maxWidth="md">
-          <Grid container spacing={4}>
-            {projects.map((project: Project) => (
-              <Grid item key={project.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}>
-                  <CardActionArea href={HOME}>
-                    <CardMedia
-                      component="img"
-                      image={project.projectImage}
-                      alt={project.projectName}
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {project.projectName}
-                      </Typography>
-                      <Typography>
-                        Started on {project.inquiryDate.toDateString()}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small">Open Project</Button>
-                    </CardActions>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        <ProjectsKanbanView projects={projects} isLoading={isLoading} />
       </main>
       <GlobalFooter />
     </ThemeProvider>

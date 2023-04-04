@@ -1,5 +1,7 @@
 import { Mongo } from "meteor/mongo";
 
+export type ProjectStatus = string;
+
 export interface Project {
   id: string;
   clientEmail: string;
@@ -12,7 +14,7 @@ export interface Project {
   shipDate: Date;
   shippingMethod: string;
   shippingStatus: string;
-  status: string;
+  status: ProjectStatus;
   targetProductionCompletionDate: Date;
   targetSampleCompletionDate: Date;
   unitPrice: number;
