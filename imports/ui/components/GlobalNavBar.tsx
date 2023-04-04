@@ -1,7 +1,7 @@
 import { HOME } from "/imports/ui/common/routes";
 import { Meteor } from "meteor/meteor";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -11,8 +11,7 @@ import Typography from "@mui/material/Typography";
 
 import { HOME_SIGN_UP, MY_PROJECTS, SIGN_IN } from "../common/routes";
 
-const NavBarButtonsForUser = () => {
-  const navigate = useNavigate();
+const NavBarButtonsForUser = (navigate: NavigateFunction) => {
   const handleLogout = () => {
     Meteor.logout();
     navigate(HOME);
@@ -28,13 +27,14 @@ const NavBarButtonsForUser = () => {
 const NavBarButtonsForGuest = () => {
   return (
     <>
-      <Button href={SIGN_IN}>Log In</Button>
       <Button href={HOME_SIGN_UP}>Sign Up</Button>
+      <Button href={SIGN_IN}>Log In</Button>
     </>
   );
 };
 
 export const GlobalNavBar = () => {
+  const navigate = useNavigate();
   const currentUser = Meteor.user();
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -43,7 +43,9 @@ export const GlobalNavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             USourced
           </Typography>
-          {currentUser ? NavBarButtonsForUser() : NavBarButtonsForGuest()}
+          {currentUser
+            ? NavBarButtonsForUser(navigate)
+            : NavBarButtonsForGuest()}
         </Toolbar>
       </AppBar>
     </Box>
