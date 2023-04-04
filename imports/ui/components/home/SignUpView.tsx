@@ -1,6 +1,7 @@
 import { Accounts } from "meteor/accounts-base";
 import React, { useState } from "react";
 
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -16,18 +17,24 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 export const SignUpView = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    Accounts.createUser({
-      email: data.get("email")?.toString(),
-      password: data.get("password")?.toString(),
-      //   name: data.get("name")?.toString(),
-      //   phone: data.get("phone")?.toString(),
-      //   company: data.get("company")?.toString(),
-      //   businessWebsite: data.get("business-website")?.toString(),
-      //   businessType: data.get("business-type-radio-buttons-group")?.toString(),
-    });
+    try {
+      Accounts.createUser({
+        email: data.get("email")?.toString(),
+        password: data.get("password")?.toString(),
+        //   name: data.get("name")?.toString(),
+        //   phone: data.get("phone")?.toString(),
+        //   company: data.get("company")?.toString(),
+        //   businessWebsite: data.get("business-website")?.toString(),
+        //   businessType: data.get("business-type-radio-buttons-group")?.toString(),
+      });
+    } catch (error: any) {
+      console.error(error);
+      setErrorMessage(error.message);
+    }
   };
   return (
     <Container maxWidth="sm" id="signup" sx={{ pt: 6 }}>
@@ -40,6 +47,11 @@ export const SignUpView = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        {errorMessage ? (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {errorMessage}
+          </Alert>
+        ) : null}
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
