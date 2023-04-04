@@ -17,8 +17,12 @@ const NavBarButtonsForUser = (navigate: NavigateFunction) => {
   };
   return (
     <>
-      <Button href={MY_PROJECTS}>My Projects</Button>
-      <Button onClick={handleLogout}>Log Out</Button>
+      <Button variant="outlined" sx={{ ml: 2 }} href={MY_PROJECTS}>
+        My Projects
+      </Button>
+      <Button variant="outlined" sx={{ ml: 2 }} onClick={handleLogout}>
+        Log Out
+      </Button>
     </>
   );
 };
@@ -26,8 +30,12 @@ const NavBarButtonsForUser = (navigate: NavigateFunction) => {
 const NavBarButtonsForGuest = () => {
   return (
     <>
-      <Button href={HOME_SIGN_UP}>Sign Up</Button>
-      <Button href={SIGN_IN}>Log In</Button>
+      <Button variant="outlined" sx={{ ml: 2 }} href={HOME_SIGN_UP}>
+        Sign Up
+      </Button>
+      <Button variant="outlined" sx={{ ml: 2 }} href={SIGN_IN}>
+        Log In
+      </Button>
     </>
   );
 };
@@ -40,11 +48,13 @@ export const GlobalNavBar = () => {
       <AppBar position="static" color="secondary">
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <Box
-              component="img"
-              src="/assets/img/usourced-logo.png"
-              height={44}
-            />
+            <a href={HOME}>
+              <Box
+                component="img"
+                src="/assets/img/usourced-logo.png"
+                height={44}
+              />
+            </a>
           </Box>
           {currentUser
             ? NavBarButtonsForUser(navigate)

@@ -52,7 +52,11 @@ const ProjectsKanbanColumnView = ({
           backgroundColor: "#f8f8f8",
         }}>
         <Chip
-          label={<Typography variant="h6">{projectStatus}</Typography>}
+          label={
+            <Typography variant="h6" sx={{ fontSize: 16, fontWeight: 600 }}>
+              {projectStatus}
+            </Typography>
+          }
           sx={{
             mx: 1,
             my: 2,
@@ -85,7 +89,9 @@ const ProjectsKanbanColumnView = ({
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">Open Project</Button>
+                  <Button size="small" variant="outlined" sx={{ fontSize: 14 }}>
+                    Open Project
+                  </Button>
                 </CardActions>
               </CardActionArea>
             </Card>
