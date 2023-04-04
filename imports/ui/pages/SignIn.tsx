@@ -1,4 +1,4 @@
-import { HOME, HOME_SIGN_UP } from "/imports/ui/common/routes";
+import { HOME_SIGN_UP, MY_PROJECTS } from "/imports/ui/common/routes";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ export const SignIn = () => {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     Meteor.loginWithPassword(username, password);
-    navigate(HOME);
+    navigate(MY_PROJECTS);
   };
 
   return (

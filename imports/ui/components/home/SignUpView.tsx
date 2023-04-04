@@ -18,21 +18,41 @@ import Typography from "@mui/material/Typography";
 
 export const SignUpView = () => {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    console.log(e.currentTarget);
+    console.log(data.get("agreeToTerms"));
+    console.log(data.get("email"));
+    console.log(data.get("name"));
+    console.log(data.get("phone"));
     try {
-      Accounts.createUser({
-        email: data.get("email")?.toString(),
-        password: data.get("password")?.toString(),
-        //   name: data.get("name")?.toString(),
-        //   phone: data.get("phone")?.toString(),
-        //   company: data.get("company")?.toString(),
-        //   businessWebsite: data.get("business-website")?.toString(),
-        //   businessType: data.get("business-type-radio-buttons-group")?.toString(),
-      });
+      if (!agreeToTerms) {
+        throw new Error("Did you accept the Terms of Use?");
+      }
+      Accounts.createUser(
+        {
+          email: data.get("email")?.toString(),
+          password: data.get("password")?.toString(),
+          profile: {
+            name: data.get("name")?.toString(),
+            phone: data.get("phone")?.toString(),
+            company: data.get("company")?.toString(),
+            businessWebsite: data.get("business-website")?.toString(),
+            businessType: data
+              .get("business-type-radio-buttons-group")
+              ?.toString(),
+          },
+        },
+        (error: any) => {
+          if (!error) {
+            return;
+          }
+          setErrorMessage(error.message);
+        }
+      );
     } catch (error: any) {
-      console.error(error);
       setErrorMessage(error.message);
     }
   };
@@ -147,7 +167,14 @@ export const SignUpView = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="agree" />}
+                control={
+                  <Checkbox
+                    checked={agreeToTerms}
+                    onChange={(e) => {
+                      setAgreeToTerms(e.target.checked);
+                    }}
+                  />
+                }
                 label={
                   <div>
                     <span>I accept the </span>
