@@ -9,28 +9,33 @@ import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-import { HOME_SIGN_UP, SIGN_IN } from "../common/routes";
+import { HOME_SIGN_UP, MY_PROJECTS, SIGN_IN } from "../common/routes";
 
-const getNavBarButtonsForGuest = () => {
+const NavBarButtonsForUser = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Meteor.logout();
+    navigate(HOME);
+  };
   return (
     <>
-      <Button color="inherit" href={SIGN_IN}>
-        Log In
-      </Button>
-      <Button color="inherit" href={HOME_SIGN_UP}>
-        Sign Up
-      </Button>
+      <Button href={MY_PROJECTS}>My Projects</Button>
+      <Button onClick={handleLogout}>Log Out</Button>
+    </>
+  );
+};
+
+const NavBarButtonsForGuest = () => {
+  return (
+    <>
+      <Button href={SIGN_IN}>Log In</Button>
+      <Button href={HOME_SIGN_UP}>Sign Up</Button>
     </>
   );
 };
 
 export const GlobalNavBar = () => {
-  const navigate = useNavigate();
   const currentUser = Meteor.user();
-  const handleLogout = () => {
-    Meteor.logout();
-    navigate(HOME);
-  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="secondary">
@@ -38,13 +43,7 @@ export const GlobalNavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             USourced
           </Typography>
-          {currentUser ? (
-            <Button color="inherit" onClick={handleLogout}>
-              Log Out {currentUser ? currentUser.username : ""}
-            </Button>
-          ) : (
-            getNavBarButtonsForGuest()
-          )}
+          {currentUser ? NavBarButtonsForUser() : NavBarButtonsForGuest()}
         </Toolbar>
       </AppBar>
     </Box>

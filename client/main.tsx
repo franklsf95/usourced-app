@@ -1,5 +1,6 @@
-import { HOME, SIGN_IN } from "/imports/ui/common/routes";
-import { App } from "/imports/ui/pages/App";
+import { HOME, MY_PROJECTS, SIGN_IN } from "/imports/ui/common/routes";
+import { Home } from "/imports/ui/pages/Home";
+import { MyProjects } from "/imports/ui/pages/MyProjects";
 import { SignIn } from "/imports/ui/pages/SignIn";
 import { Meteor } from "meteor/meteor";
 import React from "react";
@@ -10,11 +11,15 @@ Meteor.startup(() => {
   const router = createBrowserRouter([
     {
       path: HOME,
-      element: <App />,
+      element: <Home />,
     },
     {
       path: SIGN_IN,
       element: <SignIn />,
+    },
+    {
+      path: MY_PROJECTS,
+      element: <MyProjects />,
     },
   ]);
   ReactDOM.createRoot(document.getElementById("root")!).render(

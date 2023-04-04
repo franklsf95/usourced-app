@@ -1,21 +1,16 @@
-import { HOME } from "/imports/ui/common/routes";
+import { HOME, HOME_SIGN_UP } from "/imports/ui/common/routes";
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import { ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
 import { appTheme } from "../common/theme";
 import { GlobalFooter } from "../components/GlobalFooter";
@@ -23,7 +18,6 @@ import { GlobalFooter } from "../components/GlobalFooter";
 export const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,12 +55,15 @@ export const SignIn = () => {
               flexDirection: "column",
               alignItems: "center",
             }}>
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            <Box
+              component="img"
+              sx={{
+                width: 200,
+                my: 4,
+              }}
+              alt="USourced"
+              src="/assets/img/usourced-logo.png"
+            />
             <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
@@ -90,30 +87,21 @@ export const SignIn = () => {
                 autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
+                color="secondary"
                 sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2" color="secondary">
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" color="secondary">
+                  <Link href={HOME_SIGN_UP} variant="body2">
                     {"New Customer? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
-              <Box sx={{ mt: 4 }}></Box>
               <GlobalFooter />
             </Box>
           </Box>

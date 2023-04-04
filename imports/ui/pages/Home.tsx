@@ -1,6 +1,5 @@
 import "../../api/task_methods";
 
-import { Task, TasksCollection } from "/imports/api/tasks";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
@@ -17,8 +16,6 @@ import { appTheme } from "../common/theme";
 import { GlobalFooter } from "../components/GlobalFooter";
 import { GlobalNavBar } from "../components/GlobalNavBar";
 import { SignUpView } from "../components/home/SignUpView";
-import { NewTaskFormView } from "../components/tasks/NewTaskFormView";
-import { TaskView } from "../components/tasks/TaskView";
 
 const HeroView = () => {
   return (
@@ -51,7 +48,7 @@ const HeroView = () => {
   );
 };
 
-export const App = () => {
+export const Home = () => {
   const currentUser = useTracker(() => Meteor.user());
   return (
     <ThemeProvider theme={appTheme}>

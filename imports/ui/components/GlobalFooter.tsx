@@ -3,6 +3,8 @@ import React from "react";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
+import { HOME } from "../common/routes";
+
 export const GlobalFooter = () => {
   return (
     <Typography
@@ -11,7 +13,7 @@ export const GlobalFooter = () => {
       align="center"
       sx={{ mt: 12, mb: 6 }}>
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href={HOME}>
         USourced, Inc
       </Link>
       {". "}
