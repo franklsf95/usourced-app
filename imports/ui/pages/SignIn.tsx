@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,12 +19,18 @@ import { GlobalFooter } from "../components/GlobalFooter";
 export const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Meteor.loginWithPassword(username, password);
-    navigate(MY_PROJECTS);
+    Meteor.loginWithPassword(username, password, (error: any) => {
+      if (!error) {
+        navigate(MY_PROJECTS);
+        return;
+      }
+      setErrorMessage(error.message);
+    });
   };
 
   return (
@@ -64,6 +71,11 @@ export const SignIn = () => {
               alt="USourced"
               src="/assets/img/usourced-logo.png"
             />
+            {errorMessage ? (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                {errorMessage}
+              </Alert>
+            ) : null}
             <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
