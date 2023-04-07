@@ -11,7 +11,7 @@ const Login = lazy(() => import("./auth/Login.js"));
 const Privacy = lazy(() => import("./legal/Privacy.js"));
 const Terms = lazy(() => import("./legal/Terms.js"));
 
-const Dashboard = lazy(() => import("./dashboard/Dashboard.js"));
+const Home = lazy(() => import("./home/Home.js"));
 
 const SettingsLayout = lazy(() => import("./settings/SettingsLayout.js"));
 const AccountDetails = lazy(() => import("./settings/AccountDetails.js"));
@@ -37,8 +37,8 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <RootError />,
     children: [
-      { index: true, element: <Navigate to="/dashboard" replace /> },
-      { path: "dashboard", element: <Dashboard /> },
+      { index: true, element: <Navigate to="/home" replace /> },
+      { path: "home", element: <Home /> },
       {
         path: "settings",
         element: <SettingsLayout />,

@@ -4,6 +4,7 @@
 import { Toolbar } from "@mui/material";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
+import { AppFooter } from "./components/AppFooter.js";
 import { AppToolbar } from "./components/AppToolbar.js";
 
 /**
@@ -18,6 +19,8 @@ export function AppLayout(): JSX.Element {
       <React.Suspense>
         <Outlet />
       </React.Suspense>
+
+      <AppFooter />
     </React.Fragment>
   );
 }

@@ -7,7 +7,11 @@ export const light: PaletteOptions = {
   mode: "light",
 
   primary: {
-    main: "rgb(24,119,242)",
+    main: "#183439",
+  },
+
+  secondary: {
+    main: "#F5CCB6",
   },
 
   background: {
@@ -15,8 +19,8 @@ export const light: PaletteOptions = {
   },
 
   example: {
-    primary: "#49b4ff",
-    secondary: "#ef3054",
+    primary: "#183439",
+    secondary: "#F5CCB6",
   },
 };
 
@@ -24,7 +28,11 @@ export const dark: PaletteOptions = {
   mode: "dark",
 
   primary: {
-    main: "rgb(45,136,255)",
+    main: "#183439",
+  },
+
+  secondary: {
+    main: "#F5CCB6",
   },
 
   background: {
@@ -32,8 +40,8 @@ export const dark: PaletteOptions = {
   },
 
   example: {
-    primary: "#49b4ff",
-    secondary: "#ef3054",
+    primary: "#183439",
+    secondary: "#F5CCB6",
   },
 };
 

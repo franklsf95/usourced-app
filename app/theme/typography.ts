@@ -5,17 +5,14 @@ import { TypographyVariantsOptions } from "@mui/material/styles";
 
 export const options: TypographyVariantsOptions = {
   fontFamily: [
-    `-apple-system`,
-    `"BlinkMacSystemFont"`,
-    `"Segoe UI"`,
-    `"Roboto"`,
-    `"Oxygen"`,
-    `"Ubuntu"`,
-    `"Cantarell"`,
-    `"Fira Sans"`,
-    `"Droid Sans"`,
-    `"Helvetica Neue"`,
-    `sans-serif`,
+    "Tenor Sans",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
   ].join(","),
 };
 

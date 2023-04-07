@@ -17,7 +17,6 @@ import { Link as NavLink } from "../../common/Link.js";
 import { useCurrentUser } from "../../core/auth.js";
 import { Logo } from "./Logo.js";
 import { NotificationsMenu } from "./NotificationsMenu.js";
-import { ThemeButton } from "./ThemeButton.js";
 import { UserMenu } from "./UserMenu.js";
 
 export function AppToolbar(props: AppToolbarProps): JSX.Element {
@@ -49,23 +48,16 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
   return (
     <AppBar
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, ...sx }}
-      color="default"
-      elevation={1}
+      color="secondary"
+      elevation={0}
       {...other}
     >
       <Toolbar>
-        {/* App name / logo */}
-
         <Link color="inherit" underline="none" href="/" component={NavLink}>
           <Logo />
         </Link>
-
         <span style={{ flexGrow: 1 }} />
-
         {/* Account related controls (icon buttons) */}
-
-        {me !== undefined && <ThemeButton sx={{ mr: 1 }} />}
-
         {me && (
           <Chip
             sx={{
@@ -74,8 +66,9 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
               fontWeight: 600,
               backgroundColor: (x) =>
                 x.palette.mode === "light"
-                  ? x.palette.grey[300]
+                  ? x.palette.grey[100]
                   : x.palette.grey[700],
+              opacity: 0.8,
               ".MuiChip-avatar": { width: 32, height: 32 },
             }}
             component={NavLink}
@@ -97,8 +90,9 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
               marginLeft: (x) => x.spacing(1),
               backgroundColor: (x) =>
                 x.palette.mode === "light"
-                  ? x.palette.grey[300]
+                  ? x.palette.grey[100]
                   : x.palette.grey[700],
+              opacity: 0.8,
               width: 40,
               height: 40,
             }}
@@ -113,8 +107,9 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
               marginLeft: (x) => x.spacing(1),
               backgroundColor: (x) =>
                 x.palette.mode === "light"
-                  ? x.palette.grey[300]
+                  ? x.palette.grey[100]
                   : x.palette.grey[700],
+              opacity: 0.8,
               width: 40,
               height: 40,
             }}
@@ -125,10 +120,11 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         {me === null && (
           <Button
             component={NavLink}
-            variant="text"
+            variant="outlined"
             href="/login"
             color="inherit"
-            children="Log in"
+            children="LOG IN"
+            sx={{ ml: 2 }}
           />
         )}
         {me === null && (
@@ -137,7 +133,8 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
             variant="outlined"
             href="/signup"
             color="inherit"
-            children="Create an account"
+            children="SIGN UP"
+            sx={{ ml: 2 }}
           />
         )}
       </Toolbar>
