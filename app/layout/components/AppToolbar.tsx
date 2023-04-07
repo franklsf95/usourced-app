@@ -7,7 +7,6 @@ import {
   AppBarProps,
   Avatar,
   Button,
-  Chip,
   IconButton,
   Link,
   Toolbar,
@@ -59,30 +58,12 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         <span style={{ flexGrow: 1 }} />
         {/* Account related controls (icon buttons) */}
         {me && (
-          <Chip
-            sx={{
-              height: 40,
-              borderRadius: 20,
-              fontWeight: 600,
-              backgroundColor: (x) =>
-                x.palette.mode === "light"
-                  ? x.palette.grey[100]
-                  : x.palette.grey[700],
-              opacity: 0.8,
-              ".MuiChip-avatar": { width: 32, height: 32 },
-            }}
-            component={NavLink}
-            href="/"
-            avatar={
-              <Avatar
-                alt={me?.displayName || (me?.isAnonymous ? "Anonymous" : "")}
-                src={me?.photoURL || undefined}
-              />
-            }
-            label={getFirstName(
-              me?.displayName || (me?.isAnonymous ? "Anonymous" : ""),
-            )}
-          />
+          <NavLink href="/">
+            <Avatar
+              alt={me?.displayName || (me?.isAnonymous ? "Anonymous" : "")}
+              src={me?.photoURL || undefined}
+            />
+          </NavLink>
         )}
         {me && (
           <IconButton
@@ -153,10 +134,6 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
       />
     </AppBar>
   );
-}
-
-function getFirstName(displayName: string): string {
-  return displayName && displayName.split(" ")[0];
 }
 
 type AppToolbarProps = Omit<AppBarProps, "children">;
