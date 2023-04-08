@@ -5,15 +5,16 @@ import { getAnalytics } from "firebase/analytics";
 import { FirebaseError, initializeApp, type FirebaseApp } from "firebase/app";
 import {
   FacebookAuthProvider,
-  fetchSignInMethodsForEmail,
-  getAuth,
   GoogleAuthProvider,
   OAuthCredential,
+  fetchSignInMethodsForEmail,
+  getAuth,
   signInAnonymously,
   signInWithPopup,
   type Auth,
   type UserCredential,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import { config } from "./config.js";
 export { AuthErrorCodes, linkWithCredential } from "firebase/auth";
 export { FirebaseError };
@@ -21,6 +22,7 @@ export { FirebaseError };
 export const app = initializeApp(config.firebase);
 export const auth = getAuth(app);
 export const analytics = getAnalytics(app);
+export const db = getFirestore(app);
 
 export function signIn(options: SignInOptions): Promise<UserCredential> {
   if (options.method === GoogleAuthProvider.PROVIDER_ID) {
