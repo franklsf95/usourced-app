@@ -10,8 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import { updateEmail, updateProfile } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import * as React from "react";
 import { useAuthCallback, useCurrentUser } from "../../core/auth.js";
+import { db } from "../../core/firebase.js";
 import { usePageEffect } from "../../core/page.js";
 
 export default function AccountDetails(): JSX.Element {
@@ -31,8 +33,19 @@ export default function AccountDetails(): JSX.Element {
 
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
+          name="email"
+          type="email"
+          label="Email"
+          value={input.email}
+          helperText={" "}
+          onChange={handleChange}
+          InputLabelProps={{ shrink: true }}
+          fullWidth
+          disabled
+        />
+        <TextField
           name="displayName"
-          label="Display Name"
+          label="Your Name"
           value={input.displayName}
           helperText={" "}
           onChange={handleChange}
@@ -41,18 +54,15 @@ export default function AccountDetails(): JSX.Element {
           fullWidth
           required
         />
-
         <TextField
-          name="email"
-          type="email"
-          label="Email"
-          value={input.email}
+          name="phoneNumber"
+          label="Phone Number"
+          value={input.phoneNumber}
           helperText={" "}
           onChange={handleChange}
           disabled={state.loading}
           InputLabelProps={{ shrink: true }}
           fullWidth
-          required
         />
 
         <Button
@@ -66,30 +76,54 @@ export default function AccountDetails(): JSX.Element {
   );
 }
 
+type UserData = {
+  email: string;
+  phoneNumber: string;
+  companyName: string;
+};
+
+async function fetchUserData(uid: string): Promise<UserData | undefined> {
+  const userDoc = await getDoc(doc(db, "user_data", uid));
+  return userDoc.data() as UserData;
+}
+
 function useState() {
   const me = useCurrentUser();
   const [state, setState] = React.useState({
     input: {
       displayName: me?.displayName ?? "",
       email: me?.email ?? "",
+      phoneNumber: me?.phoneNumber ?? "",
     },
+    userData: undefined as UserData | undefined,
     loading: me === undefined,
     error: undefined as string | undefined,
   });
 
   React.useEffect(() => {
-    if (me?.uid) {
-      setState((prev) => ({
-        ...prev,
-        input: {
-          ...prev.input,
-          displayName: me.displayName ?? "",
-          email: me.email ?? "",
-        },
-        loading: false,
-      }));
+    async function onCurrentUser() {
+      if (me?.uid) {
+        try {
+          const userData = await fetchUserData(me.uid);
+          setState((prev) => ({
+            ...prev,
+            input: {
+              ...prev.input,
+              displayName: me.displayName ?? "",
+              email: me.email ?? "",
+              phoneNumber: userData?.phoneNumber ?? "",
+            },
+            userData,
+            loading: false,
+          }));
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          setState((prev) => ({ ...prev, error: err.message }));
+        }
+      }
     }
-  }, [setState, me?.uid, me?.email, me?.displayName]);
+    onCurrentUser();
+  }, [setState, me]);
 
   return [state, setState] as const;
 }

@@ -1,6 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
+import { getAdditionalUserInfo } from "firebase/auth";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { signIn, SignInMethod } from "../../core/firebase.js";
@@ -81,9 +82,12 @@ export function useHandleSignIn(setState: SetState) {
       try {
         const method = event.currentTarget.dataset.method as SignInMethod;
         const credential = await signIn({ method });
+        const additionalUserInfo = getAdditionalUserInfo(credential);
+        const isNewUser = additionalUserInfo?.isNewUser ?? false;
         if (credential.user) {
           setState((prev) => (prev.error ? { ...prev, error: null } : prev));
-          navigate("/");
+          const to = isNewUser ? "/settings/account" : "/";
+          navigate(to);
         }
       } catch (err) {
         const error = (err as Error)?.message ?? "Login failed.";
