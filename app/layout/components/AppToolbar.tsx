@@ -56,24 +56,44 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
           <Logo />
         </Link>
         <span style={{ flexGrow: 1 }} />
+        {/* Navigation links for signed-in users */}
+        {me && (
+          <Button
+            component={NavLink}
+            href="/"
+            color="inherit"
+            children="My Projects"
+            sx={{ mr: 2 }}
+          />
+        )}
+        {me && (
+          <Button
+            component={NavLink}
+            variant="outlined"
+            href="/"
+            color="inherit"
+            children="New Request"
+            sx={{ mr: 2 }}
+          />
+        )}
         {/* Account related controls (icon buttons) */}
         {me && (
-          <NavLink href="/">
+          <NavLink href="/settings">
             <Avatar
               alt={me?.displayName || (me?.isAnonymous ? "Anonymous" : "")}
               src={me?.photoURL || undefined}
+              sx={{ ml: 2 }}
             />
           </NavLink>
         )}
         {me && (
           <IconButton
             sx={{
-              marginLeft: (x) => x.spacing(1),
+              ml: 1,
               backgroundColor: (x) =>
                 x.palette.mode === "light"
                   ? x.palette.grey[100]
                   : x.palette.grey[700],
-              opacity: 0.8,
               width: 40,
               height: 40,
             }}
@@ -85,12 +105,11 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
           <IconButton
             ref={menuAnchorRef}
             sx={{
-              marginLeft: (x) => x.spacing(1),
+              ml: 1,
               backgroundColor: (x) =>
                 x.palette.mode === "light"
                   ? x.palette.grey[100]
                   : x.palette.grey[700],
-              opacity: 0.8,
               width: 40,
               height: 40,
             }}
@@ -104,17 +123,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
             variant="outlined"
             href="/login"
             color="inherit"
-            children="LOG IN"
-            sx={{ ml: 2 }}
-          />
-        )}
-        {me === null && (
-          <Button
-            component={NavLink}
-            variant="outlined"
-            href="/signup"
-            color="inherit"
-            children="SIGN UP"
+            children="SIGN IN"
             sx={{ ml: 2 }}
           />
         )}

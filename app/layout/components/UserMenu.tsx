@@ -1,7 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Brightness4, Logout, Settings } from "@mui/icons-material";
+import { Logout, Settings } from "@mui/icons-material";
 import {
   Link,
   ListItemIcon,
@@ -9,19 +9,15 @@ import {
   Menu,
   MenuItem,
   MenuProps,
-  Switch,
 } from "@mui/material";
 import * as React from "react";
 import { Link as NavLink, useNavigate } from "react-router-dom";
 import { useSignOut } from "../../core/auth.js";
-import { useTheme, useToggleTheme } from "../../theme/index.js";
 
 export function UserMenu(props: UserMenuProps): JSX.Element {
   const { PaperProps, MenuListProps, ...other } = props;
   const close = useClose(props.onClose);
   const signOut = useHandleSignOut(props.onClose);
-  const toggleTheme = useToggleTheme();
-  const theme = useTheme();
 
   return (
     <Menu
@@ -37,16 +33,6 @@ export function UserMenu(props: UserMenuProps): JSX.Element {
       <MenuItem component={NavLink} to="/settings" onClick={close}>
         <ListItemIcon sx={{ minWidth: 40 }} children={<Settings />} />
         <ListItemText primary="Account Details" />
-      </MenuItem>
-
-      <MenuItem>
-        <ListItemIcon sx={{ minWidth: 40 }} children={<Brightness4 />} />
-        <ListItemText primary="Dark Mode" />
-        <Switch
-          name="theme"
-          checked={theme?.palette?.mode === "dark"}
-          onChange={toggleTheme}
-        />
       </MenuItem>
 
       <MenuItem onClick={signOut}>

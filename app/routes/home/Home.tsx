@@ -8,7 +8,7 @@ export default function Home(): JSX.Element {
   usePageEffect({ title: "" });
 
   return (
-    <a href="#signup">
+    <a href="/login">
       <Box component="img" src="/homepage-banner.gif" width="100%" />
     </a>
   );
