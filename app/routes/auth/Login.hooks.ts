@@ -86,7 +86,7 @@ export function useHandleSignIn(setState: SetState) {
         const isNewUser = additionalUserInfo?.isNewUser ?? false;
         if (credential.user) {
           setState((prev) => (prev.error ? { ...prev, error: null } : prev));
-          const to = isNewUser ? "/settings/account" : "/";
+          const to = isNewUser ? "/settings/account?new_user=true" : "/";
           navigate(to);
         }
       } catch (err) {

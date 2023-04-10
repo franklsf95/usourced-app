@@ -78,7 +78,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         )}
         {/* Account related controls (icon buttons) */}
         {me && (
-          <NavLink href="/settings">
+          <NavLink href="/settings/account">
             <Avatar
               alt={me?.displayName || (me?.isAnonymous ? "Anonymous" : "")}
               src={me?.photoURL || undefined}
