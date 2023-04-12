@@ -5,7 +5,7 @@ import { Button, ButtonProps } from "@mui/material";
 import * as React from "react";
 import { type SignInMethod } from "../../core/auth.js";
 import { type ExistingAccount } from "../../core/firebase.js";
-import { AuthIcon } from "../../icons/AuthIcon.js";
+import { AuthIcon } from "./icons/AuthIcon.js";
 
 export function LoginButton(props: LoginButtonProps): JSX.Element {
   const { method, onClick, linkTo, ...other } = props;

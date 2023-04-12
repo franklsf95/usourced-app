@@ -2,7 +2,7 @@
 /* SPDX-License-Identifier: MIT */
 
 import { Alert, Button, Container, Typography } from "@mui/material";
-import { AuthIcon } from "../../icons/AuthIcon.js";
+import { AuthIcon } from "../../layout/components/icons/AuthIcon.js";
 import { Props, useHandleSignIn, useState } from "./Login.hooks.js";
 import { Notice } from "./Notice.js";
 

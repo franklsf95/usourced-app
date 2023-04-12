@@ -3,8 +3,8 @@
 
 import { type User, type UserCredential } from "firebase/auth";
 import * as React from "react";
-import { atom, useRecoilValueLoadable } from "recoil";
-import { useOpenLoginDialog } from "../dialogs/LoginDialog.js";
+import { GetRecoilValue, atom, useRecoilValueLoadable } from "recoil";
+import { useOpenLoginDialog } from "../layout/components/LoginDialog.js";
 import {
   auth,
   signIn,
@@ -120,6 +120,16 @@ export function useAuthCallback<T extends AuthCallback>(
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
     [openLoginDialog, ...deps],
   );
+}
+
+export async function CurrentUserAuthHeader(get: GetRecoilValue) {
+  const me = get(CurrentUser);
+  const token = await me?.getIdToken();
+  return {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
 }
 
 type AuthCallbackParameters<T extends AuthCallback> = Parameters<T> extends [

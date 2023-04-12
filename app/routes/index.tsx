@@ -6,6 +6,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AppLayout } from "../layout/AppLayout.js";
 import { BaseLayout } from "../layout/BaseLayout.js";
 import { RootError } from "../layout/RootError.js";
+import MyProjects from "./projects/MyProjects.js";
 
 const Login = lazy(() => import("./auth/Login.js"));
 const Privacy = lazy(() => import("./legal/Privacy.js"));
@@ -37,8 +38,8 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <RootError />,
     children: [
-      { index: true, element: <Navigate to="/home" replace /> },
-      { path: "home", element: <Home /> },
+      { index: true, element: <Home /> },
+      { path: "projects", element: <MyProjects /> },
       {
         path: "settings",
         element: <SettingsLayout />,
