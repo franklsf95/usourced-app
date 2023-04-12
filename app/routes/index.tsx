@@ -6,16 +6,13 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AppLayout } from "../layout/AppLayout.js";
 import { BaseLayout } from "../layout/BaseLayout.js";
 import { RootError } from "../layout/RootError.js";
-import MyProjects from "./projects/MyProjects.js";
 
 const Login = lazy(() => import("./auth/Login.js"));
 const Privacy = lazy(() => import("./legal/Privacy.js"));
 const Terms = lazy(() => import("./legal/Terms.js"));
-
-const Home = lazy(() => import("./home/Home.js"));
-
-const SettingsLayout = lazy(() => import("./settings/SettingsLayout.js"));
-const AccountDetails = lazy(() => import("./settings/AccountDetails.js"));
+const Home = lazy(() => import("./home/HomePage.js"));
+const AccountSettings = lazy(() => import("./settings/AccountSettingsPage.js"));
+const MyProjects = lazy(() => import("./projects/MyProjectsPage.js"));
 
 /**
  * Application routes
@@ -42,10 +39,9 @@ export const router = createBrowserRouter([
       { path: "projects", element: <MyProjects /> },
       {
         path: "settings",
-        element: <SettingsLayout />,
         children: [
           { index: true, element: <Navigate to="/settings/account" /> },
-          { path: "account", element: <AccountDetails /> },
+          { path: "account", element: <AccountSettings /> },
         ],
       },
     ],

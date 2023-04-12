@@ -1,7 +1,13 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { CircularProgress, Container, Typography } from "@mui/material";
+import {
+  Alert,
+  CircularProgress,
+  Container,
+  Stack,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -23,19 +29,38 @@ const MyProjectsQuery = selector<Project[]>({
   },
 });
 
-export default function MyProjects(): JSX.Element {
-  usePageEffect({ title: "My Projects" });
-
+function MyProjectsView(): JSX.Element {
   const projects = useRecoilValue(MyProjectsQuery);
+  return <ProjectsKanbanView projects={projects} />;
+}
+
+function LoadingView(): JSX.Element {
+  return (
+    <Stack alignItems="center">
+      <CircularProgress />
+    </Stack>
+  );
+}
+
+function ErrorView({ error }: { error: Error }): JSX.Element {
+  return (
+    <Container maxWidth="sm">
+      <Alert severity="error">{error.message}</Alert>
+    </Container>
+  );
+}
+
+export default function MyProjectsPage(): JSX.Element {
+  usePageEffect({ title: "My Projects" });
 
   return (
     <Container>
       <Typography variant="h1" align="center" sx={{ my: 6 }}>
         My Projects
       </Typography>
-      <ErrorBoundary fallback={<div>Something went wrong</div>}>
-        <React.Suspense fallback={<CircularProgress />}>
-          <ProjectsKanbanView projects={projects} />
+      <ErrorBoundary FallbackComponent={ErrorView}>
+        <React.Suspense fallback={<LoadingView />}>
+          <MyProjectsView />
         </React.Suspense>
       </ErrorBoundary>
     </Container>

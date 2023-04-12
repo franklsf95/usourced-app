@@ -4,7 +4,7 @@
 import { Box } from "@mui/material";
 import { usePageEffect } from "../../core/page.js";
 
-export default function Home(): JSX.Element {
+export default function HomePage(): JSX.Element {
   usePageEffect({ title: "" });
 
   return (

@@ -39,7 +39,7 @@ function useSearchParams(): URLSearchParams {
   return new URLSearchParams(location.search);
 }
 
-export default function AccountDetails(): JSX.Element {
+export default function AccountSettingsPage(): JSX.Element {
   const searchParams = useSearchParams();
   const isNewUserLanding = !!searchParams.get("newUser");
 
