@@ -1,9 +1,7 @@
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Chip,
@@ -12,6 +10,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import pluralize from "pluralize";
 import { Project, ProjectStatus } from "../../../models/projects.js";
 
 function getProjectGroups(projects: Project[]): Map<ProjectStatus, Project[]> {
@@ -32,8 +31,9 @@ function ProjectCardView({ project }: { project: Project }): JSX.Element {
   return (
     <Card
       sx={{
-        width: 220,
+        width: 240,
         mx: "auto",
+        my: 1,
       }}
     >
       <CardActionArea>
@@ -43,21 +43,17 @@ function ProjectCardView({ project }: { project: Project }): JSX.Element {
           alt={project.projectName}
         />
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h6">
+          <Typography gutterBottom variant="h3">
             {project.projectName}
           </Typography>
-          <Typography>Started on {project.inquiryDate}</Typography>
+          <Typography variant="body1" fontSize={12}>
+            Inquired on {project.inquiryDate.toLocaleDateString()}
+          </Typography>
+          <Typography variant="body1" fontSize={12}>
+            Estimated Delivery on{" "}
+            {project.estimatedDeliveryDate.toLocaleDateString()}
+          </Typography>
         </CardContent>
-        <CardActions>
-          <Button
-            size="small"
-            variant="outlined"
-            sx={{ fontSize: 14 }}
-            href={`/projects/${project.id}`}
-          >
-            Open Project
-          </Button>
-        </CardActions>
       </CardActionArea>
     </Card>
   );
@@ -73,10 +69,11 @@ function ProjectsKanbanColumnView({
   return (
     <Stack sx={{ mx: 1 }} direction="column">
       <Paper
-        elevation={3}
+        elevation={1}
         sx={{
           width: 240,
-          backgroundColor: "#f8f8f8",
+          backgroundColor: "#f0f0f0",
+          py: 1,
         }}
       >
         <Chip
@@ -87,7 +84,7 @@ function ProjectsKanbanColumnView({
           }
           sx={{
             mx: 1,
-            my: 2,
+            mt: 1,
             height: "auto",
             "& .MuiChip-label": {
               display: "block",
@@ -100,6 +97,9 @@ function ProjectsKanbanColumnView({
             <ProjectCardView project={project} />
           </Box>
         ))}
+        <Typography variant="body1" color="#666666" fontSize={11} mx={1} mt={2}>
+          Total {pluralize("project", projects.length, true)}
+        </Typography>
       </Paper>
     </Stack>
   );
@@ -115,7 +115,7 @@ export function ProjectsKanbanView({
   const projectGroups = getProjectGroups(projects);
   return (
     <Container>
-      <Paper elevation={1} sx={{ overflow: "scroll" }}>
+      <Box sx={{ height: "75vh", overflow: "scroll" }}>
         <Box sx={{ width: 2400, display: "flex" }}>
           {[...projectGroups.entries()].map(([status, projects], i) => (
             <ProjectsKanbanColumnView
@@ -125,7 +125,7 @@ export function ProjectsKanbanView({
             />
           ))}
         </Box>
-      </Paper>
+      </Box>
     </Container>
   );
 }

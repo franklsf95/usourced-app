@@ -2186,6 +2186,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/pluralize@npm:^0.0.29":
+  version: 0.0.29
+  resolution: "@types/pluralize@npm:0.0.29"
+  checksum: 675726bcf01265596df3cf20d9484992fa482d16fcdaa4c17d8d82d7eae7dde5e60021b88262048e662609227b51fbab13be78ea71f5d1bec08306d777e826c4
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*, @types/prop-types@npm:^15.7.5":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
@@ -2588,6 +2595,7 @@ __metadata:
     "@mui/lab": "npm:^5.0.0-alpha.125"
     "@mui/material": "npm:^5.11.16"
     "@types/node": "npm:^18.15.11"
+    "@types/pluralize": "npm:^0.0.29"
     "@types/react": "npm:^18.0.33"
     "@types/react-dom": "npm:^18.0.11"
     "@vitejs/plugin-react": "npm:^3.1.0"
@@ -2596,6 +2604,7 @@ __metadata:
     firebase: "npm:^9.19.1"
     localforage: "npm:^1.10.0"
     notistack: "npm:^3.0.1"
+    pluralize: "npm:^8.0.0"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-error-boundary: "npm:^4.0.3"
@@ -6481,6 +6490,13 @@ __metadata:
     mlly: "npm:^1.1.1"
     pathe: "npm:^1.1.0"
   checksum: e5da078c585c235cd3bdbb8a203c6e7620782abd3bb5c617ed6003ca42eacc10e5782f1030bcac2c3cc5c5f03e5989e6b936f5935733cc14b3e50cb83b95eda3
+  languageName: node
+  linkType: hard
+
+"pluralize@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "pluralize@npm:8.0.0"
+  checksum: e3bd882f49d220fbf7996a66c6c7f13fea43fbb7155de11cba8902ebfc7ed2a06cb2a706895738de9f6c089c72542bea8c855dab6abe11e54e75986ad19bfc7e
   languageName: node
   linkType: hard
 

@@ -14,7 +14,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { selector, useRecoilValue } from "recoil";
 import { CurrentUserAuthHeader } from "../../core/auth.js";
 import { usePageEffect } from "../../core/page.js";
-import { Project } from "../../models/projects.js";
+import { Project, parseProject } from "../../models/projects.js";
 import { ProjectsKanbanView } from "./views/ProjectsKanbanView.js";
 
 const MyProjectsQuery = selector<Project[]>({
@@ -24,8 +24,7 @@ const MyProjectsQuery = selector<Project[]>({
     const res = await axios.get("/projects", auth_header).catch((err) => {
       throw err;
     });
-    const { projects } = res.data;
-    return projects;
+    return res.data.projects.map(parseProject);
   },
 });
 
@@ -55,7 +54,7 @@ export default function MyProjectsPage(): JSX.Element {
 
   return (
     <Container>
-      <Typography variant="h1" align="center" sx={{ my: 6 }}>
+      <Typography variant="h1" align="center" sx={{ mt: 4, mb: 4 }}>
         My Projects
       </Typography>
       <ErrorBoundary FallbackComponent={ErrorView}>
