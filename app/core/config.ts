@@ -3,6 +3,9 @@
 
 export type EnvName = "prod" | "test" | "local";
 export type Config = {
+  api: {
+    origin: string;
+  };
   app: {
     env: EnvName;
     name: string;

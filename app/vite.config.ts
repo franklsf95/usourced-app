@@ -16,6 +16,9 @@ const configs = envNames.map((envName): [EnvName, Config] => {
   return [
     envName,
     {
+      api: {
+        origin: env.API_ORIGIN,
+      },
       app: {
         env: envName,
         name: env.APP_NAME,
