@@ -49,10 +49,10 @@ function ProjectCardView({ project }: { project: Project }): JSX.Element {
           <Typography variant="body1" fontSize={12}>
             Inquired on {project.inquiryDate.toLocaleDateString()}
           </Typography>
-          <Typography variant="body1" fontSize={12}>
+          {/* <Typography variant="body1" fontSize={12}>
             Estimated Delivery on{" "}
             {project.estimatedDeliveryDate.toLocaleDateString()}
-          </Typography>
+          </Typography> */}
         </CardContent>
       </CardActionArea>
     </Card>

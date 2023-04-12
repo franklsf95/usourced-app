@@ -4,7 +4,6 @@ export interface Project {
   id: string;
   clientEmail: string;
   createdTime: string;
-  estimatedDeliveryDate: Date;
   inquiryDate: Date;
   projectImage: string;
   projectName: string;
@@ -24,7 +23,6 @@ export function parseProject(data: any): Project {
     id: data.id,
     clientEmail: data.clientEmail,
     createdTime: data.createdTime,
-    estimatedDeliveryDate: new Date(data.estimatedDeliveryDate),
     inquiryDate: new Date(data.inquiryDate),
     projectImage: data.projectImage,
     projectName: data.projectName,

@@ -24,11 +24,15 @@ const MyProjectsQuery = selector<Project[]>({
     const res = await axios.get("/projects", auth_header).catch((err) => {
       throw err;
     });
+    if (res.status === 204) {
+      return [];
+    }
     return res.data.projects.map(parseProject);
   },
 });
 
 function MyProjectsView(): JSX.Element {
+  // TODO(@lsf): handle empty view
   const projects = useRecoilValue(MyProjectsQuery);
   return <ProjectsKanbanView projects={projects} />;
 }
