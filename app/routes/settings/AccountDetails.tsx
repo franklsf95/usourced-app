@@ -41,7 +41,7 @@ function useSearchParams(): URLSearchParams {
 
 export default function AccountDetails(): JSX.Element {
   const searchParams = useSearchParams();
-  const isNewUserLanding = !!searchParams.get("new_user");
+  const isNewUserLanding = !!searchParams.get("newUser");
 
   const [{ input, ...state }, setState] = useState();
   const handleChange = useHandleChange(setState);
