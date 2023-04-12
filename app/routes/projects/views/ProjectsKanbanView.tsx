@@ -13,18 +13,35 @@ import {
 import pluralize from "pluralize";
 import { Project, ProjectStatus } from "../../../models/projects.js";
 
-function getProjectGroups(projects: Project[]): Map<ProjectStatus, Project[]> {
-  const ret = new Map();
+type ProjectGroup = {
+  projectStatus: ProjectStatus;
+  projects: Project[];
+};
+
+function getOrdinalFromProjectStatus(projectStatus: ProjectStatus): number {
+  return Number(projectStatus.split(". ", 2)[0]);
+}
+
+function getSortedProjectGroups(projects: Project[]): ProjectGroup[] {
+  const groups: { [key: ProjectStatus]: Project[] } = {};
+  const statuses: ProjectStatus[] = [];
   projects.forEach((item) => {
     const key = item.status;
-    const col = ret.get(key);
+    const col = groups[key];
     if (!col) {
-      ret.set(key, [item]);
+      groups[key] = [item];
+      statuses.push(key);
     } else {
       col.push(item);
     }
   });
-  return ret;
+  statuses.sort((a: ProjectStatus, b: ProjectStatus) => {
+    return getOrdinalFromProjectStatus(a) - getOrdinalFromProjectStatus(b);
+  });
+  return statuses.map((status: ProjectStatus) => ({
+    projectStatus: status,
+    projects: groups[status],
+  }));
 }
 
 function ProjectCardView({ project }: { project: Project }): JSX.Element {
@@ -112,15 +129,15 @@ export interface ProjectsKanbanViewProps {
 export function ProjectsKanbanView({
   projects,
 }: ProjectsKanbanViewProps): JSX.Element {
-  const projectGroups = getProjectGroups(projects);
+  const projectGroups = getSortedProjectGroups(projects);
   return (
     <Container>
       <Box sx={{ height: "75vh", overflow: "scroll" }}>
         <Box sx={{ width: 2400, display: "flex" }}>
-          {[...projectGroups.entries()].map(([status, projects], i) => (
+          {projectGroups.map(({ projectStatus, projects }: ProjectGroup, i) => (
             <ProjectsKanbanColumnView
               key={i}
-              projectStatus={status}
+              projectStatus={projectStatus}
               projects={projects}
             />
           ))}
