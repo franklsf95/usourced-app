@@ -57,7 +57,7 @@ export default function MyProjectsPage(): JSX.Element {
   usePageEffect({ title: "My Projects" });
 
   return (
-    <Container>
+    <Container component="main">
       <Typography variant="h1" align="center" sx={{ mt: 4, mb: 4 }}>
         My Projects
       </Typography>

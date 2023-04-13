@@ -1,6 +1,6 @@
 export type ProjectStatus = string;
 
-export interface Project {
+export type Project = {
   id: string;
   clientEmail: string;
   createdTime: string;
@@ -15,7 +15,7 @@ export interface Project {
   targetProductionCompletionDate: Date;
   targetSampleCompletionDate: Date;
   unitPrice: number;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseProject(data: any): Project {

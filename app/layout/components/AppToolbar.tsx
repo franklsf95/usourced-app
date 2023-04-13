@@ -70,7 +70,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
           <Button
             component={NavLink}
             variant="outlined"
-            href="/"
+            href="/projects/new"
             color="inherit"
             children="New Request"
             sx={{ mr: 2 }}

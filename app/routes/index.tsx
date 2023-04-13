@@ -13,6 +13,7 @@ const Terms = lazy(() => import("./legal/Terms.js"));
 const Home = lazy(() => import("./home/HomePage.js"));
 const AccountSettings = lazy(() => import("./settings/AccountSettingsPage.js"));
 const MyProjects = lazy(() => import("./projects/MyProjectsPage.js"));
+const NewProject = lazy(() => import("./projects/NewProjectPage.js"));
 
 /**
  * Application routes
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "projects", element: <MyProjects /> },
+      { path: "projects/new", element: <NewProject /> },
       {
         path: "settings",
         children: [

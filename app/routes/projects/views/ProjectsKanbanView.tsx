@@ -122,9 +122,9 @@ function ProjectsKanbanColumnView({
   );
 }
 
-export interface ProjectsKanbanViewProps {
+export type ProjectsKanbanViewProps = {
   projects: Project[];
-}
+};
 
 export function ProjectsKanbanView({
   projects,
