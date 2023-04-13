@@ -20,13 +20,17 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { updateProfile } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { User, updateProfile } from "firebase/auth";
 import * as React from "react";
 import { useLocation } from "react-router-dom";
 import { useAuthCallback, useCurrentUser } from "../../core/auth.js";
-import { db } from "../../core/firebase.js";
 import { usePageEffect } from "../../core/page.js";
+import { Company, fetchCompanies } from "../../models/companies.js";
+import {
+  UserAccount,
+  fetchUserAccount,
+  updateUserAccount,
+} from "../../models/user_accounts.js";
 
 declare module "@mui/material/Alert" {
   interface AlertPropsColorOverrides {
@@ -179,24 +183,10 @@ export default function AccountSettingsPage(): JSX.Element {
   );
 }
 
-type LinkedCompany = {
-  id: string;
-  name: string;
-};
-
-type UserData = {
-  email: string;
-  phoneNumber: string;
-  companyName: string;
-  companyWebsite: string;
-  businessType: string;
-  linkedCompanies: LinkedCompany[];
-};
-
-async function fetchUserData(uid: string): Promise<UserData | undefined> {
-  const userDoc = await getDoc(doc(db, "user_data", uid));
-  // if user doc does not exist, create a new one
-  return userDoc.data() as UserData;
+async function fetchLinkedCompanies(me: User): Promise<Company[]> {
+  const tokenResult = await me.getIdTokenResult();
+  const linkedCompanies = tokenResult.claims.linkedCompanies;
+  return await fetchCompanies(linkedCompanies);
 }
 
 function useState() {
@@ -209,9 +199,9 @@ function useState() {
       companyName: "",
       companyWebsite: "",
       businessType: "",
-      linkedCompanies: [] as LinkedCompany[],
+      linkedCompanies: [] as Company[],
     },
-    userData: undefined as UserData | undefined,
+    userAccount: undefined as UserAccount | undefined,
     loading: me === undefined,
     error: undefined as string | undefined,
     success: false,
@@ -221,20 +211,21 @@ function useState() {
     async function effect() {
       if (me?.uid) {
         try {
-          const userData = await fetchUserData(me.uid);
+          const userAccount = await fetchUserAccount(me.uid);
+          const linkedCompanies = await fetchLinkedCompanies(me);
           setState((prev) => ({
             ...prev,
             input: {
               ...prev.input,
               displayName: me.displayName ?? "",
               email: me.email ?? "",
-              phoneNumber: userData?.phoneNumber ?? "",
-              companyName: userData?.companyName ?? "",
-              companyWebsite: userData?.companyWebsite ?? "",
-              businessType: userData?.businessType ?? "",
-              linkedCompanies: userData?.linkedCompanies ?? [],
+              phoneNumber: userAccount?.phoneNumber ?? "",
+              companyName: userAccount?.companyName ?? "",
+              companyWebsite: userAccount?.companyWebsite ?? "",
+              businessType: userAccount?.businessType ?? "",
+              linkedCompanies,
             },
-            userData,
+            userAccount,
             loading: false,
           }));
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -266,15 +257,7 @@ function useHandleSubmit(input: Input, setState: SetState) {
   const saveProfile = useAuthCallback(
     async (me) => {
       await updateProfile(me, { displayName: input.displayName });
-      // update user data in firestore user_data table
-      await setDoc(doc(db, "user_data", me.uid), {
-        email: input.email,
-        displayName: input.displayName,
-        phoneNumber: input.phoneNumber,
-        companyName: input.companyName,
-        companyWebsite: input.companyWebsite,
-        businessType: input.businessType,
-      });
+      await updateUserAccount(me.uid, input);
     },
     [input],
   );
