@@ -19,6 +19,9 @@ export type Config = {
     authDomain: string;
     measurementId: string;
   };
+  openai: {
+    apiKey: string;
+  };
 };
 
 export const configs = JSON.parse(import.meta.env.VITE_CONFIG);

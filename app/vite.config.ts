@@ -32,6 +32,9 @@ const configs = envNames.map((envName): [EnvName, Config] => {
         authDomain: env.FIREBASE_AUTH_DOMAIN,
         measurementId: env.GA_MEASUREMENT_ID,
       },
+      openai: {
+        apiKey: env.OPENAI_API_KEY,
+      },
     },
   ];
 });
