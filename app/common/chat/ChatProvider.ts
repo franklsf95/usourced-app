@@ -1,12 +1,14 @@
 import { UserInfo } from "firebase/auth";
 import moment from "moment";
-import { SetterOrUpdater, atom } from "recoil";
+import { SetterOrUpdater, atom, selector } from "recoil";
+import { chat } from "../../core/openai.js";
 
 export type ChatMessage = {
   id: string;
   text: string;
   createdAt: Date;
   from: UserInfo;
+  isTyping: boolean;
 };
 
 const AI_AGENT = {
@@ -17,6 +19,7 @@ const AI_AGENT = {
   phoneNumber: "",
   providerId: "",
 };
+
 const CURRENT_USER = {
   uid: "__ME__",
   email: "",
@@ -26,34 +29,80 @@ const CURRENT_USER = {
   providerId: "",
 };
 
-const messages: ChatMessage[] = [
-  {
-    id: "1",
-    text: "Hey man what's up",
-    createdAt: moment().subtract(3, "minutes").toDate(),
-    from: CURRENT_USER,
-  },
-  {
-    id: "2",
-    text: "Hey, I'm Good! What about you? lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    createdAt: moment().subtract(1, "minutes").toDate(),
-    from: AI_AGENT,
-  },
-  {
-    id: "3",
-    text: "Cool. i am good, let's catch up!",
-    createdAt: moment().toDate(),
-    from: CURRENT_USER,
-  },
-];
+type ChatState = {
+  messages: ChatMessage[];
+  incomingMessage: ChatMessage | null;
+};
 
-export const ChatMessageListAtom = atom<ChatMessage[]>({
-  key: "ChatMessageList",
-  default: messages,
+function getOpenAIMessages(messages: ChatMessage[]) {
+  return messages.map((m) => ({
+    role: m.from.uid === "AI" ? "assistant" : ("user" as "assistant" | "user"),
+    content: m.text,
+    name: m.from.uid,
+  }));
+}
+
+export const ChatStateAtom = atom<ChatState>({
+  key: "ChatState",
+  default: {
+    messages: [
+      {
+        id: Math.random().toString(),
+        text: "Welcome to USourced! What is your product sourcing request?",
+        createdAt: moment().toDate(),
+        from: AI_AGENT,
+        isTyping: false,
+      },
+    ],
+    incomingMessage: null,
+  },
+  effects: [
+    ({ onSet, setSelf }) => {
+      onSet(async (newChatState) => {
+        const { messages } = newChatState;
+        const lastMessage = messages[messages.length - 1];
+        if (lastMessage.from.uid !== AI_AGENT.uid) {
+          setSelf(() => ({
+            messages,
+            incomingMessage: {
+              id: Math.random().toString(),
+              text: "",
+              createdAt: moment().toDate(),
+              from: AI_AGENT,
+              isTyping: true,
+            },
+          }));
+          const response = await chat(getOpenAIMessages(messages));
+          const reply = response.data.choices[0].message?.content;
+          setSelf(() => ({
+            messages: [
+              ...messages,
+              {
+                id: Math.random().toString(),
+                text: reply || "",
+                createdAt: moment().toDate(),
+                from: AI_AGENT,
+                isTyping: false,
+              },
+            ],
+            incomingMessage: null,
+          }));
+        }
+      });
+    },
+  ],
+});
+
+export const ChatWaitingForResponseStateAtom = selector<boolean>({
+  key: "ChatWaitingForResponseState",
+  get: ({ get }) => {
+    const { incomingMessage } = get(ChatStateAtom);
+    return incomingMessage !== null && incomingMessage.isTyping;
+  },
 });
 
 export function sendMessage(
-  setChatMessageList: SetterOrUpdater<ChatMessage[]>,
+  setChatState: SetterOrUpdater<ChatState>,
   messageText: string,
 ) {
   const newMessage: ChatMessage = {
@@ -61,6 +110,10 @@ export function sendMessage(
     text: messageText,
     createdAt: moment().toDate(),
     from: CURRENT_USER,
+    isTyping: false,
   };
-  setChatMessageList((old) => [...old, newMessage]);
+  setChatState((old) => ({
+    ...old,
+    messages: [...old.messages, newMessage],
+  }));
 }

@@ -1,18 +1,19 @@
-import { Configuration, OpenAIApi } from "openai";
+import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 import { config } from "./config.js";
 
-const openai = new OpenAIApi(
-  new Configuration({
-    apiKey: config.openai.apiKey,
-  }),
-);
+const configuration = new Configuration({
+  apiKey: config.openai.apiKey,
+});
+delete configuration.baseOptions.headers["User-Agent"];
 
-export async function getReply(prompt: string) {
-  const response = await openai.createCompletion({
+const openai = new OpenAIApi(configuration);
+
+export async function chat(messages: ChatCompletionRequestMessage[]) {
+  return await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
-    prompt,
-    max_tokens: 200,
+    messages,
+    max_tokens: 100,
+    temperature: 0.5,
     stream: false,
   });
-  return response;
 }

@@ -21,35 +21,48 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useCurrentUser } from "../../core/auth.js";
 import {
   ChatMessage,
-  ChatMessageListAtom,
+  ChatStateAtom,
+  ChatWaitingForResponseStateAtom,
   sendMessage,
 } from "./ChatProvider.js";
 
-function ChatMessageFromMe({ message }: { message: ChatMessage }): JSX.Element {
+function MessageView({ message }: { message: ChatMessage }): JSX.Element {
+  return (
+    <Typography variant="body2" color="text.primary">
+      {message.text}
+      {message.isTyping ? (
+        <span className="blinking-cursor"> &#x258C;</span>
+      ) : (
+        ""
+      )}
+    </Typography>
+  );
+}
+
+function ChatMessageFromMeView({
+  message,
+}: {
+  message: ChatMessage;
+}): JSX.Element {
   const me = useCurrentUser();
   const displayName = me?.displayName || "";
   const photoURL = me?.photoURL || "";
   return (
     <ListItem
+      key={message.id}
       alignItems="flex-start"
       sx={{ display: "flex", justifyContent: "flex-end", textAlign: "right" }}
     >
       <ListItemText
-        primary={
-          <Typography variant="body2" color="text.primary">
-            {message.text}
-          </Typography>
-        }
+        primary={<MessageView message={message} />}
         secondary={
-          <>
-            <Typography
-              variant="body2"
-              color="#999999"
-              sx={{ fontSize: 10, textAlign: "right" }}
-            >
-              {moment(message.createdAt).fromNow()}
-            </Typography>
-          </>
+          <Typography
+            variant="body2"
+            color="#999999"
+            sx={{ fontSize: 10, textAlign: "right" }}
+          >
+            {moment(message.createdAt).fromNow()}
+          </Typography>
         }
       />
       <ListItemAvatar sx={{ ml: 2, mt: 0, mr: 0 }}>
@@ -59,30 +72,28 @@ function ChatMessageFromMe({ message }: { message: ChatMessage }): JSX.Element {
   );
 }
 
-function ChatMessageFromAI({ message }: { message: ChatMessage }): JSX.Element {
+function ChatMessageFromOtherUserView({
+  message,
+}: {
+  message: ChatMessage;
+}): JSX.Element {
   const displayName = message.from.displayName || "";
   const photoURL = message.from.photoURL || "";
   return (
-    <ListItem alignItems="flex-start">
+    <ListItem key={message.id} alignItems="flex-start">
       <ListItemAvatar>
         <Avatar alt={displayName} src={photoURL} />
       </ListItemAvatar>
       <ListItemText
-        primary={
-          <Typography variant="body2" color="text.primary">
-            {message.text}
-          </Typography>
-        }
+        primary={<MessageView message={message} />}
         secondary={
-          <>
-            <Typography
-              variant="body2"
-              color="#999999"
-              sx={{ fontSize: 10, textAlign: "right" }}
-            >
-              {moment(message.createdAt).fromNow()}
-            </Typography>
-          </>
+          <Typography
+            variant="body2"
+            color="#999999"
+            sx={{ fontSize: 10, textAlign: "right" }}
+          >
+            {moment(message.createdAt).fromNow()}
+          </Typography>
         }
       />
     </ListItem>
@@ -91,21 +102,25 @@ function ChatMessageFromAI({ message }: { message: ChatMessage }): JSX.Element {
 
 function ChatMessageView({ message }: { message: ChatMessage }): JSX.Element {
   return message.from.uid === "__ME__" ? (
-    <ChatMessageFromMe message={message} />
+    <ChatMessageFromMeView message={message} />
   ) : (
-    <ChatMessageFromAI message={message} />
+    <ChatMessageFromOtherUserView message={message} />
   );
 }
 
 function ChatMessageListView(): JSX.Element {
-  const messages = useRecoilValue(ChatMessageListAtom);
+  const chatState = useRecoilValue(ChatStateAtom);
+  let messages = chatState.messages;
+  if (chatState.incomingMessage) {
+    messages = [...messages, chatState.incomingMessage];
+  }
   return (
     <List sx={{ height: "90%", overflowY: "auto" }}>
       {messages.map((message) => (
-        <>
-          <ChatMessageView key={message.id} message={message} />
-          <Divider />
-        </>
+        <React.Fragment key={message.id}>
+          <ChatMessageView message={message} />
+          <Divider variant="inset" />
+        </React.Fragment>
       ))}
     </List>
   );
@@ -113,13 +128,17 @@ function ChatMessageListView(): JSX.Element {
 
 function SendMessageInput(): JSX.Element {
   const [inputText, setInputText] = React.useState<string>("");
-  const setChatMessageList = useSetRecoilState(ChatMessageListAtom);
+  const isWaitingForResponse = useRecoilValue(ChatWaitingForResponseStateAtom);
+  const setChatState = useSetRecoilState(ChatStateAtom);
 
   const submitMessage = () => {
+    if (isWaitingForResponse) {
+      return;
+    }
     if (!inputText) {
       return;
     }
-    sendMessage(setChatMessageList, inputText);
+    sendMessage(setChatState, inputText);
     setInputText("");
   };
 
@@ -135,9 +154,13 @@ function SendMessageInput(): JSX.Element {
     }
   };
 
+  const placeholder = isWaitingForResponse
+    ? "Please wait..."
+    : "Send a Message";
+
   return (
     <FormControl sx={{ my: 1, mx: "1%", width: "98%" }} variant="outlined">
-      <InputLabel htmlFor="send-message-input">Send a Message</InputLabel>
+      <InputLabel htmlFor="send-message-input">{placeholder}</InputLabel>
       <OutlinedInput
         id="send-message-input"
         endAdornment={
@@ -147,7 +170,8 @@ function SendMessageInput(): JSX.Element {
             </IconButton>
           </InputAdornment>
         }
-        label="Send a Message"
+        disabled={isWaitingForResponse}
+        label={placeholder}
         value={inputText}
         onChange={onInputChange}
         onKeyUp={onKeyUp}
