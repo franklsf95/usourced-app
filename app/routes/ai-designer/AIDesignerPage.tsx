@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import { usePageEffect } from "../../core/page.js";
+import { AIChat } from "./components/AIChat.js";
 
 const PRODUCT_NAME = "Cloud-Handle Ceremic Mug";
 
@@ -90,7 +91,7 @@ function TimelineEstimatorView(): JSX.Element {
 
 function ProductConfiguratorView(): JSX.Element {
   return (
-    <Container sx={{ mt: 6 }}>
+    <Container>
       <Typography variant="h1" component="h1" mb={4}>
         {PRODUCT_NAME}
       </Typography>
@@ -121,13 +122,13 @@ export default function AIDesignerPage(): JSX.Element {
   usePageEffect({ title: PRODUCT_NAME });
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ pt: 6 }}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <ProductConfiguratorView />
         </Grid>
         <Grid item xs={6}>
-          <h1>Hello</h1>
+          <AIChat />
         </Grid>
       </Grid>
     </Container>
