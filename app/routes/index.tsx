@@ -5,6 +5,7 @@ import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AppLayout } from "../layout/AppLayout.js";
 import { BaseLayout } from "../layout/BaseLayout.js";
+import { DemoLayout } from "../layout/DemoLayout.js";
 import { RootError } from "../layout/RootError.js";
 
 const Login = lazy(() => import("./auth/Login.js"));
@@ -14,6 +15,7 @@ const Home = lazy(() => import("./home/HomePage.js"));
 const AccountSettings = lazy(() => import("./settings/AccountSettingsPage.js"));
 const MyProjects = lazy(() => import("./projects/MyProjectsPage.js"));
 const NewProject = lazy(() => import("./projects/NewProjectPage.js"));
+const AIDesignerPage = lazy(() => import("./ai-designer/AIDesignerPage.js"));
 
 /**
  * Application routes
@@ -47,6 +49,12 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "",
+    element: <DemoLayout />,
+    errorElement: <RootError />,
+    children: [{ path: "ai-designer", element: <AIDesignerPage /> }],
   },
 ]);
 
