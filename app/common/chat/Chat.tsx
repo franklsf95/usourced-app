@@ -15,54 +15,15 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { UserInfo } from "firebase/auth";
 import moment from "moment";
+import * as React from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useCurrentUser } from "../../core/auth.js";
-
-type ChatMessage = {
-  id: string;
-  text: string;
-  createdAt: Date;
-  from: UserInfo;
-};
-
-const AI_AGENT = {
-  uid: "AI",
-  email: "AI",
-  displayName: "USourced",
-  photoURL: "/usourced-icon.png",
-  phoneNumber: "",
-  providerId: "",
-};
-const CURRENT_USER = {
-  uid: "__ME__",
-  email: "",
-  displayName: "",
-  photoURL: "",
-  phoneNumber: "",
-  providerId: "",
-};
-
-const messages: ChatMessage[] = [
-  {
-    id: "1",
-    text: "Hey man what's up",
-    createdAt: moment().subtract(3, "minutes").toDate(),
-    from: CURRENT_USER,
-  },
-  {
-    id: "2",
-    text: "Hey, I'm Good! What about you? lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    createdAt: moment().subtract(1, "minutes").toDate(),
-    from: AI_AGENT,
-  },
-  {
-    id: "3",
-    text: "Cool. i am good, let's catch up!",
-    createdAt: moment().toDate(),
-    from: CURRENT_USER,
-  },
-];
+import {
+  ChatMessage,
+  ChatMessageListAtom,
+  sendMessage,
+} from "./ChatProvider.js";
 
 function ChatMessageFromMe({ message }: { message: ChatMessage }): JSX.Element {
   const me = useCurrentUser();
@@ -128,7 +89,7 @@ function ChatMessageFromAI({ message }: { message: ChatMessage }): JSX.Element {
   );
 }
 
-function ChatMessage({ message }: { message: ChatMessage }): JSX.Element {
+function ChatMessageView({ message }: { message: ChatMessage }): JSX.Element {
   return message.from.uid === "__ME__" ? (
     <ChatMessageFromMe message={message} />
   ) : (
@@ -136,12 +97,13 @@ function ChatMessage({ message }: { message: ChatMessage }): JSX.Element {
   );
 }
 
-function ChatMessageList(): JSX.Element {
+function ChatMessageListView(): JSX.Element {
+  const messages = useRecoilValue(ChatMessageListAtom);
   return (
     <List sx={{ height: "90%", overflowY: "auto" }}>
       {messages.map((message) => (
         <>
-          <ChatMessage key={message.id} message={message} />
+          <ChatMessageView key={message.id} message={message} />
           <Divider />
         </>
       ))}
@@ -150,6 +112,29 @@ function ChatMessageList(): JSX.Element {
 }
 
 function SendMessageInput(): JSX.Element {
+  const [inputText, setInputText] = React.useState<string>("");
+  const setChatMessageList = useSetRecoilState(ChatMessageListAtom);
+
+  const submitMessage = () => {
+    if (!inputText) {
+      return;
+    }
+    sendMessage(setChatMessageList, inputText);
+    setInputText("");
+  };
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setInputText(e.target.value);
+  };
+
+  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      submitMessage();
+    }
+  };
+
   return (
     <FormControl sx={{ my: 1, mx: "1%", width: "98%" }} variant="outlined">
       <InputLabel htmlFor="send-message-input">Send a Message</InputLabel>
@@ -163,6 +148,9 @@ function SendMessageInput(): JSX.Element {
           </InputAdornment>
         }
         label="Send a Message"
+        value={inputText}
+        onChange={onInputChange}
+        onKeyUp={onKeyUp}
       />
     </FormControl>
   );
@@ -172,7 +160,7 @@ export function Chat(): JSX.Element {
   return (
     <Grid container component={Paper} sx={{ width: "100%", height: "80vh" }}>
       <Grid item xs={12}>
-        <ChatMessageList />
+        <ChatMessageListView />
         <Divider />
         <SendMessageInput />
       </Grid>
