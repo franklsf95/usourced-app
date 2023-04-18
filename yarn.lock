@@ -2605,6 +2605,7 @@ __metadata:
     localforage: "npm:^1.10.0"
     moment: "npm:^2.29.4"
     notistack: "npm:^3.0.1"
+    openai: "npm:^3.2.1"
     pluralize: "npm:^8.0.0"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -2765,6 +2766,15 @@ __metadata:
   version: 4.6.3
   resolution: "axe-core@npm:4.6.3"
   checksum: 0dea15ef524fdc92071f15958485cfc2d5b2c1820b79d542cf7368a5eade9fb9e03f9735ac6f03444238ec1aa544ddc93846925105c2f4edfb302e520c4c3076
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.26.0":
+  version: 0.26.1
+  resolution: "axios@npm:0.26.1"
+  dependencies:
+    follow-redirects: "npm:^1.14.8"
+  checksum: ac969975b2e196b6e6075353688eeeb540c5cf8447c2914f90323165dfc43cd26cc31e601ed36f5711f5cd7dc76654a7c1b0db142c669152d5d600c9d3516307
   languageName: node
   linkType: hard
 
@@ -4317,7 +4327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.15.0":
+"follow-redirects@npm:^1.14.8, follow-redirects@npm:^1.15.0":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
   peerDependenciesMeta:
@@ -6281,6 +6291,16 @@ __metadata:
     is-docker: "npm:^2.1.1"
     is-wsl: "npm:^2.2.0"
   checksum: 132803ca71c3bb0f66bd2db969efbb9a2511d05588c02f7141dd346e74ca817dc605a28ab1426bbeb8cb43c9deb9697bbbe26ad5a8488603677c70c4b84959bd
+  languageName: node
+  linkType: hard
+
+"openai@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "openai@npm:3.2.1"
+  dependencies:
+    axios: "npm:^0.26.0"
+    form-data: "npm:^4.0.0"
+  checksum: 5c6e735c4b58f742753cab14e84b89e702024ef88528b56594287c8632c420e052c8732616d5a167cebb3052a372b65a929aaa6fe2b16a3c91373efa9e21d717
   languageName: node
   linkType: hard
 
