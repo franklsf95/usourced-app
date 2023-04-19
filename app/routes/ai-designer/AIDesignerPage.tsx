@@ -1,24 +1,27 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
+import { ArrowCircleLeft, ArrowCircleRight } from "@mui/icons-material";
 import {
   Box,
   Button,
+  Chip,
   Container,
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
   Select,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
 import * as React from "react";
+import { useScene } from "../../common/chat/playbook.js";
 import { usePageEffect } from "../../core/page.js";
 import { AIChat } from "./components/AIChat.js";
-
-const PRODUCT_NAME = "Cloud-Handle Ceremic Mug";
 
 function PricingEstimatorView(): JSX.Element {
   const [quantity, setQuantity] = React.useState(100);
@@ -27,7 +30,7 @@ function PricingEstimatorView(): JSX.Element {
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
       <Typography variant="h2" mb={4}>
-        Pricing Estimator
+        Pricing Estimates
       </Typography>
       <FormControl fullWidth sx={{ mb: 2 }}>
         <InputLabel>Quantity</InputLabel>
@@ -68,9 +71,9 @@ function TimelineEstimatorView(): JSX.Element {
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
       <Typography variant="h2" mb={2}>
-        Timeline Estimator
+        Timeline Estimates
       </Typography>
-      <Typography variant="h4" mb={2}>
+      {/* <Typography variant="h4" mb={2}>
         Production time: <b>7 business days</b>
       </Typography>
       <Typography variant="h4" mb={2}>
@@ -84,28 +87,72 @@ function TimelineEstimatorView(): JSX.Element {
       </Typography>
       <Typography variant="h4" mb={2}>
         Deliver by <b>May 20, 2023</b>
-      </Typography>
+      </Typography> */}
     </Paper>
   );
 }
 
+function ProductMockupEmptyView(): JSX.Element {
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: 400,
+        border: "1px dashed black",
+        borderRadius: 3,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        p: 4,
+      }}
+    >
+      <Typography variant="h2">
+        product mockup will
+        <br /> show up here
+      </Typography>
+    </Box>
+  );
+}
+
+function ProductMockupImageView({ url }: { url: string }): JSX.Element {
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: 400,
+        borderRadius: 3,
+        overflow: "hidden",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        p: 4,
+      }}
+    >
+      <img src={url} alt="Product mockup" width="100%" />
+    </Box>
+  );
+}
+
+function ProductMockupView({ url }: { url: string }): JSX.Element {
+  return url ? (
+    <ProductMockupImageView url={url} />
+  ) : (
+    <ProductMockupEmptyView />
+  );
+}
+
 function ProductConfiguratorView(): JSX.Element {
+  const { scene } = useScene();
   return (
     <Container>
       <Typography variant="h1" component="h1" mb={4}>
-        {PRODUCT_NAME}
+        {scene.productName}
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <Box
-            sx={{
-              width: "100%",
-              height: 400,
-              border: "1px solid black",
-            }}
-          >
-            Sample Image
-          </Box>
+          <ProductMockupView url={scene.productMockupState} />
         </Grid>
         <Grid item xs={6}>
           <Stack spacing={2}>
@@ -118,8 +165,37 @@ function ProductConfiguratorView(): JSX.Element {
   );
 }
 
+function DemoControlBar(): JSX.Element {
+  const { sceneNumber, incrementSceneNumber } = useScene();
+  return (
+    <Snackbar open>
+      <div>
+        <Stack direction="row">
+          <IconButton onClick={() => incrementSceneNumber(-1)}>
+            <ArrowCircleLeft />
+          </IconButton>
+          <Chip label={sceneNumber} variant="outlined" sx={{ mt: 0.5 }} />
+          <IconButton
+            onClick={() => {
+              incrementSceneNumber(1);
+              if (sceneNumber % 2 === 0) {
+                // Automatically advance to next scene to simulate AI response
+                setTimeout(() => {
+                  incrementSceneNumber(1);
+                }, 1000);
+              }
+            }}
+          >
+            <ArrowCircleRight />
+          </IconButton>
+        </Stack>
+      </div>
+    </Snackbar>
+  );
+}
+
 export default function AIDesignerPage(): JSX.Element {
-  usePageEffect({ title: PRODUCT_NAME });
+  usePageEffect({ title: "AI Designer" });
 
   return (
     <Container maxWidth="xl" sx={{ pt: 6 }}>
@@ -131,6 +207,7 @@ export default function AIDesignerPage(): JSX.Element {
           <AIChat />
         </Grid>
       </Grid>
+      <DemoControlBar />
     </Container>
   );
 }

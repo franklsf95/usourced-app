@@ -3,6 +3,8 @@ import moment from "moment";
 import { SetterOrUpdater, atom, selector } from "recoil";
 import { chat } from "../../core/openai.js";
 
+const USE_CHATGPT = false;
+
 export type ChatMessage = {
   id: string;
   text: string;
@@ -13,7 +15,7 @@ export type ChatMessage = {
   payload?: { [key: string]: any };
 };
 
-const SYSTEM_AGENT = {
+export const SYSTEM_AGENT = {
   uid: "__SYSTEM__",
   email: "",
   displayName: "USourced",
@@ -22,7 +24,7 @@ const SYSTEM_AGENT = {
   providerId: "",
 };
 
-const AI_AGENT = {
+export const AI_AGENT = {
   uid: "__AI__",
   email: "",
   displayName: "USourced",
@@ -31,7 +33,7 @@ const AI_AGENT = {
   providerId: "",
 };
 
-const CURRENT_USER = {
+export const CURRENT_USER = {
   uid: "__ME__",
   email: "",
   displayName: "",
@@ -87,6 +89,9 @@ export const ChatStateAtom = atom<ChatState>({
               isTyping: true,
             },
           }));
+          if (!USE_CHATGPT) {
+            return;
+          }
           try {
             const response = await chat(getOpenAIMessages(messages));
             const reply = response.data.choices[0].message?.content;

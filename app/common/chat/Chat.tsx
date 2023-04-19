@@ -149,14 +149,19 @@ function ChatMessageListView(): JSX.Element {
   if (chatState.incomingMessage) {
     messages = [...messages, chatState.incomingMessage];
   }
+  const endOfListRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    endOfListRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   return (
-    <List sx={{ height: "90%", overflowY: "auto" }}>
+    <List sx={{ height: "636px", overflowY: "auto" }}>
       {messages.map((message) => (
         <React.Fragment key={message.id}>
           <ChatMessageView message={message} />
           <Divider variant="inset" />
         </React.Fragment>
       ))}
+      <div key="endOfList" ref={endOfListRef} />
     </List>
   );
 }
@@ -191,7 +196,7 @@ function SendMessageInput(): JSX.Element {
 
   const placeholder = isWaitingForResponse
     ? "Please wait..."
-    : "Send a Message";
+    : "Send a message";
 
   return (
     <FormControl sx={{ mx: "2%", width: "96%", mt: 1 }} variant="outlined">

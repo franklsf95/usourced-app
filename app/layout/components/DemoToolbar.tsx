@@ -103,7 +103,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             <Search />
           </SearchIconWrapper>
           <StyledInputBase
-            placeholder="Search…"
+            placeholder="search products..."
             inputProps={{ "aria-label": "search" }}
           />
         </SearchSection>
