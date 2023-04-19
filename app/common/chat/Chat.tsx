@@ -1,5 +1,6 @@
 import { Send } from "@mui/icons-material";
 import {
+  Alert,
   Avatar,
   Divider,
   FormControl,
@@ -36,6 +37,34 @@ function MessageView({ message }: { message: ChatMessage }): JSX.Element {
         ""
       )}
     </Typography>
+  );
+}
+
+function SystemMessageView({ message }: { message: ChatMessage }): JSX.Element {
+  const displayName = message.from.displayName || "";
+  const photoURL = message.from.photoURL || "";
+  return (
+    <ListItem key={message.id} alignItems="flex-start">
+      <ListItemAvatar>
+        <Avatar alt={displayName} src={photoURL} />
+      </ListItemAvatar>
+      <ListItemText
+        primary={
+          <Alert severity="error">
+            System Error: {message.payload?.error.message}
+          </Alert>
+        }
+        secondary={
+          <Typography
+            variant="body2"
+            color="#999999"
+            sx={{ fontSize: 10, textAlign: "right" }}
+          >
+            {moment(message.createdAt).fromNow()}
+          </Typography>
+        }
+      />
+    </ListItem>
   );
 }
 
@@ -101,11 +130,17 @@ function ChatMessageFromOtherUserView({
 }
 
 function ChatMessageView({ message }: { message: ChatMessage }): JSX.Element {
-  return message.from.uid === "__ME__" ? (
-    <ChatMessageFromMeView message={message} />
-  ) : (
-    <ChatMessageFromOtherUserView message={message} />
-  );
+  switch (message.from.uid) {
+    case "__SYSTEM__": {
+      return <SystemMessageView message={message} />;
+    }
+    case "__ME__": {
+      return <ChatMessageFromMeView message={message} />;
+    }
+    default: {
+      return <ChatMessageFromOtherUserView message={message} />;
+    }
+  }
 }
 
 function ChatMessageListView(): JSX.Element {

@@ -8,12 +8,23 @@ export type ChatMessage = {
   text: string;
   createdAt: Date;
   from: UserInfo;
-  isTyping: boolean;
+  isTyping?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  payload?: { [key: string]: any };
+};
+
+const SYSTEM_AGENT = {
+  uid: "__SYSTEM__",
+  email: "",
+  displayName: "USourced",
+  photoURL: "/usourced-icon.png",
+  phoneNumber: "",
+  providerId: "",
 };
 
 const AI_AGENT = {
-  uid: "AI",
-  email: "AI",
+  uid: "__AI__",
+  email: "",
   displayName: "USourced",
   photoURL: "/usourced-icon.png",
   phoneNumber: "",
@@ -35,11 +46,16 @@ type ChatState = {
 };
 
 function getOpenAIMessages(messages: ChatMessage[]) {
-  return messages.map((m) => ({
-    role: m.from.uid === "AI" ? "assistant" : ("user" as "assistant" | "user"),
-    content: m.text,
-    name: m.from.uid,
-  }));
+  return messages
+    .filter((m) => m.from.uid !== "__SYSTEM__")
+    .map((m) => ({
+      role:
+        m.from.uid === "__AI__"
+          ? "assistant"
+          : ("user" as "assistant" | "user"),
+      content: m.text,
+      name: m.from.uid,
+    }));
 }
 
 export const ChatStateAtom = atom<ChatState>({
@@ -51,7 +67,6 @@ export const ChatStateAtom = atom<ChatState>({
         text: "Welcome to USourced! What is your product sourcing request?",
         createdAt: moment().toDate(),
         from: AI_AGENT,
-        isTyping: false,
       },
     ],
     incomingMessage: null,
@@ -72,21 +87,36 @@ export const ChatStateAtom = atom<ChatState>({
               isTyping: true,
             },
           }));
-          const response = await chat(getOpenAIMessages(messages));
-          const reply = response.data.choices[0].message?.content;
-          setSelf(() => ({
-            messages: [
-              ...messages,
-              {
-                id: Math.random().toString(),
-                text: reply || "",
-                createdAt: moment().toDate(),
-                from: AI_AGENT,
-                isTyping: false,
-              },
-            ],
-            incomingMessage: null,
-          }));
+          try {
+            const response = await chat(getOpenAIMessages(messages));
+            const reply = response.data.choices[0].message?.content;
+            setSelf(() => ({
+              messages: [
+                ...messages,
+                {
+                  id: Math.random().toString(),
+                  text: reply || "",
+                  createdAt: moment().toDate(),
+                  from: AI_AGENT,
+                },
+              ],
+              incomingMessage: null,
+            }));
+          } catch (error) {
+            setSelf(() => ({
+              messages: [
+                ...messages,
+                {
+                  id: Math.random().toString(),
+                  text: "SYSTEM_ERROR",
+                  createdAt: moment().toDate(),
+                  from: SYSTEM_AGENT,
+                  payload: { error },
+                },
+              ],
+              incomingMessage: null,
+            }));
+          }
         }
       });
     },
@@ -97,7 +127,7 @@ export const ChatWaitingForResponseStateAtom = selector<boolean>({
   key: "ChatWaitingForResponseState",
   get: ({ get }) => {
     const { incomingMessage } = get(ChatStateAtom);
-    return incomingMessage !== null && incomingMessage.isTyping;
+    return incomingMessage !== null && (incomingMessage.isTyping ?? false);
   },
 });
 
@@ -110,7 +140,6 @@ export function sendMessage(
     text: messageText,
     createdAt: moment().toDate(),
     from: CURRENT_USER,
-    isTyping: false,
   };
   setChatState((old) => ({
     ...old,
