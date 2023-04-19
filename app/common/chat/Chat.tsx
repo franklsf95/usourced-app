@@ -2,6 +2,7 @@ import { Send } from "@mui/icons-material";
 import {
   Alert,
   Avatar,
+  Box,
   Divider,
   FormControl,
   Grid,
@@ -27,6 +28,24 @@ import {
   sendMessage,
 } from "./ChatProvider.js";
 
+function MessageTimeView({
+  message,
+  textAlign,
+}: {
+  message: ChatMessage;
+  textAlign: string;
+}): JSX.Element {
+  return (
+    <Typography
+      variant="body2"
+      color="#999999"
+      sx={{ fontSize: 10, textAlign }}
+    >
+      {moment(message.createdAt).fromNow()}
+    </Typography>
+  );
+}
+
 function MessageView({ message }: { message: ChatMessage }): JSX.Element {
   return (
     <Typography variant="body2" color="text.primary">
@@ -37,6 +56,19 @@ function MessageView({ message }: { message: ChatMessage }): JSX.Element {
         ""
       )}
     </Typography>
+  );
+}
+
+function RichMessageView({ message }: { message: ChatMessage }): JSX.Element {
+  return (
+    <Box>
+      <MessageView message={message} />
+      {message.payload?.attachments?.map((attachment: { url: string }) => (
+        <Box key={attachment.url}>
+          <img src={attachment.url} height={150} />
+        </Box>
+      )) ?? null}
+    </Box>
   );
 }
 
@@ -54,15 +86,7 @@ function SystemMessageView({ message }: { message: ChatMessage }): JSX.Element {
             System Error: {message.payload?.error.message}
           </Alert>
         }
-        secondary={
-          <Typography
-            variant="body2"
-            color="#999999"
-            sx={{ fontSize: 10, textAlign: "right" }}
-          >
-            {moment(message.createdAt).fromNow()}
-          </Typography>
-        }
+        secondary={<MessageTimeView message={message} textAlign="left" />}
       />
     </ListItem>
   );
@@ -80,21 +104,18 @@ function ChatMessageFromMeView({
     <ListItem
       key={message.id}
       alignItems="flex-start"
-      sx={{ display: "flex", justifyContent: "flex-end", textAlign: "right" }}
+      sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        textAlign: "right",
+      }}
     >
       <ListItemText
-        primary={<MessageView message={message} />}
-        secondary={
-          <Typography
-            variant="body2"
-            color="#999999"
-            sx={{ fontSize: 10, textAlign: "right" }}
-          >
-            {moment(message.createdAt).fromNow()}
-          </Typography>
-        }
+        primary={<RichMessageView message={message} />}
+        secondary={<MessageTimeView message={message} textAlign="right" />}
+        sx={{ ml: 8 }}
       />
-      <ListItemAvatar sx={{ ml: 2, mt: 0, mr: 0 }}>
+      <ListItemAvatar sx={{ ml: 2 }}>
         <Avatar alt={displayName} src={photoURL} />
       </ListItemAvatar>
     </ListItem>
@@ -114,16 +135,8 @@ function ChatMessageFromOtherUserView({
         <Avatar alt={displayName} src={photoURL} />
       </ListItemAvatar>
       <ListItemText
-        primary={<MessageView message={message} />}
-        secondary={
-          <Typography
-            variant="body2"
-            color="#999999"
-            sx={{ fontSize: 10, textAlign: "right" }}
-          >
-            {moment(message.createdAt).fromNow()}
-          </Typography>
-        }
+        primary={<RichMessageView message={message} />}
+        secondary={<MessageTimeView message={message} textAlign="left" />}
       />
     </ListItem>
   );
