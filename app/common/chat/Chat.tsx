@@ -194,13 +194,13 @@ function SendMessageInput(): JSX.Element {
     : "Send a Message";
 
   return (
-    <FormControl sx={{ my: 1, mx: "1%", width: "98%" }} variant="outlined">
+    <FormControl sx={{ mx: "2%", width: "96%", mt: 1 }} variant="outlined">
       <InputLabel htmlFor="send-message-input">{placeholder}</InputLabel>
       <OutlinedInput
         id="send-message-input"
         endAdornment={
           <InputAdornment position="end">
-            <IconButton edge="end">
+            <IconButton edge="end" onClick={submitMessage}>
               <Send />
             </IconButton>
           </InputAdornment>
