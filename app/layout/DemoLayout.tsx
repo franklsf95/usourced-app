@@ -1,9 +1,9 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Toolbar } from "@mui/material";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
+import { DemoNavigationBar } from "./components/DemoNavigationBar.js";
 import { DemoToolbar } from "./components/DemoToolbar.js";
 
 /**
@@ -13,7 +13,8 @@ export function DemoLayout(): JSX.Element {
   return (
     <React.Fragment>
       <DemoToolbar />
-      <Toolbar />
+      <DemoNavigationBar />
+      <div style={{ height: 180 }} />
 
       <React.Suspense>
         <Outlet />

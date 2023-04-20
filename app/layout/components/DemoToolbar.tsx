@@ -1,11 +1,16 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { ArrowDropDown, NotificationsNone, Search } from "@mui/icons-material";
+import {
+  FolderOutlined,
+  Search,
+  ShoppingCartOutlined,
+} from "@mui/icons-material";
 import {
   AppBar,
   AppBarProps,
   Avatar,
+  Box,
   Button,
   IconButton,
   InputBase,
@@ -16,24 +21,25 @@ import { alpha, styled } from "@mui/material/styles";
 import * as React from "react";
 import { Link as NavLink } from "../../common/Link.js";
 import { useCurrentUser } from "../../core/auth.js";
-import { Logo } from "./Logo.js";
-import { NotificationsMenu } from "./NotificationsMenu.js";
 import { UserMenu } from "./UserMenu.js";
+
+declare module "@mui/material/AppBar" {
+  interface AppBarPropsColorOverrides {
+    background: true;
+  }
+}
 
 const SearchSection = styled("div")(({ theme }) => ({
   position: "relative",
+  flexGrow: 1,
+  marginLeft: theme.spacing(8),
+  marginRight: theme.spacing(8),
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
   width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -49,6 +55,11 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
+  border: "1px solid #183439",
+  borderRadius: 16,
+  fontSize: 14,
+  height: "2.4em",
+  width: 800,
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -71,14 +82,6 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
     notifications: null as HTMLElement | null,
   });
 
-  function openNotificationsMenu() {
-    setAnchorEl((x) => ({ ...x, notifications: menuAnchorRef.current }));
-  }
-
-  function closeNotificationsMenu() {
-    setAnchorEl((x) => ({ ...x, notifications: null }));
-  }
-
   function openUserMenu() {
     setAnchorEl((x) => ({ ...x, userMenu: menuAnchorRef.current }));
   }
@@ -89,71 +92,49 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
 
   return (
     <AppBar
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, ...sx }}
-      color="secondary"
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        ...sx,
+      }}
+      color="background"
       elevation={0}
       {...other}
     >
-      <Toolbar>
+      <Toolbar sx={{ mx: 8, height: 100, mt: 1 }}>
         <Link color="inherit" underline="none" href="/" component={NavLink}>
-          <Logo />
+          <Box component="img" src="/usourced-logo.png" height={56} />
         </Link>
-        <SearchSection sx={{ flexGrow: 1, mx: 8 }}>
+        <SearchSection>
           <SearchIconWrapper>
             <Search />
           </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="search products..."
-            inputProps={{ "aria-label": "search" }}
-          />
+          <StyledInputBase placeholder="Search products..." />
         </SearchSection>
         {/* <span style={{ flexGrow: 1 }} /> */}
         {/* Navigation links for signed-in users */}
         {me && (
           <Button
             component={NavLink}
-            variant="outlined"
+            variant="text"
             href="/projects"
             color="inherit"
-            children="My Projects"
-            sx={{ mr: 2 }}
+            children="Cart"
+            startIcon={<ShoppingCartOutlined />}
+            sx={{ mr: 2, width: 180 }}
           />
         )}
-        {/* {me && (
+        {me && (
           <Button
             component={NavLink}
-            variant="outlined"
-            href="/projects/new"
+            variant="text"
+            href="/projects"
             color="inherit"
-            children="New Request"
-            sx={{ mr: 2 }}
+            children="Projects"
+            startIcon={<FolderOutlined />}
+            sx={{ mr: 2, width: 180 }}
           />
-        )} */}
+        )}
         {/* Account related controls (icon buttons) */}
-        {me && (
-          <NavLink href="/settings/account">
-            <Avatar
-              alt={me?.displayName || (me?.isAnonymous ? "Anonymous" : "")}
-              src={me?.photoURL || undefined}
-              sx={{ ml: 2 }}
-            />
-          </NavLink>
-        )}
-        {me && (
-          <IconButton
-            sx={{
-              ml: 1,
-              backgroundColor: (x) =>
-                x.palette.mode === "light"
-                  ? x.palette.grey[100]
-                  : x.palette.grey[700],
-              width: 40,
-              height: 40,
-            }}
-            children={<NotificationsNone />}
-            onClick={openNotificationsMenu}
-          />
-        )}
         {me && (
           <IconButton
             ref={menuAnchorRef}
@@ -166,9 +147,13 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
               width: 40,
               height: 40,
             }}
-            children={<ArrowDropDown />}
             onClick={openUserMenu}
-          />
+          >
+            <Avatar
+              alt={me?.displayName || (me?.isAnonymous ? "Anonymous" : "")}
+              src={me?.photoURL || undefined}
+            />
+          </IconButton>
         )}
         {me === null && (
           <Button
@@ -184,11 +169,6 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
 
       {/* Pop-up menus */}
 
-      <NotificationsMenu
-        anchorEl={anchorEl.notifications}
-        onClose={closeNotificationsMenu}
-        PaperProps={{ sx: { marginTop: "8px" } }}
-      />
       <UserMenu
         anchorEl={anchorEl.userMenu}
         onClose={closeUserMenu}
