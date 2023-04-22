@@ -10,6 +10,7 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import * as React from "react";
 import { ButtonGroupSelector } from "../../common/ButtonGroupSelector.js";
 import { ColorSelector } from "../../common/ColorSelector.js";
 import InputSlider from "../../common/InputSlider.js";
@@ -18,6 +19,11 @@ import { usePageEffect } from "../../core/page.js";
 type Selection = {
   label: string;
   value: string;
+};
+
+type PricingTier = {
+  quantity: number;
+  pricePerItem: number;
 };
 
 type ProductListing = {
@@ -31,6 +37,7 @@ type ProductListing = {
   earliestShippingDate: string;
   colorSelections: string[];
   printEffectSelections: Selection[];
+  pricingTiers: PricingTier[];
 };
 
 const productListing: ProductListing = {
@@ -65,17 +72,51 @@ const productListing: ProductListing = {
       value: "sublimation",
     },
   ],
+  pricingTiers: [
+    {
+      quantity: 1000,
+      pricePerItem: 5,
+    },
+    {
+      quantity: 2000,
+      pricePerItem: 4,
+    },
+    {
+      quantity: 3000,
+      pricePerItem: 3.5,
+    },
+    {
+      quantity: 5000,
+      pricePerItem: 3,
+    },
+  ],
 };
 
-function PricingCalculator(): JSX.Element {
+function getPricePerItem(
+  quantity: number,
+  pricingTiers: PricingTier[],
+): number {
+  const tier = pricingTiers.find((tier) => tier.quantity >= quantity);
+  return tier
+    ? tier.pricePerItem
+    : pricingTiers[pricingTiers.length - 1].pricePerItem;
+}
+
+function PricingCalculator({
+  pricingTiers,
+}: {
+  pricingTiers: PricingTier[];
+}): JSX.Element {
+  const [quantity, setQuantity] = React.useState<number>(1000);
+  const pricePerItem = getPricePerItem(quantity, pricingTiers);
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
       <Typography variant="h2" mt={2} mb={2}>
         Bulk Price Calculator
       </Typography>
-      <InputSlider />
+      <InputSlider onChange={setQuantity} />
       <Typography variant="h3" mt={1} mb={1}>
-        $5/item
+        ${pricePerItem.toFixed(2)}/item
       </Typography>
       <Button variant="text" sx={{ fontSize: 12, textDecoration: "underline" }}>
         View cost breakdown
@@ -138,7 +179,7 @@ function ProductDetailsView({
         <ButtonGroupSelector choices={productListing.printEffectSelections} />
       </Box>
       <Box sx={{ mt: 4, mb: 4 }}>
-        <PricingCalculator />
+        <PricingCalculator pricingTiers={productListing.pricingTiers} />
       </Box>
       <Button variant="contained" color="primary">
         Customize Now

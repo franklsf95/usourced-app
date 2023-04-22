@@ -5,27 +5,38 @@ import {
   OutlinedInput,
   Slider,
   Typography,
-} from "@mui/material"
-import * as React from "react"
+} from "@mui/material";
+import * as React from "react";
 
-export default function InputSlider() {
-  const minValue = 100;
-  const maxValue = 1000;
-  const [value, setValue] = React.useState<number>(100);
+export default function InputSlider({
+  onChange,
+}: {
+  onChange: (value: number) => void;
+}) {
+  const minValue = 1000;
+  const maxValue = 10000;
+  const [value, setValue] = React.useState<number>(minValue);
+
+  const handleValueChange = (newValue: number) => {
+    setValue(newValue);
+    onChange(newValue);
+  };
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue);
+    if (typeof newValue === "number") {
+      handleValueChange(newValue);
+    }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(Number(event.target.value));
+    handleValueChange(Number(event.target.value));
   };
 
   const handleBlur = () => {
     if (value < minValue) {
-      setValue(minValue);
+      handleValueChange(minValue);
     } else if (value > maxValue) {
-      setValue(maxValue);
+      handleValueChange(maxValue);
     }
   };
 
@@ -41,7 +52,7 @@ export default function InputSlider() {
             onChange={handleSliderChange}
             min={minValue}
             max={maxValue}
-            step={100}
+            step={1000}
           />
         </Grid>
         <Grid item>
@@ -58,7 +69,7 @@ export default function InputSlider() {
                 // type: "number",
               }
             }
-            sx={{ width: 112 }}
+            sx={{ width: 120 }}
             endAdornment={<InputAdornment position="end">items</InputAdornment>}
           />
         </Grid>
