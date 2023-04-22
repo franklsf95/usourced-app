@@ -16,6 +16,9 @@ const AccountSettings = lazy(() => import("./settings/AccountSettingsPage.js"));
 const MyProjects = lazy(() => import("./projects/MyProjectsPage.js"));
 const NewProject = lazy(() => import("./projects/NewProjectPage.js"));
 const AIDesignerPage = lazy(() => import("./ai-designer/AIDesignerPage.js"));
+const ProductListingPage = lazy(
+  () => import("./product-listing/ProductListingPage.js"),
+);
 
 /**
  * Application routes
@@ -54,7 +57,10 @@ export const router = createBrowserRouter([
     path: "",
     element: <DemoLayout />,
     errorElement: <RootError />,
-    children: [{ path: "ai-designer", element: <AIDesignerPage /> }],
+    children: [
+      { path: "ai-designer", element: <AIDesignerPage /> },
+      { path: "product/:id", element: <ProductListingPage /> },
+    ],
   },
 ]);
 

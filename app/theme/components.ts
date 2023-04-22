@@ -13,7 +13,6 @@ export const components = (palette: Palette): ThemeOptions["components"] => ({
       root: {
         fontFamily: "Karla",
         fontSize: 16,
-        fontWeight: 600,
         letterSpacing: 1,
         textTransform: "unset",
       },
