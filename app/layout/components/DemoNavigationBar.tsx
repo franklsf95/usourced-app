@@ -15,7 +15,7 @@ export function DemoNavigationBar(props: AppToolbarProps): JSX.Element {
   const buttonSx = {
     fontWeight: 300,
     textTransform: "uppercase",
-    width: 240,
+    width: 280,
     px: 4,
   };
 
@@ -34,12 +34,6 @@ export function DemoNavigationBar(props: AppToolbarProps): JSX.Element {
     >
       <Toolbar sx={{ justifyContent: "space-evenly", mx: 16 }}>
         <Button
-          variant="text"
-          color="inherit"
-          children={"Shop All"}
-          sx={buttonSx}
-        />
-        <Button
           component={RouterLink}
           href="/custom-request"
           variant="text"
@@ -48,9 +42,19 @@ export function DemoNavigationBar(props: AppToolbarProps): JSX.Element {
           sx={buttonSx}
         />
         <Button
+          component={RouterLink}
+          href="/product/1"
           variant="text"
           color="inherit"
-          children={"Demo"}
+          children="Product Catalog Demo"
+          sx={buttonSx}
+        />
+        <Button
+          component={RouterLink}
+          href="/ai-designer"
+          variant="text"
+          color="inherit"
+          children="USourced AI Demo"
           sx={buttonSx}
         />
       </Toolbar>
