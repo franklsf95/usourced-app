@@ -12,7 +12,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import * as React from "react";
-import { Link as NavLink } from "../../common/Link.js";
+import { RouterLink } from "../../common/RouterLink.js";
 import { useCurrentUser } from "../../core/auth.js";
 import { Logo } from "./Logo.js";
 import { NotificationsMenu } from "./NotificationsMenu.js";
@@ -52,14 +52,14 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
       {...other}
     >
       <Toolbar>
-        <Link color="inherit" underline="none" href="/" component={NavLink}>
+        <Link color="inherit" underline="none" href="/" component={RouterLink}>
           <Logo />
         </Link>
         <span style={{ flexGrow: 1 }} />
         {/* Navigation links for signed-in users */}
         {me && (
           <Button
-            component={NavLink}
+            component={RouterLink}
             href="/projects"
             color="inherit"
             children="My Projects"
@@ -68,7 +68,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         )}
         {me && (
           <Button
-            component={NavLink}
+            component={RouterLink}
             variant="outlined"
             href="/projects/new"
             color="inherit"
@@ -78,13 +78,13 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         )}
         {/* Account related controls (icon buttons) */}
         {me && (
-          <NavLink href="/settings/account">
+          <RouterLink href="/settings/account">
             <Avatar
               alt={me?.displayName || (me?.isAnonymous ? "Anonymous" : "")}
               src={me?.photoURL || undefined}
               sx={{ ml: 2 }}
             />
-          </NavLink>
+          </RouterLink>
         )}
         {me && (
           <IconButton
@@ -119,7 +119,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         )}
         {me === null && (
           <Button
-            component={NavLink}
+            component={RouterLink}
             variant="outlined"
             href="/login"
             color="inherit"

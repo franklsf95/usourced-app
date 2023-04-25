@@ -3,7 +3,7 @@
 
 import { Close } from "@mui/icons-material";
 import { AppBar, AppBarProps, Box, IconButton, Toolbar } from "@mui/material";
-import { Link } from "../../common/Link.js";
+import { RouterLink } from "../../common/RouterLink.js";
 import { Logo } from "./Logo.js";
 
 export function BaseToolbar(props: AppBarProps): JSX.Element {
@@ -13,7 +13,7 @@ export function BaseToolbar(props: AppBarProps): JSX.Element {
         {/* Name / Logo */}
         <Box
           sx={{ textDecoration: "none", color: "inherit" }}
-          component={Link}
+          component={RouterLink}
           children={<Logo />}
           href="/"
         />
@@ -22,7 +22,7 @@ export function BaseToolbar(props: AppBarProps): JSX.Element {
         <Box sx={{ flexGrow: 1 }} component="span" />
 
         {/* Close button */}
-        <IconButton component={Link} href="/">
+        <IconButton component={RouterLink} href="/">
           <Close />
         </IconButton>
       </Toolbar>

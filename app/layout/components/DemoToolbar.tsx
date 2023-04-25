@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import * as React from "react";
-import { Link as NavLink } from "../../common/Link.js";
+import { RouterLink } from "../../common/RouterLink.js";
 import { useCurrentUser } from "../../core/auth.js";
 import { UserMenu } from "./UserMenu.js";
 
@@ -101,7 +101,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
       {...other}
     >
       <Toolbar sx={{ mx: 8, height: 100, mt: 1 }}>
-        <Link color="inherit" underline="none" href="/" component={NavLink}>
+        <Link color="inherit" underline="none" href="/" component={RouterLink}>
           <Box component="img" src="/usourced-logo.png" height={56} />
         </Link>
         <SearchSection>
@@ -114,7 +114,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         {/* Navigation links for signed-in users */}
         {me && (
           <Button
-            component={NavLink}
+            component={RouterLink}
             variant="text"
             href="/projects"
             color="inherit"
@@ -125,7 +125,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         )}
         {me && (
           <Button
-            component={NavLink}
+            component={RouterLink}
             variant="text"
             href="/projects"
             color="inherit"
@@ -157,7 +157,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         )}
         {me === null && (
           <Button
-            component={NavLink}
+            component={RouterLink}
             variant="outlined"
             href="/login"
             color="inherit"
