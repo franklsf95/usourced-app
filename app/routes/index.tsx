@@ -16,6 +16,9 @@ const AccountSettings = lazy(() => import("./settings/AccountSettingsPage.js"));
 const MyProjects = lazy(() => import("./projects/MyProjectsPage.js"));
 const NewProject = lazy(() => import("./projects/NewProjectPage.js"));
 const AIDesignerPage = lazy(() => import("./ai-designer/AIDesignerPage.js"));
+const CustomRequestPage = lazy(
+  () => import("./custom-request/CustomRequestPage.js"),
+);
 const ProductListingPage = lazy(
   () => import("./product-listing/ProductListingPage.js"),
 );
@@ -41,7 +44,6 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <RootError />,
     children: [
-      { index: true, element: <Home /> },
       { path: "projects", element: <MyProjects /> },
       { path: "projects/new", element: <NewProject /> },
       {
@@ -58,7 +60,9 @@ export const router = createBrowserRouter([
     element: <DemoLayout />,
     errorElement: <RootError />,
     children: [
+      { index: true, element: <Home /> },
       { path: "ai-designer", element: <AIDesignerPage /> },
+      { path: "custom-request", element: <CustomRequestPage /> },
       { path: "product/:id", element: <ProductListingPage /> },
     ],
   },

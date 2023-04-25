@@ -111,7 +111,7 @@ function PricingCalculator({
   const pricePerItem = getPricePerItem(quantity, pricingTiers);
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
-      <Typography variant="h2" mt={2} mb={2}>
+      <Typography variant="h2" mt={2} mb={2} fontSize="1.5em">
         Bulk Price Calculator
       </Typography>
       <InputSlider onChange={setQuantity} />
@@ -163,8 +163,8 @@ function ProductDetailsView({
           {productListing.reviewsCount} reviews
         </Typography>
       </Box>
-      <Typography variant="h5" mt={6} fontWeight={600}>
-        Earliest Shipping by: {productListing.earliestShippingDate}
+      <Typography variant="h5" mt={7} fontWeight={600}>
+        Ships as early as {productListing.earliestShippingDate}
       </Typography>
       <Box sx={{ mt: 2 }}>
         <Typography variant="h5" my={1}>
