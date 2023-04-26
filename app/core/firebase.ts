@@ -15,6 +15,7 @@ import {
   type UserCredential,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { config } from "./config.js";
 export { AuthErrorCodes, linkWithCredential } from "firebase/auth";
 export { FirebaseError };
@@ -23,6 +24,7 @@ export const app = initializeApp(config.firebase);
 export const auth = getAuth(app);
 export const analytics = getAnalytics(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 export function signIn(options: SignInOptions): Promise<UserCredential> {
   if (options.method === GoogleAuthProvider.PROVIDER_ID) {
