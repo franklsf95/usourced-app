@@ -1,24 +1,19 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Send } from "@mui/icons-material";
 import {
   Box,
   Button,
   Card,
   CardContent,
   Container,
-  FormControl,
   Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
   Typography,
 } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import * as React from "react";
 import { storage } from "../../core/firebase.js";
+import { NewsletterSignUp } from "./components/NewsletterSignUp.js";
 
 const DEMO_PRODUCT_CATEGORIES = [
   {
@@ -143,7 +138,6 @@ const TEAM_MEMBERS = [
 const DEFAULT_PROFILE_IMAGE_URL = "/home/silhouette.png";
 
 function TopSection(): JSX.Element {
-  const emailInputId = "demo-signup-email-input";
   return (
     <Box component="section" sx={{ py: 16, backgroundColor: "#FFFFFF" }}>
       <Container maxWidth="md" sx={{ textAlign: "center" }}>
@@ -158,22 +152,7 @@ function TopSection(): JSX.Element {
           <Typography variant="h4" mb={2}>
             Sign up and be the first to know when we launch
           </Typography>
-          <FormControl sx={{ width: "25ch" }} variant="outlined">
-            <InputLabel htmlFor={emailInputId}>Email</InputLabel>
-            <OutlinedInput
-              id={emailInputId}
-              autoComplete="email"
-              type="email"
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton edge="end">
-                    <Send />
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Email"
-            />
-          </FormControl>
+          <NewsletterSignUp />
         </Box>
       </Container>
     </Box>
