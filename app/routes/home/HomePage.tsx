@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
+import { decode } from "he";
 import * as React from "react";
 import { storage } from "../../core/firebase.js";
 import { NewsletterSignUp } from "./components/NewsletterSignUp.js";
@@ -141,8 +142,8 @@ function TopSection(): JSX.Element {
   return (
     <Box component="section" sx={{ py: 16, backgroundColor: "#FFFFFF" }}>
       <Container maxWidth="md" sx={{ textAlign: "center" }}>
-        <Typography variant="h1" fontSize={72} mb={4}>
-          Quality, Speed, Value
+        <Typography variant="h1" fontSize={68} mb={4}>
+          You dream it, we make it
         </Typography>
         <Typography variant="h2">
           Next-generation bespoke product sourcing with generative AI,
@@ -163,8 +164,8 @@ function CatalogSection(): JSX.Element {
   return (
     <Box component="section" sx={{ py: 16 }}>
       <Container maxWidth="md" sx={{ textAlign: "center" }}>
-        <Typography variant="h1" fontSize={48} mb={4}>
-          You dream it, we make it
+        <Typography variant="h1" fontSize={66} mb={4}>
+          Quality, Speed, Value
         </Typography>
         <Typography variant="h2">
           Discover unique products across multiple categories, from tech gadgets
@@ -178,7 +179,7 @@ function CatalogSection(): JSX.Element {
                   <Box
                     component="img"
                     src={category.imageUrl}
-                    sx={{ height: 160, maxWidth: 160 }}
+                    sx={{ height: 160, maxWidth: 160, objectFit: "cover" }}
                   />
                   <Typography variant="h5">{category.name}</Typography>
                 </CardContent>
@@ -211,7 +212,7 @@ function ValueCard({
         <Typography variant="h3" mb={2}>
           {title}
         </Typography>
-        <Typography variant="body2">{description}</Typography>
+        <Typography variant="body2">{decode(description)}</Typography>
       </CardContent>
     </Card>
   );
