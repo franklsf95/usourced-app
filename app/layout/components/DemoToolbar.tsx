@@ -1,11 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import {
-  FolderOutlined,
-  Search,
-  ShoppingCartOutlined,
-} from "@mui/icons-material";
+import { FolderOutlined, ShoppingCartOutlined } from "@mui/icons-material";
 import {
   AppBar,
   AppBarProps,
@@ -13,11 +9,9 @@ import {
   Box,
   Button,
   IconButton,
-  InputBase,
   Link,
   Toolbar,
 } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
 import * as React from "react";
 import { RouterLink } from "../../common/RouterLink.js";
 import { useCurrentUser } from "../../core/auth.js";
@@ -28,49 +22,6 @@ declare module "@mui/material/AppBar" {
     background: true;
   }
 }
-
-const SearchSection = styled("div")(({ theme }) => ({
-  position: "relative",
-  flexGrow: 1,
-  marginLeft: theme.spacing(8),
-  marginRight: theme.spacing(8),
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  width: "100%",
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  opacity: 0.5,
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  border: "1px solid #183439",
-  borderRadius: 16,
-  fontSize: 14,
-  height: "2.4em",
-  width: 800,
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
 
 export function DemoToolbar(props: AppToolbarProps): JSX.Element {
   const { sx, ...other } = props;
@@ -90,9 +41,17 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
     setAnchorEl((x) => ({ ...x, userMenu: null }));
   }
 
+  const buttonSx = {
+    fontWeight: 300,
+    textTransform: "uppercase",
+    px: 4,
+    mr: 4,
+  };
+
   return (
     <AppBar
       sx={{
+        borderBottom: "1px #183439 solid",
         zIndex: (theme) => theme.zIndex.drawer + 1,
         ...sx,
       }}
@@ -104,13 +63,39 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         <Link color="inherit" underline="none" href="/" component={RouterLink}>
           <Box component="img" src="/usourced-logo.png" height={56} />
         </Link>
-        <SearchSection>
-          <SearchIconWrapper>
-            <Search />
-          </SearchIconWrapper>
-          <StyledInputBase placeholder="Search products..." />
-        </SearchSection>
-        {/* <span style={{ flexGrow: 1 }} /> */}
+        <span style={{ flexGrow: 1 }} />
+        <Button
+          component={RouterLink}
+          href="/custom-request"
+          variant="text"
+          color="inherit"
+          children="Custom Request"
+          sx={buttonSx}
+        />
+        <Button
+          component={RouterLink}
+          href="/product/1"
+          variant="text"
+          color="inherit"
+          children="Product Catalog Demo"
+          sx={buttonSx}
+        />
+        <Button
+          component={RouterLink}
+          href="/ai-designer"
+          variant="text"
+          color="inherit"
+          children="USourced AI Demo"
+          sx={buttonSx}
+        />
+        <Button
+          component={RouterLink}
+          href="/projects"
+          variant="text"
+          color="inherit"
+          children="Client Dashboard Demo"
+          sx={buttonSx}
+        />
         {/* Navigation links for signed-in users */}
         {me && (
           <Button

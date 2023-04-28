@@ -3,7 +3,6 @@
 
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import { DemoNavigationBar } from "./components/DemoNavigationBar.js";
 import { DemoToolbar } from "./components/DemoToolbar.js";
 
 /**
@@ -13,8 +12,7 @@ export function DemoLayout(): JSX.Element {
   return (
     <React.Fragment>
       <DemoToolbar />
-      <DemoNavigationBar />
-      <div style={{ height: 180 }} />
+      <div style={{ height: 100 }} />
 
       <React.Suspense>
         <Outlet />
