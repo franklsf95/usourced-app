@@ -1,13 +1,16 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
+import { ZoomIn, ZoomOut } from "@mui/icons-material";
 import {
   Box,
   Button,
   Container,
   Grid,
+  IconButton,
   Paper,
   Rating,
+  Stack,
   Typography,
 } from "@mui/material";
 import * as React from "react";
@@ -26,16 +29,18 @@ type PricingTier = {
   pricePerItem: number;
 };
 
+type ProductVariant = {
+  color: string;
+  mockup_url: string;
+};
+
 type ProductListing = {
   id: string;
   name: string;
-  mockup: {
-    url: string;
-  };
   rating: number;
   reviewsCount: number;
   earliestShippingDate: string;
-  colorSelections: string[];
+  variants: ProductVariant[];
   printEffectSelections: Selection[];
   pricingTiers: PricingTier[];
 };
@@ -43,20 +48,38 @@ type ProductListing = {
 const productListing: ProductListing = {
   id: "1",
   name: "Cloud-Handle Ceramic Mug",
-  mockup: {
-    url: "/demo/cloud-handle-mug-blue.png",
-  },
   rating: 5.0,
   reviewsCount: 96,
   earliestShippingDate: "May 1, 2023",
-  colorSelections: [
-    "#FFFFFF",
-    "#F7F1B9",
-    "#C8E0FC",
-    "#EFD0FA",
-    "#CFFAC0",
-    "#FFD9C4",
-    "#F4AEA6",
+  variants: [
+    {
+      color: "#FFFFFF",
+      mockup_url: "/demo/mugs/blue.png",
+    },
+    {
+      color: "#C8E0FC",
+      mockup_url: "/demo/mugs/blue.png",
+    },
+    {
+      color: "#EFD0FA",
+      mockup_url: "/demo/mugs/purple.png",
+    },
+    {
+      color: "#F4AEA6",
+      mockup_url: "/demo/mugs/purple.png",
+    },
+    {
+      color: "#FFD9C4",
+      mockup_url: "/demo/mugs/green.png",
+    },
+    {
+      color: "#CFFAC0",
+      mockup_url: "/demo/mugs/green.png",
+    },
+    {
+      color: "#F7F1B9",
+      mockup_url: "/demo/mugs/yellow.png",
+    },
   ],
   printEffectSelections: [
     {
@@ -127,28 +150,48 @@ function PricingCalculator({
 
 function ProductMockupImageView({ url }: { url: string }): JSX.Element {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: 400,
-        borderRadius: 3,
-        overflow: "hidden",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        p: 4,
-      }}
-    >
-      <img src={url} alt="Product mockup" width="100%" />
-    </Box>
+    <Paper elevation={1} sx={{ backgroundColor: "#F8F6F3" }}>
+      <Box sx={{ float: "left", p: 2 }}>
+        <Typography variant="h5" mb={1}>
+          Drag to view in 3D
+        </Typography>
+        <Box>
+          <IconButton>
+            <ZoomIn />
+          </IconButton>
+        </Box>
+        <Box>
+          <IconButton>
+            <ZoomOut />
+          </IconButton>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          height: 400,
+          borderRadius: 3,
+          overflow: "hidden",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          p: 12,
+          pt: 0,
+          pl: 16,
+        }}
+      >
+        <img src={url} alt="Product mockup" width="100%" />
+      </Box>
+    </Paper>
   );
 }
 
 function ProductDetailsView({
   productListing,
+  handleSelectColor,
 }: {
   productListing: ProductListing;
+  handleSelectColor: (color: string) => void;
 }): JSX.Element {
   return (
     <Container>
@@ -170,7 +213,10 @@ function ProductDetailsView({
         <Typography variant="h5" my={1}>
           Choose base color:
         </Typography>
-        <ColorSelector colors={productListing.colorSelections} />
+        <ColorSelector
+          colors={productListing.variants.map((v) => v.color)}
+          onSelect={handleSelectColor}
+        />
       </Box>
       <Box sx={{ mt: 2 }}>
         <Typography variant="h5" my={1}>
@@ -189,11 +235,43 @@ function ProductDetailsView({
 }
 
 function ProductMockupView({
-  productListing,
+  selectedVariant,
 }: {
-  productListing: ProductListing;
+  selectedVariant: ProductVariant;
 }): JSX.Element {
-  return <ProductMockupImageView url={productListing.mockup.url} />;
+  return (
+    <>
+      <ProductMockupImageView url={selectedVariant.mockup_url} />
+      <Typography variant="h5" mt={2} mb={2} sx={{ fontWeight: 700 }}>
+        + Specs & Details
+      </Typography>
+    </>
+  );
+}
+
+function ProductVariantView({
+  variant,
+}: {
+  variant: ProductVariant;
+}): JSX.Element {
+  return (
+    <Box
+      sx={{
+        width: 220,
+        height: 220,
+        borderRadius: 2,
+        overflow: "hidden",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#F8F6F3",
+        p: 4,
+        pl: 8,
+      }}
+    >
+      <img src={variant.mockup_url} alt={variant.color} width="100%" />
+    </Box>
+  );
 }
 
 function ProductVariantsListView({
@@ -201,35 +279,54 @@ function ProductVariantsListView({
 }: {
   productListing: ProductListing;
 }): JSX.Element {
+  const variants = productListing.variants;
+  const selectedVariants = [variants[0], variants[2], variants[4], variants[6]];
   return (
-    <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
-      <Typography variant="h2" mb={2}>
-        Product Variants
-      </Typography>
-      <Typography variant="h3" mb={2}>
-        {productListing.name}
-      </Typography>
-      <Typography variant="h4" mb={2}>
-        {productListing.id}
-      </Typography>
-    </Paper>
+    <Box height={540} width={236} sx={{ overflowY: "scroll" }}>
+      <Stack spacing={2}>
+        {selectedVariants.map((variant) => (
+          <ProductVariantView key={variant.color} variant={variant} />
+        ))}
+      </Stack>
+    </Box>
   );
 }
 
 export default function ProductListingPage(): JSX.Element {
   usePageEffect({ title: productListing.name });
 
+  const [selectedVariant, setSelectedVariant] = React.useState<ProductVariant>(
+    productListing.variants[0],
+  );
+  const colorToVariantMap = React.useMemo(
+    () =>
+      productListing.variants.reduce((acc, variant) => {
+        acc[variant.color] = variant;
+        return acc;
+      }, {} as Record<string, ProductVariant>),
+    [productListing.variants],
+  );
+  const handleSelectColor = React.useCallback(
+    (color: string) => {
+      setSelectedVariant(colorToVariantMap[color]);
+    },
+    [colorToVariantMap],
+  );
+
   return (
-    <Container maxWidth="xl" sx={{ pt: 6 }}>
+    <Container maxWidth="xl" sx={{ pt: 10 }}>
       <Grid container spacing={2}>
         <Grid item xs={2}>
           <ProductVariantsListView productListing={productListing} />
         </Grid>
         <Grid item xs={4}>
-          <ProductMockupView productListing={productListing} />
+          <ProductMockupView selectedVariant={selectedVariant} />
         </Grid>
         <Grid item xs={4}>
-          <ProductDetailsView productListing={productListing} />
+          <ProductDetailsView
+            productListing={productListing}
+            handleSelectColor={handleSelectColor}
+          />
         </Grid>
       </Grid>
     </Container>

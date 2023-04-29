@@ -12,7 +12,7 @@ export function DemoLayout(): JSX.Element {
   return (
     <React.Fragment>
       <DemoToolbar />
-      <div style={{ height: 100 }} />
+      <div style={{ height: 88 }} />
 
       <React.Suspense>
         <Outlet />

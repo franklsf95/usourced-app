@@ -1,7 +1,6 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { FolderOutlined, ShoppingCartOutlined } from "@mui/icons-material";
 import {
   AppBar,
   AppBarProps,
@@ -59,7 +58,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
       elevation={0}
       {...other}
     >
-      <Toolbar sx={{ mx: 8, height: 100, mt: 1 }}>
+      <Toolbar sx={{ mx: 8, height: 88, mt: 1 }}>
         <Link color="inherit" underline="none" href="/" component={RouterLink}>
           <Box component="img" src="/usourced-logo.png" height={56} />
         </Link>
@@ -97,7 +96,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           sx={buttonSx}
         />
         {/* Navigation links for signed-in users */}
-        {me && (
+        {/* {me && (
           <Button
             component={RouterLink}
             variant="text"
@@ -105,7 +104,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             color="inherit"
             children="Cart"
             startIcon={<ShoppingCartOutlined />}
-            sx={{ mr: 2, width: 180 }}
+            sx={{ mr: 2 }}
           />
         )}
         {me && (
@@ -116,9 +115,9 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             color="inherit"
             children="Projects"
             startIcon={<FolderOutlined />}
-            sx={{ mr: 2, width: 180 }}
+            sx={{ mr: 2 }}
           />
-        )}
+        )} */}
         {/* Account related controls (icon buttons) */}
         {me && (
           <IconButton
