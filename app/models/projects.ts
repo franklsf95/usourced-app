@@ -1,4 +1,11 @@
-export type ProjectStatus = string;
+export enum ProjectStatus {
+  SentQuotes = "Sent Quotes",
+  InSampleProduction = "Sampling",
+  AdjustingSamples = "Adjusting Samples",
+  SampleShipped = "Samples Shipped",
+  InBulkProduction = "In Bulk Production",
+  ProductionShipped = "Production Shipped",
+}
 
 export type Project = {
   id: string;

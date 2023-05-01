@@ -76,7 +76,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           href="/product/1"
           variant="text"
           color="inherit"
-          children="Product Catalog Demo"
+          children="Catalog Demo"
           sx={buttonSx}
         />
         <Button
@@ -89,7 +89,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         />
         <Button
           component={RouterLink}
-          href="/projects"
+          href="/projects-dashboard"
           variant="text"
           color="inherit"
           children="Client Dashboard Demo"

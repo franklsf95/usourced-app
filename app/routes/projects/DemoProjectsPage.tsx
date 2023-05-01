@@ -1,3 +1,6 @@
+/* SPDX-FileCopyrightText: 2014-present Kriasoft */
+/* SPDX-License-Identifier: MIT */
+
 import {
   Box,
   Card,
@@ -11,42 +14,15 @@ import {
   Typography,
 } from "@mui/material";
 import pluralize from "pluralize";
-import { Project } from "../../../models/projects.js";
+import { usePageEffect } from "../../core/page.js";
+import {
+  DemoProject,
+  demo_project_groups,
+} from "../../models/demo_projects.js";
+import { ProjectStatus } from "../../models/projects.js";
 
-type ProjectStatus = string;
-
-type ProjectGroup = {
-  projectStatus: ProjectStatus;
-  projects: Project[];
-};
-
-function getOrdinalFromProjectStatus(projectStatus: ProjectStatus): number {
-  return Number(projectStatus.split(". ", 2)[0]);
-}
-
-function getSortedProjectGroups(projects: Project[]): ProjectGroup[] {
-  const groups: { [key: ProjectStatus]: Project[] } = {};
-  const statuses: ProjectStatus[] = [];
-  projects.forEach((item) => {
-    const key = item.status;
-    const col = groups[key];
-    if (!col) {
-      groups[key] = [item];
-      statuses.push(key);
-    } else {
-      col.push(item);
-    }
-  });
-  statuses.sort((a: ProjectStatus, b: ProjectStatus) => {
-    return getOrdinalFromProjectStatus(a) - getOrdinalFromProjectStatus(b);
-  });
-  return statuses.map((status: ProjectStatus) => ({
-    projectStatus: status,
-    projects: groups[status],
-  }));
-}
-
-function ProjectCardView({ project }: { project: Project }): JSX.Element {
+function ProjectCardView({ project }: { project: DemoProject }): JSX.Element {
+  const projectImage = "/home/1.png";
   return (
     <Card
       sx={{
@@ -58,7 +34,7 @@ function ProjectCardView({ project }: { project: Project }): JSX.Element {
       <CardActionArea>
         <CardMedia
           component="img"
-          image={project.projectImage}
+          image={projectImage}
           alt={project.projectName}
         />
         <CardContent sx={{ flexGrow: 1 }}>
@@ -83,7 +59,7 @@ function ProjectsKanbanColumnView({
   projects,
 }: {
   projectStatus: ProjectStatus;
-  projects: Project[];
+  projects: DemoProject[];
 }): JSX.Element {
   return (
     <Stack sx={{ mx: 1 }} direction="column">
@@ -111,7 +87,7 @@ function ProjectsKanbanColumnView({
             },
           }}
         />
-        {projects.map((project: Project) => (
+        {projects.map((project) => (
           <Box key={project.id}>
             <ProjectCardView project={project} />
           </Box>
@@ -124,27 +100,52 @@ function ProjectsKanbanColumnView({
   );
 }
 
-export type ProjectsKanbanViewProps = {
-  projects: Project[];
-};
-
-export function ProjectsKanbanView({
-  projects,
-}: ProjectsKanbanViewProps): JSX.Element {
-  const projectGroups = getSortedProjectGroups(projects);
+export function ProjectsKanbanView(): JSX.Element {
   return (
     <Container>
       <Box sx={{ height: "75vh", overflow: "scroll" }}>
         <Box sx={{ width: 2400, display: "flex" }}>
-          {projectGroups.map(({ projectStatus, projects }: ProjectGroup, i) => (
+          {demo_project_groups.map(({ projectStatus, projects }) => (
             <ProjectsKanbanColumnView
-              key={i}
+              key={projectStatus}
               projectStatus={projectStatus}
               projects={projects}
             />
           ))}
         </Box>
       </Box>
+    </Container>
+  );
+}
+
+function ProjectStatusCategoriesBar(): JSX.Element {
+  return (
+    <Box sx={{ width: 2400, height: 200, border: "1px solid #ccc" }}></Box>
+  );
+}
+
+function ProjectsChatView(): JSX.Element {
+  return (
+    <Box sx={{ width: 400, height: "75vh", border: "1px solid #ccc" }}></Box>
+  );
+}
+
+function MyProjectsView(): JSX.Element {
+  return (
+    <>
+      <ProjectStatusCategoriesBar />
+      <ProjectsKanbanView />
+      <ProjectsChatView />
+    </>
+  );
+}
+
+export default function DemoProjectsPage(): JSX.Element {
+  usePageEffect({ title: "My Projects" });
+
+  return (
+    <Container component="main">
+      <MyProjectsView />
     </Container>
   );
 }

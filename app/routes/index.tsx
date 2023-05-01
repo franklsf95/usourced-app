@@ -22,6 +22,7 @@ const CustomRequestPage = lazy(
 const ProductListingPage = lazy(
   () => import("./product-listing/ProductListingPage.js"),
 );
+const DemoProjectsPage = lazy(() => import("./projects/DemoProjectsPage.js"));
 
 /**
  * Application routes
@@ -64,6 +65,7 @@ export const router = createBrowserRouter([
       { path: "ai-designer", element: <AIDesignerPage /> },
       { path: "custom-request", element: <CustomRequestPage /> },
       { path: "product/:id", element: <ProductListingPage /> },
+      { path: "projects-dashboard", element: <DemoProjectsPage /> },
     ],
   },
 ]);
