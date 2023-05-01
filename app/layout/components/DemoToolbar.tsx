@@ -9,6 +9,7 @@ import {
   Button,
   IconButton,
   Link,
+  Stack,
   Toolbar,
 } from "@mui/material";
 import * as React from "react";
@@ -43,8 +44,6 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
   const buttonSx = {
     fontWeight: 300,
     textTransform: "uppercase",
-    px: 4,
-    mr: 4,
   };
 
   return (
@@ -62,39 +61,45 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         <Link color="inherit" underline="none" href="/" component={RouterLink}>
           <Box component="img" src="/usourced-logo.png" height={56} />
         </Link>
-        <span style={{ flexGrow: 1 }} />
-        <Button
-          component={RouterLink}
-          href="/custom-request"
-          variant="text"
-          color="inherit"
-          children="Custom Request"
-          sx={buttonSx}
-        />
-        <Button
-          component={RouterLink}
-          href="/product/1"
-          variant="text"
-          color="inherit"
-          children="Catalog Demo"
-          sx={buttonSx}
-        />
-        <Button
-          component={RouterLink}
-          href="/ai-designer"
-          variant="text"
-          color="inherit"
-          children="USourced AI Demo"
-          sx={buttonSx}
-        />
-        <Button
-          component={RouterLink}
-          href="/projects-dashboard"
-          variant="text"
-          color="inherit"
-          children="Client Dashboard Demo"
-          sx={buttonSx}
-        />
+        <div style={{ flexGrow: 1 }} />
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ flexGrow: 1, justifyContent: "space-evenly" }}
+        >
+          <Button
+            component={RouterLink}
+            href="/custom-request"
+            variant="text"
+            color="inherit"
+            children="Custom Request"
+            sx={buttonSx}
+          />
+          <Button
+            component={RouterLink}
+            href="/product/1"
+            variant="text"
+            color="inherit"
+            children="Catalog Demo"
+            sx={buttonSx}
+          />
+          <Button
+            component={RouterLink}
+            href="/ai-designer"
+            variant="text"
+            color="inherit"
+            children="USourced AI Demo"
+            sx={buttonSx}
+          />
+          <Button
+            component={RouterLink}
+            href="/projects-dashboard"
+            variant="text"
+            color="inherit"
+            children="Client Dashboard Demo"
+            sx={buttonSx}
+          />
+        </Stack>
         {/* Navigation links for signed-in users */}
         {/* {me && (
           <Button
@@ -142,9 +147,9 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         {me === null && (
           <Button
             component={RouterLink}
-            variant="outlined"
+            variant="contained"
             href="/login"
-            color="inherit"
+            color="primary"
             children="SIGN IN"
             sx={{ ml: 2 }}
           />
