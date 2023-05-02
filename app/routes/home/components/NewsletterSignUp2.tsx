@@ -30,6 +30,9 @@ const MyTextField = styled((props: TextFieldProps) => (
     borderRadius: 40,
     backgroundColor: "rgba(255,255,255,0.2)",
     transition: theme.transitions.create(["background-color"]),
+    "&:hover": {
+      backgroundColor: "rgba(255,255,255,0.5)",
+    },
     "&.Mui-focused": {
       backgroundColor: "rgba(255,255,255,0.8)",
     },
