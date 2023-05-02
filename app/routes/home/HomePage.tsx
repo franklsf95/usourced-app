@@ -64,19 +64,19 @@ const COMPANY_VALUES = [
     title: "Customer First",
     description:
       "Our customers are at the center of everything we do. You want it? We can source it &ndash; our small but mighty team is ready to help you. Plus, our generative AI capabilities mean you can get the answers you need ASAP.",
-    imageUrl: "/home/value-icons/crown.png",
+    imageUrl: "/home/value-icons/customer.svg",
   },
   {
     title: "Vetted Quality",
     description:
       "Enjoy our curated catalog of tried and tested products. We source globally from a large network of suppliers and manufacturers to ensure you get the best quality and the best price.",
-    imageUrl: "/home/value-icons/starfish.png",
+    imageUrl: "/home/value-icons/quality.svg",
   },
   {
     title: "Seamless Experience",
     description:
       "Design your product, approve a mockup, and place your order within minutes using our self-serve platform. Then, keep easily track of your projects and order status with our integrated user dashboard.",
-    imageUrl: "/home/value-icons/flower.png",
+    imageUrl: "/home/value-icons/steps.svg",
   },
 ];
 
