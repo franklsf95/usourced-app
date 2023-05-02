@@ -1,15 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { decode } from "he";
 import { Link } from "react-router-dom";
 import { RouterLink } from "../../common/RouterLink.js";
@@ -76,7 +68,7 @@ const COMPANY_VALUES = [
   {
     title: "Seamless Experience",
     description:
-      "Design your product, approve a mockup, and place your order within minutes using our self-serve platform. Then, keep easily track of your projects and order status with our integrated user dashboard.",
+      "Design your product, approve a mockup, and place your order within minutes using our self-serve platform. Then, easily keep track of your projects and order status with our integrated user dashboard.",
     imageUrl: "/home/value-icons/steps.svg",
   },
 ];
@@ -153,7 +145,7 @@ function CatalogSection(): JSX.Element {
       component="section"
       sx={{
         pt: 8,
-        pb: 16,
+        pb: 12,
         backgroundImage:
           "url(/home/background/orange-1.svg), url(/home/background/orange-2.svg)",
         backgroundRepeat: "no-repeat",
@@ -169,21 +161,21 @@ function CatalogSection(): JSX.Element {
           Discover unique products across multiple categories, from tech gadgets
           to packaging supplies, and get instant quotes
         </Typography>
-        <Grid container spacing={2} sx={{ mt: 0 }}>
+        <Grid container spacing={2} sx={{ mt: 4 }}>
           {DEMO_PRODUCT_CATEGORIES.map((category) => (
             <Grid item xs={6} sm={4} md={3} key={category.id}>
-              <Card>
-                <CardContent>
-                  <Link to="/product/1">
-                    <Box
-                      component="img"
-                      src={category.imageUrl}
-                      sx={{ height: 160, maxWidth: 160, objectFit: "cover" }}
-                    />
-                  </Link>
-                  <Typography variant="h5">{category.name}</Typography>
-                </CardContent>
-              </Card>
+              <Box>
+                <Link to="/product/1">
+                  <Box
+                    component="img"
+                    src={category.imageUrl}
+                    sx={{ height: 160, maxWidth: 160, objectFit: "contain" }}
+                  />
+                </Link>
+                <Typography variant="h2" fontSize={16}>
+                  {category.name}
+                </Typography>
+              </Box>
             </Grid>
           ))}
         </Grid>
@@ -371,10 +363,9 @@ function AboutSection(): JSX.Element {
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" paragraph>
               We launched USourced in 2022, offering white-glove services to
-              brands and creators looking to launch their brand via fully custom
-              products. From design to sampling, packaging to global fulfillment
-              &ndash; our small but mighty team is with you every step of the
-              way.
+              clients looking to launch their brand via fully custom products.
+              From design to sampling, packaging to global fulfillment &ndash;
+              our small but mighty team is with you every step of the way.
             </Typography>
             <Typography variant="body1" paragraph>
               <b>If you can dream it, we can make it</b>. With USourced, you can
