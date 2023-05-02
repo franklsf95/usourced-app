@@ -348,9 +348,9 @@ function AboutSection(): JSX.Element {
         <Grid container spacing={2} sx={{ textAlign: "left" }}>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" paragraph>
-              Hey there! We&rsquo;re USourced, a product sourcing agency and
-              platform that&rsquo;s ready to transform the world of custom
-              product sourcing.
+              Hey there! We&rsquo;re USourced, a product sourcing platform
+              that&rsquo;s ready to transform the world of custom product
+              sourcing.
             </Typography>
             <Typography variant="body1" paragraph>
               <b>Our mission</b> is to streamline access to unique, high-quality
@@ -360,12 +360,11 @@ function AboutSection(): JSX.Element {
               into reality.
             </Typography>
             <Typography variant="body1" paragraph>
-              It all started when our founder and CEO Julia Xu (formerly Chief
-              of Staff at Alibaba) realized how difficult it was for small
-              brands to source custom products. By bridging the gap between
-              brand and manufacturer, she realized that she could open the door
-              to easy and unlimited customization that&rsquo;s actually
-              intuitive.
+              It all started when our founder Julia Xu realized how difficult it
+              was for small brands to source custom products. By bridging the
+              gap between brand and manufacturer, she realized that she could
+              open the door to easy and unlimited customization that&rsquo;s
+              actually intuitive.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -375,11 +374,6 @@ function AboutSection(): JSX.Element {
               products. From design to sampling, packaging to global fulfillment
               &ndash; our small but mighty team is with you every step of the
               way.
-            </Typography>
-            <Typography variant="body1" paragraph>
-              Don&rsquo;t just take our word for it, though &ndash; our clients
-              include popular creators like Rebecca Zamolo and Philip DeFranco,
-              as well as top brands like Disney and Camp.
             </Typography>
             <Typography variant="body1" paragraph>
               <b>If you can dream it, we can make it</b>. With USourced, you can
