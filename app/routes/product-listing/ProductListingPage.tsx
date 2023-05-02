@@ -18,6 +18,7 @@ import { ButtonGroupSelector } from "../../common/ButtonGroupSelector.js";
 import { ColorSelector } from "../../common/ColorSelector.js";
 import InputSlider from "../../common/InputSlider.js";
 import { usePageEffect } from "../../core/page.js";
+import { useSnackBar } from "../../layout/components/SnackBarContext.js";
 
 type Selection = {
   label: string;
@@ -53,32 +54,28 @@ const productListing: ProductListing = {
   earliestShippingDate: "May 1, 2023",
   variants: [
     {
-      color: "#FFFFFF",
-      mockup_url: "/demo/mugs/blue.png",
+      color: "#9CAFC4",
+      mockup_url: "/demo/mugs/blue.JPG",
     },
     {
-      color: "#C8E0FC",
-      mockup_url: "/demo/mugs/blue.png",
+      color: "#EEE2C8",
+      mockup_url: "/demo/mugs/cream.JPG",
     },
     {
-      color: "#EFD0FA",
-      mockup_url: "/demo/mugs/purple.png",
+      color: "#DCD1A2",
+      mockup_url: "/demo/mugs/green.JPG",
     },
     {
-      color: "#F4AEA6",
-      mockup_url: "/demo/mugs/purple.png",
+      color: "#E8C6C6",
+      mockup_url: "/demo/mugs/pink.JPG",
     },
     {
-      color: "#FFD9C4",
-      mockup_url: "/demo/mugs/green.png",
+      color: "#D3CBD6",
+      mockup_url: "/demo/mugs/purple.JPG",
     },
     {
-      color: "#CFFAC0",
-      mockup_url: "/demo/mugs/green.png",
-    },
-    {
-      color: "#F7F1B9",
-      mockup_url: "/demo/mugs/yellow.png",
+      color: "#EBD59A",
+      mockup_url: "/demo/mugs/yellow.JPG",
     },
   ],
   printEffectSelections: [
@@ -150,38 +147,29 @@ function PricingCalculator({
 
 function ProductMockupImageView({ url }: { url: string }): JSX.Element {
   return (
-    <Paper elevation={1} sx={{ backgroundColor: "#F8F6F3" }}>
-      <Box sx={{ float: "left", p: 2 }}>
-        <Typography variant="h5" mb={1}>
+    <Paper elevation={1}>
+      <Box sx={{ position: "relative" }}>
+        <Typography
+          variant="h5"
+          mb={1}
+          sx={{ position: "absolute", top: 16, left: 16 }}
+        >
           Drag to view in 3D
         </Typography>
-        <Box>
-          <IconButton>
-            <ZoomIn />
-          </IconButton>
-        </Box>
-        <Box>
-          <IconButton>
-            <ZoomOut />
-          </IconButton>
-        </Box>
+        <IconButton sx={{ position: "absolute", top: 40, left: 10 }}>
+          <ZoomIn />
+        </IconButton>
+        <IconButton sx={{ position: "absolute", top: 70, left: 10 }}>
+          <ZoomOut />
+        </IconButton>
       </Box>
       <Box
-        sx={{
-          width: "100%",
-          height: 400,
-          borderRadius: 3,
-          overflow: "hidden",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          p: 12,
-          pt: 0,
-          pl: 16,
-        }}
-      >
-        <img src={url} alt="Product mockup" width="100%" />
-      </Box>
+        component="img"
+        src={url}
+        width={400}
+        height={400}
+        sx={{ ml: 8, mt: 4, mb: 4 }}
+      />
     </Paper>
   );
 }
@@ -193,6 +181,7 @@ function ProductDetailsView({
   productListing: ProductListing;
   handleSelectColor: (color: string) => void;
 }): JSX.Element {
+  const { showDemoAlert } = useSnackBar();
   return (
     <Container>
       <Typography variant="h2">{productListing.name}</Typography>
@@ -227,7 +216,11 @@ function ProductDetailsView({
       <Box sx={{ mt: 4, mb: 4 }}>
         <PricingCalculator pricingTiers={productListing.pricingTiers} />
       </Box>
-      <Button variant="contained" color="primary">
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => showDemoAlert()}
+      >
         Customize Now
       </Button>
     </Container>
@@ -264,9 +257,8 @@ function ProductVariantView({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#F8F6F3",
-        p: 4,
-        pl: 8,
+        backgroundColor: "white",
+        p: "0px 10px 10px 24px",
       }}
     >
       <img src={variant.mockup_url} alt={variant.color} width="100%" />
@@ -279,12 +271,10 @@ function ProductVariantsListView({
 }: {
   productListing: ProductListing;
 }): JSX.Element {
-  const variants = productListing.variants;
-  const selectedVariants = [variants[0], variants[2], variants[4], variants[6]];
   return (
     <Box height={540} width={236} sx={{ overflowY: "scroll" }}>
       <Stack spacing={2}>
-        {selectedVariants.map((variant) => (
+        {productListing.variants.map((variant) => (
           <ProductVariantView key={variant.color} variant={variant} />
         ))}
       </Stack>
@@ -304,7 +294,7 @@ export default function ProductListingPage(): JSX.Element {
         acc[variant.color] = variant;
         return acc;
       }, {} as Record<string, ProductVariant>),
-    [productListing.variants],
+    [],
   );
   const handleSelectColor = React.useCallback(
     (color: string) => {
@@ -314,7 +304,7 @@ export default function ProductListingPage(): JSX.Element {
   );
 
   return (
-    <Container maxWidth="xl" sx={{ pt: 10 }}>
+    <Container maxWidth="xl" sx={{ pt: 10, pb: 10 }}>
       <Grid container spacing={2}>
         <Grid item xs={2}>
           <ProductVariantsListView productListing={productListing} />
