@@ -13,6 +13,7 @@ import {
 import { decode } from "he";
 import { Link } from "react-router-dom";
 import { RouterLink } from "../../common/RouterLink.js";
+import { usePageEffect } from "../../core/page.js";
 import { NewsletterSignUp } from "./components/NewsletterSignUp.js";
 import { TeamSection } from "./components/TeamSection.js";
 
@@ -388,6 +389,10 @@ function AboutSection(): JSX.Element {
 }
 
 export default function HomePage(): JSX.Element {
+  usePageEffect({
+    title:
+      "USourced - Generative AI-powered Global Product Sourcing Platform and Marketplace",
+  });
   return (
     <Box component="main">
       <TopSection />
