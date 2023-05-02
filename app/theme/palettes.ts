@@ -18,6 +18,10 @@ export const light: PaletteOptions = {
     default: "rgb(240,242,245)",
   },
 
+  grass: {
+    main: "#C4EA98",
+  },
+
   example: {
     primary: "#183439",
     secondary: "#F5CCB6",
@@ -33,6 +37,10 @@ export const dark: PaletteOptions = {
 
   secondary: {
     main: "#F5CCB6",
+  },
+
+  grass: {
+    main: "#C4EA98",
   },
 
   background: {
@@ -57,12 +65,18 @@ declare module "@mui/material/styles" {
       primary: string;
       secondary: string;
     };
+    grass: {
+      main: string;
+    };
   }
 
   interface PaletteOptions {
     example: {
       primary: string;
       secondary: string;
+    };
+    grass: {
+      main: string;
     };
   }
 }

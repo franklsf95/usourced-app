@@ -1,23 +1,46 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Close, Notifications } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   Alert,
   AlertColor,
-  FilledInput,
-  FormControl,
+  Button,
   IconButton,
-  InputAdornment,
-  InputLabel,
+  OutlinedInputProps,
   Snackbar,
+  TextField,
+  TextFieldProps,
+  styled,
 } from "@mui/material";
 import * as React from "react";
 import { useCurrentUser } from "../../../core/auth.js";
 import { addNewsletterSubscriber } from "../../../models/newsletter_subscribers.js";
 
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    grass: true;
+  }
+}
+
+const MyTextField = styled((props: TextFieldProps) => (
+  <TextField
+    InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiFilledInput-root": {
+    overflow: "hidden",
+    borderRadius: 40,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    transition: theme.transitions.create(["background-color"]),
+    "&.Mui-focused": {
+      backgroundColor: "rgba(255,255,255,0.8)",
+    },
+  },
+}));
+
 export function NewsletterSignUp2(): JSX.Element {
-  const emailInputId = "demo-signup-email-input";
   const me = useCurrentUser();
 
   const [email, setEmail] = React.useState(me?.email ?? "");
@@ -61,27 +84,23 @@ export function NewsletterSignUp2(): JSX.Element {
   };
   return (
     <>
-      <FormControl sx={{ width: "100%" }} variant="outlined">
-        <InputLabel size="small" htmlFor={emailInputId} sx={{ fontSize: 14 }}>
-          Enter your email
-        </InputLabel>
-        <FilledInput
-          id={emailInputId}
-          autoComplete="email"
-          type="email"
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton edge="end" onClick={handleSubmit}>
-                <Notifications />
-              </IconButton>
-            </InputAdornment>
-          }
-          value={email}
-          onChange={handleChange}
-          size="small"
-          sx={{ borderRadius: 8, fontSize: 14 }}
-        />
-      </FormControl>
+      <MyTextField
+        label="Enter your email"
+        variant="filled"
+        value={email}
+        onChange={handleChange}
+        type="email"
+        autoComplete="email"
+        sx={{ width: "40ch" }}
+      />
+      <Button
+        onClick={handleSubmit}
+        variant="contained"
+        color="grass"
+        sx={{ ml: 2, height: 56, color: "#222", borderRadius: 10 }}
+      >
+        Sign Up
+      </Button>
       <Snackbar
         open={snackBarOpen}
         autoHideDuration={5000}

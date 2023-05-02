@@ -14,6 +14,7 @@ import {
 import { decode } from "he";
 import { Link } from "react-router-dom";
 import { NewsletterSignUp } from "./components/NewsletterSignUp.js";
+import { NewsletterSignUp2 } from "./components/NewsletterSignUp2.js";
 import { TeamSection } from "./components/TeamSection.js";
 
 const DEMO_PRODUCT_CATEGORIES = [
@@ -338,8 +339,8 @@ function AboutSection(): JSX.Element {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" paragraph>
-              We launched USourced in 2022, offering white-glove services brands
-              and creators looking to launch their brand via fully custom
+              We launched USourced in 2022, offering white-glove services to
+              brands and creators looking to launch their brand via fully custom
               products. From design to sampling, packaging to global fulfillment
               &ndash; our small but mighty team is with you every step of the
               way.
@@ -372,12 +373,12 @@ function FooterSection(): JSX.Element {
         pt: 16,
       }}
     >
-      <Container maxWidth="lg" sx={{ color: "white", pb: 8 }}>
-        <Box>
+      <Container maxWidth="lg" sx={{ color: "white", pb: 10 }}>
+        <Box mb={8}>
           <Typography variant="h1" fontSize={64} mb={4}>
-            Sign up for our newsletter
+            Sign Up for Our Newsletter
           </Typography>
-          {/* <NewsletterSignUp2 /> */}
+          <NewsletterSignUp2 />
         </Box>
         <hr style={{ opacity: 0.25 }} />
         <Grid container spacing={2} sx={{ mt: 4 }}>
