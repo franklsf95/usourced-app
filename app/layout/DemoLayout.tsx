@@ -5,6 +5,7 @@ import { Box, Container, Typography } from "@mui/material";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { DemoToolbar } from "./components/DemoToolbar.js";
+import { SnackBarProvider } from "./components/SnackBarContext.js";
 
 function DemoBanner(): JSX.Element {
   return (
@@ -30,12 +31,14 @@ function DemoBanner(): JSX.Element {
 export function DemoLayout(): JSX.Element {
   return (
     <React.Fragment>
-      <DemoToolbar />
-      <DemoBanner />
+      <SnackBarProvider>
+        <DemoToolbar />
+        <DemoBanner />
 
-      <React.Suspense>
-        <Outlet />
-      </React.Suspense>
+        <React.Suspense>
+          <Outlet />
+        </React.Suspense>
+      </SnackBarProvider>
     </React.Fragment>
   );
 }

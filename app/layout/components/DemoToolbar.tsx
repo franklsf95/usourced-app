@@ -15,6 +15,7 @@ import {
 import * as React from "react";
 import { RouterLink } from "../../common/RouterLink.js";
 import { useCurrentUser } from "../../core/auth.js";
+import { useSnackBar } from "./SnackBarContext.js";
 import { UserMenu } from "./UserMenu.js";
 
 declare module "@mui/material/AppBar" {
@@ -43,10 +44,11 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
 
   const buttonSx = {};
 
+  const { showDemoAlert } = useSnackBar();
+
   return (
     <AppBar
       sx={{
-        // borderBottom: "1px #183439 solid",
         zIndex: (theme) => theme.zIndex.drawer + 1,
         ...sx,
       }}
@@ -143,11 +145,10 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         )}
         {me === null && (
           <Button
-            component={RouterLink}
             variant="contained"
-            href="/login"
             color="primary"
             children="SIGN IN"
+            onClick={() => showDemoAlert()}
             sx={{ ml: 2, borderRadius: 8 }}
           />
         )}
