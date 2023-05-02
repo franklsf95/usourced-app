@@ -7,13 +7,13 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  Chip,
-  Container,
-  Paper,
   Stack,
   Typography,
 } from "@mui/material";
+import { getDownloadURL, ref } from "firebase/storage";
 import pluralize from "pluralize";
+import * as React from "react";
+import { storage } from "../../core/firebase.js";
 import { usePageEffect } from "../../core/page.js";
 import {
   DemoProject,
@@ -21,8 +21,32 @@ import {
 } from "../../models/demo_projects.js";
 import { ProjectStatus } from "../../models/projects.js";
 
+const DEFAULT_PROJECT_IMAGE_URL = "/home/box-silhouette.png";
+
+async function fetchProjectImageUrl(
+  project: DemoProject,
+): Promise<string | null> {
+  const path = `/usourced/demo/projects/${project.projectName}.png`;
+  try {
+    return await getDownloadURL(ref(storage, path));
+  } catch (e) {
+    return null;
+  }
+}
+
 function ProjectCardView({ project }: { project: DemoProject }): JSX.Element {
-  const projectImage = "/home/1.png";
+  const [imageUrl, setImageUrl] = React.useState<string>(
+    DEFAULT_PROJECT_IMAGE_URL,
+  );
+  React.useEffect(() => {
+    async function effect() {
+      const url = await fetchProjectImageUrl(project);
+      if (url) {
+        setImageUrl(url);
+      }
+    }
+    effect();
+  }, [project]);
   return (
     <Card
       sx={{
@@ -32,22 +56,17 @@ function ProjectCardView({ project }: { project: DemoProject }): JSX.Element {
       }}
     >
       <CardActionArea>
-        <CardMedia
-          component="img"
-          image={projectImage}
-          alt={project.projectName}
-        />
+        <CardMedia component="img" image={imageUrl} alt={project.projectName} />
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h3">
+          <Typography gutterBottom variant="h3" fontSize={16} fontWeight={600}>
             {project.projectName}
           </Typography>
-          <Typography variant="body1" fontSize={12}>
+          <Typography variant="body1" fontSize={14}>
             Inquired on {project.inquiryDate.toLocaleDateString()}
           </Typography>
-          {/* <Typography variant="body1" fontSize={12}>
-            Estimated Delivery on{" "}
-            {project.estimatedDeliveryDate.toLocaleDateString()}
-          </Typography> */}
+          <Typography variant="body1" fontSize={14}>
+            Quantity: {project.quantity}
+          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>
@@ -63,64 +82,36 @@ function ProjectsKanbanColumnView({
 }): JSX.Element {
   return (
     <Stack sx={{ mx: 1 }} direction="column">
-      <Paper
-        elevation={1}
-        sx={{
-          width: 240,
-          backgroundColor: "#f0f0f0",
-          py: 1,
-        }}
-      >
-        <Chip
-          label={
-            <Typography variant="h6" sx={{ fontSize: 16, fontWeight: 600 }}>
-              {projectStatus}
-            </Typography>
-          }
-          sx={{
-            mx: 1,
-            mt: 1,
-            height: "auto",
-            "& .MuiChip-label": {
-              display: "block",
-              whiteSpace: "normal",
-            },
-          }}
-        />
-        {projects.map((project) => (
-          <Box key={project.id}>
-            <ProjectCardView project={project} />
-          </Box>
-        ))}
-        <Typography variant="body1" color="#666666" fontSize={11} mx={1} mt={2}>
-          Total {pluralize("project", projects.length, true)}
+      <Box sx={{ textAlign: "center" }}>
+        <Typography variant="h2" fontSize={20} mx={2} mt={1}>
+          {projectStatus}
         </Typography>
-      </Paper>
+        <Typography variant="body1" color="#666666" fontSize={12} mx={1} mb={1}>
+          {pluralize("project", projects.length, true)}
+        </Typography>
+      </Box>
+      {projects.map((project) => (
+        <Box key={project.id}>
+          <ProjectCardView project={project} />
+        </Box>
+      ))}
     </Stack>
   );
 }
 
 export function ProjectsKanbanView(): JSX.Element {
   return (
-    <Container>
-      <Box sx={{ height: "75vh", overflow: "scroll" }}>
-        <Box sx={{ width: 2400, display: "flex" }}>
-          {demo_project_groups.map(({ projectStatus, projects }) => (
-            <ProjectsKanbanColumnView
-              key={projectStatus}
-              projectStatus={projectStatus}
-              projects={projects}
-            />
-          ))}
-        </Box>
+    <Box>
+      <Box sx={{ width: 2400, display: "flex" }}>
+        {demo_project_groups.map(({ projectStatus, projects }) => (
+          <ProjectsKanbanColumnView
+            key={projectStatus}
+            projectStatus={projectStatus}
+            projects={projects}
+          />
+        ))}
       </Box>
-    </Container>
-  );
-}
-
-function ProjectStatusCategoriesBar(): JSX.Element {
-  return (
-    <Box sx={{ width: 2400, height: 200, border: "1px solid #ccc" }}></Box>
+    </Box>
   );
 }
 
@@ -130,22 +121,13 @@ function ProjectsChatView(): JSX.Element {
   );
 }
 
-function MyProjectsView(): JSX.Element {
-  return (
-    <>
-      <ProjectStatusCategoriesBar />
-      <ProjectsKanbanView />
-      <ProjectsChatView />
-    </>
-  );
-}
-
 export default function DemoProjectsPage(): JSX.Element {
   usePageEffect({ title: "My Projects" });
 
   return (
-    <Container component="main">
-      <MyProjectsView />
-    </Container>
+    <Box component="main" sx={{ px: 8, py: 2 }}>
+      <ProjectsKanbanView />
+      {/* <ProjectsChatView /> */}
+    </Box>
   );
 }

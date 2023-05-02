@@ -17,21 +17,21 @@ export const demo_projects: { [key in ProjectStatus]: DemoProject[] } = {
   [ProjectStatus.SentQuotes]: [
     {
       id: "1",
-      projectName: "Rainbow Pom Headband",
+      projectName: "Beige Baseball Cap",
       inquiryDate: new Date("2023-01-03"),
       quantity: 500,
       projectStatus: ProjectStatus.SentQuotes,
     },
     {
       id: "2",
-      projectName: "Heart-Shape Coil Bracelet",
+      projectName: "Blue Textured Notebook",
       inquiryDate: new Date("2023-01-03"),
       quantity: 500,
       projectStatus: ProjectStatus.SentQuotes,
     },
     {
       id: "3",
-      projectName: "Junkfood Mini Backpack",
+      projectName: "Yellow Backpack",
       inquiryDate: new Date("2023-01-03"),
       quantity: 1000,
       projectStatus: ProjectStatus.SentQuotes,
@@ -40,21 +40,21 @@ export const demo_projects: { [key in ProjectStatus]: DemoProject[] } = {
   [ProjectStatus.InSampleProduction]: [
     {
       id: "4",
-      projectName: "Furry Diary with Lock",
+      projectName: "Colorful Packaging Box",
       inquiryDate: new Date("2022-10-12"),
       quantity: 1000,
       projectStatus: ProjectStatus.InSampleProduction,
     },
     {
       id: "5",
-      projectName: "Stay Cool Tank Top",
+      projectName: "Fluffy White Cat Plushie",
       inquiryDate: new Date("2022-10-20"),
       quantity: 500,
       projectStatus: ProjectStatus.InSampleProduction,
     },
     {
       id: "6",
-      projectName: "Furry Eyemask",
+      projectName: "Green Desk Fan",
       inquiryDate: new Date("2022-10-29"),
       quantity: 1000,
       projectStatus: ProjectStatus.InSampleProduction,
@@ -63,7 +63,7 @@ export const demo_projects: { [key in ProjectStatus]: DemoProject[] } = {
   [ProjectStatus.AdjustingSamples]: [
     {
       id: "7",
-      projectName: "Flower Earrings",
+      projectName: "Lavender Phone Stand",
       inquiryDate: new Date("2022-12-02"),
       quantity: 500,
       projectStatus: ProjectStatus.AdjustingSamples,
@@ -72,14 +72,14 @@ export const demo_projects: { [key in ProjectStatus]: DemoProject[] } = {
   [ProjectStatus.SampleShipped]: [
     {
       id: "8",
-      projectName: "Furry Fanny Pack",
+      projectName: "Orange Glass Water Bottle",
       inquiryDate: new Date("2022-11-02"),
       quantity: 500,
       projectStatus: ProjectStatus.SampleShipped,
     },
     {
       id: "9",
-      projectName: "Furry Ball Heart Keychain",
+      projectName: "Pink Cloud Mug",
       inquiryDate: new Date("2022-11-03"),
       quantity: 500,
       projectStatus: ProjectStatus.SampleShipped,
@@ -88,21 +88,21 @@ export const demo_projects: { [key in ProjectStatus]: DemoProject[] } = {
   [ProjectStatus.InBulkProduction]: [
     {
       id: "10",
-      projectName: "Heart Pattern Headband",
+      projectName: "Pink Fabric Pen Pouch",
       inquiryDate: new Date("2022-12-02"),
       quantity: 1000,
       projectStatus: ProjectStatus.InBulkProduction,
     },
     {
       id: "11",
-      projectName: "Vegan Leather Backpack",
+      projectName: "Rose Gold Pen",
       inquiryDate: new Date("2022-10-12"),
       quantity: 500,
       projectStatus: ProjectStatus.InBulkProduction,
     },
     {
       id: "12",
-      projectName: "Enamel Pin Set",
+      projectName: "Sapphire Blue Candle",
       inquiryDate: new Date("2023-01-02"),
       quantity: 500,
       projectStatus: ProjectStatus.InBulkProduction,
@@ -111,23 +111,16 @@ export const demo_projects: { [key in ProjectStatus]: DemoProject[] } = {
   [ProjectStatus.ProductionShipped]: [
     {
       id: "13",
-      projectName: "Walkie Talkie Set",
+      projectName: "Teal Blue USB Charger Keychain",
       inquiryDate: new Date("2022-11-22"),
       quantity: 500,
       projectStatus: ProjectStatus.ProductionShipped,
     },
     {
       id: "14",
-      projectName: "Colorful Silk Scrunchies",
+      projectName: "White V-Neck T-Shirt with Embroidered Flowers",
       inquiryDate: new Date("2022-11-22"),
       quantity: 500,
-      projectStatus: ProjectStatus.ProductionShipped,
-    },
-    {
-      id: "15",
-      projectName: "Rainbow Bling Keychain",
-      inquiryDate: new Date("2022-10-02"),
-      quantity: 1000,
       projectStatus: ProjectStatus.ProductionShipped,
     },
   ],
