@@ -151,7 +151,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             href="/login"
             color="primary"
             children="SIGN IN"
-            sx={{ ml: 2 }}
+            sx={{ ml: 2, borderRadius: 8 }}
           />
         )}
       </Toolbar>

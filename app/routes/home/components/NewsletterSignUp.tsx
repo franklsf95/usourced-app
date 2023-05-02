@@ -61,8 +61,10 @@ export function NewsletterSignUp(): JSX.Element {
   };
   return (
     <>
-      <FormControl sx={{ width: "25ch" }} variant="outlined">
-        <InputLabel htmlFor={emailInputId}>Email</InputLabel>
+      <FormControl sx={{ width: "100%" }} variant="outlined">
+        <InputLabel size="small" htmlFor={emailInputId} sx={{ fontSize: 14 }}>
+          Enter your email
+        </InputLabel>
         <OutlinedInput
           id={emailInputId}
           autoComplete="email"
@@ -74,9 +76,11 @@ export function NewsletterSignUp(): JSX.Element {
               </IconButton>
             </InputAdornment>
           }
-          label="Email"
+          label="Enter your email"
           value={email}
           onChange={handleChange}
+          size="small"
+          sx={{ borderRadius: 8, fontSize: 14 }}
         />
       </FormControl>
       <Snackbar
