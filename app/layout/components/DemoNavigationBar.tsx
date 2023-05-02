@@ -13,7 +13,7 @@ declare module "@mui/material/AppBar" {
 export function DemoNavigationBar(props: AppToolbarProps): JSX.Element {
   const { sx, ...other } = props;
   const buttonSx = {
-    fontWeight: 300,
+    fontWeight: 400,
     textTransform: "uppercase",
     width: 280,
     px: 4,

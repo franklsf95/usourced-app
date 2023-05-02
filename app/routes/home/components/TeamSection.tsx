@@ -1,17 +1,4 @@
-import { ExpandMore } from "@mui/icons-material";
-import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  Collapse,
-  Container,
-  Grid,
-  IconButton,
-  IconButtonProps,
-  Typography,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Container, Grid, Popover, Typography } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import * as React from "react";
 import { storage } from "../../../core/firebase.js";
@@ -90,35 +77,8 @@ async function fetchProfileImageUrl(
   }
 }
 
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMoreButton = styled((props: ExpandMoreProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-function TeamMemberCard({
-  member,
-  bioExpanded,
-  setBioExpanded,
-}: {
-  member: MemberProfile;
-  bioExpanded: boolean;
-  setBioExpanded: (value: boolean) => void;
-}) {
-  const handleExpandClick = () => {
-    setBioExpanded(!bioExpanded);
-  };
-
+function TeamMemberCard({ member }: { member: MemberProfile }) {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const [imageUrl, setImageUrl] = React.useState<string>(
     DEFAULT_PROFILE_IMAGE_URL,
   );
@@ -132,58 +92,90 @@ function TeamMemberCard({
     effect();
   }, [member]);
 
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
+  const profileEl = (
+    <Box
+      component="img"
+      src={imageUrl}
+      sx={{ height: 160, maxWidth: 160, borderRadius: 80 }}
+    />
+  );
+
+  const wrappedProfileEl = member.bio ? (
+    <>
+      <Box onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
+        {profileEl}
+      </Box>
+      <Popover
+        sx={{
+          pointerEvents: "none",
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "center",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        <Box width={400}>
+          <Typography variant="body1" paragraph sx={{ m: 2 }}>
+            {member.bio}
+          </Typography>
+        </Box>
+      </Popover>
+    </>
+  ) : (
+    profileEl
+  );
+
   return (
     <Grid item xs={12} sm={6} md={3} key={member.name}>
-      <Card>
-        <CardContent sx={{ pb: 0 }}>
-          <Box
-            component="img"
-            src={imageUrl}
-            sx={{ height: 160, maxWidth: 160, borderRadius: 80 }}
-          />
-          <Typography variant="h5">{member.name}</Typography>
-          <Typography variant="body2" color="#6D7F83">
-            {member.title}
-          </Typography>
-        </CardContent>
-        {member.bio && (
-          <>
-            <CardActions sx={{ p: 0 }}>
-              <ExpandMoreButton
-                expand={bioExpanded}
-                onClick={handleExpandClick}
-              >
-                <ExpandMore />
-              </ExpandMoreButton>
-            </CardActions>
-            <Collapse in={bioExpanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography paragraph>{member.bio}</Typography>
-              </CardContent>
-            </Collapse>
-          </>
-        )}
-      </Card>
+      <Box>
+        {wrappedProfileEl}
+        <Typography variant="h5">{member.name}</Typography>
+        <Typography variant="body2" color="#6D7F83">
+          {member.title}
+        </Typography>
+      </Box>
     </Grid>
   );
 }
 
 export function TeamSection(): JSX.Element {
-  const [bioExpanded, setBioExpanded] = React.useState<boolean>(false);
   return (
-    <Box component="section" sx={{ py: 8 }}>
+    <Box
+      component="section"
+      sx={{
+        py: 8,
+        backgroundImage:
+          "url(/home/background/green-1.svg),url(/home/background/green-2.svg)",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "bottom 200px left 0px, top 100px right 0px",
+        backgroundSize: "50vh",
+      }}
+    >
       <Container maxWidth="md" sx={{ textAlign: "center" }}>
         <Typography variant="h1" fontSize={48} mb={4}>
           Meet the Team
         </Typography>
         <Grid container spacing={2} sx={{ mt: 4 }}>
           {TEAM_MEMBERS.map((member) => (
-            <TeamMemberCard
-              member={member}
-              key={member.name}
-              bioExpanded={bioExpanded}
-              setBioExpanded={setBioExpanded}
-            />
+            <TeamMemberCard member={member} key={member.name} />
           ))}
         </Grid>
       </Container>

@@ -24,4 +24,6 @@ export const overrides: TypographyVariantsOptions = {
   h5: { fontSize: "1em", fontFamily: "Karla" },
   h6: { fontSize: "1em", fontFamily: "Karla" },
   button: { textTransform: "none" },
+  body1: { fontFamily: "Karla" },
+  body2: { fontFamily: "Karla" },
 };

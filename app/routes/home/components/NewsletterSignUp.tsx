@@ -1,7 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Close, Notifications } from "@mui/icons-material";
+import { CircleNotifications, Close } from "@mui/icons-material";
 import {
   Alert,
   AlertColor,
@@ -62,7 +62,7 @@ export function NewsletterSignUp(): JSX.Element {
   return (
     <>
       <FormControl sx={{ width: "100%" }} variant="outlined">
-        <InputLabel size="small" htmlFor={emailInputId} sx={{ fontSize: 14 }}>
+        <InputLabel htmlFor={emailInputId} sx={{ fontSize: 14 }}>
           Enter your email
         </InputLabel>
         <OutlinedInput
@@ -71,15 +71,14 @@ export function NewsletterSignUp(): JSX.Element {
           type="email"
           endAdornment={
             <InputAdornment position="end">
-              <IconButton edge="end" onClick={handleSubmit}>
-                <Notifications />
+              <IconButton color="primary" edge="end" onClick={handleSubmit}>
+                <CircleNotifications fontSize="large" />
               </IconButton>
             </InputAdornment>
           }
           label="Enter your email"
           value={email}
           onChange={handleChange}
-          size="small"
           sx={{ borderRadius: 8, fontSize: 14 }}
         />
       </FormControl>

@@ -41,15 +41,12 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
     setAnchorEl((x) => ({ ...x, userMenu: null }));
   }
 
-  const buttonSx = {
-    fontWeight: 300,
-    textTransform: "uppercase",
-  };
+  const buttonSx = {};
 
   return (
     <AppBar
       sx={{
-        borderBottom: "1px #183439 solid",
+        // borderBottom: "1px #183439 solid",
         zIndex: (theme) => theme.zIndex.drawer + 1,
         ...sx,
       }}

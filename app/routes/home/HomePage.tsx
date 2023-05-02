@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { decode } from "he";
 import { Link } from "react-router-dom";
+import { RouterLink } from "../../common/RouterLink.js";
 import { NewsletterSignUp } from "./components/NewsletterSignUp.js";
 import { NewsletterSignUp2 } from "./components/NewsletterSignUp2.js";
 import { TeamSection } from "./components/TeamSection.js";
@@ -21,42 +22,42 @@ const DEMO_PRODUCT_CATEGORIES = [
   {
     id: "1",
     name: "Apparel & Accessories",
-    imageUrl: "/home/1.png",
+    imageUrl: "/home/categories/1.png",
   },
   {
     id: "2",
     name: "Home Goods",
-    imageUrl: "/home/2.png",
+    imageUrl: "/home/categories/2.png",
   },
   {
     id: "3",
     name: "Office Supplies",
-    imageUrl: "/home/3.png",
+    imageUrl: "/home/categories/3.png",
   },
   {
     id: "4",
     name: "Packaging & Prints",
-    imageUrl: "/home/4.png",
+    imageUrl: "/home/categories/4.png",
   },
   {
     id: "5",
     name: "Tech & Gadgets",
-    imageUrl: "/home/5.png",
+    imageUrl: "/home/categories/5.png",
   },
   {
     id: "6",
     name: "Toys & Games",
-    imageUrl: "/home/6.png",
+    imageUrl: "/home/categories/6.png",
   },
   {
     id: "7",
     name: "New Arrivals",
-    imageUrl: "/home/7.png",
+    imageUrl: "/home/categories/7.png",
   },
   {
     id: "8",
     name: "Shop All",
-    imageUrl: "/home/8.png",
+    imageUrl: "/home/categories/8.png",
   },
 ];
 
@@ -83,22 +84,21 @@ const COMPANY_VALUES = [
 
 function TopSection(): JSX.Element {
   return (
-    <Box component="section" pt={4}>
+    <Box component="section" pt={1}>
       <Container
         maxWidth="lg"
         sx={{
           backgroundImage: "url(/home/top-background.png)",
-          backgroundSize: "contain no-repeat",
-          backgroundPosition: "bottom",
-          borderRadius: 12,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
           display: "flex",
-          pt: 40,
-          height: 575,
+          pt: 44,
+          height: 740,
         }}
       >
-        <Box sx={{ width: 472, mr: 20 }}>
-          <Typography variant="h1" fontSize={60} lineHeight={1.5} ml={4} mt={2}>
-            <div style={{ color: "#183439" }}>You dream it,</div>
+        <Box sx={{ width: 552, mr: 20 }}>
+          <Typography variant="h1" fontSize={60} lineHeight={1.5} ml={4}>
+            <div style={{ color: "primary" }}>YOU DREAM IT,</div>
             <div
               style={{
                 backgroundColor: "#183439",
@@ -107,24 +107,41 @@ function TopSection(): JSX.Element {
                 padding: "0 0 0 20px",
               }}
             >
-              we make it{" "}
+              WE MAKE IT{" "}
               <span style={{ display: "inline-block" }}>
                 <img src="/home/smiley.png" height={32} />
               </span>
             </div>
           </Typography>
         </Box>
-        <Box sx={{ width: "40%" }}>
-          <Typography variant="h3">
+        <Box sx={{ width: 400 }}>
+          <Typography variant="h3" sx={{ fontSize: 30, fontWeight: 300 }}>
             Next-generation bespoke product sourcing with generative AI,
             connecting you to the best manufacturers worldwide
           </Typography>
-          <Box sx={{ mt: 2, background: "#F7F7B6", borderRadius: 4, p: 2 }}>
-            <Typography variant="h4" fontSize={16} mb={2}>
-              Sign up and be the first to know when we launch:
-            </Typography>
-            <NewsletterSignUp />
-          </Box>
+        </Box>
+      </Container>
+      <Container
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          mt: -20,
+        }}
+      >
+        <Box
+          sx={{
+            background: "#F7F7B6",
+            borderRadius: 4,
+            px: 4,
+            py: 2,
+            width: 440,
+          }}
+        >
+          <Typography variant="h4" fontSize={16} mb={2}>
+            Sign up and be the first to know when we launch:
+          </Typography>
+          <NewsletterSignUp />
         </Box>
       </Container>
     </Box>
@@ -133,12 +150,23 @@ function TopSection(): JSX.Element {
 
 function CatalogSection(): JSX.Element {
   return (
-    <Box component="section" sx={{ py: 16 }}>
+    <Box
+      component="section"
+      sx={{
+        pt: 8,
+        pb: 16,
+        backgroundImage:
+          "url(/home/background/orange-1.svg), url(/home/background/orange-2.svg)",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "bottom 200px left 0px, top 100px right 0px",
+        backgroundSize: "40vh",
+      }}
+    >
       <Container maxWidth="md" sx={{ textAlign: "center" }}>
         <Typography variant="h1" fontSize={48} mb={4}>
           Quality, Speed, Value
         </Typography>
-        <Typography variant="h3" fontSize={18} mx={10}>
+        <Typography variant="h3" fontSize={20} fontWeight={300} mx={15}>
           Discover unique products across multiple categories, from tech gadgets
           to packaging supplies, and get instant quotes
         </Typography>
@@ -184,7 +212,7 @@ function ValueCard({
       <Typography variant="h2" fontSize={18} mb={2}>
         {title}
       </Typography>
-      <Typography variant="body2" fontSize={13} px={4}>
+      <Typography variant="h3" fontSize={13} px={4}>
         {decode(description)}
       </Typography>
     </Box>
@@ -214,7 +242,7 @@ function ValuesSection(): JSX.Element {
         <Typography variant="h1" fontSize={48} mb={4}>
           Our Promise
         </Typography>
-        <Typography variant="h3" fontSize={18} mx={32} lineHeight={1.5}>
+        <Typography variant="h3" fontSize={18} mx={20} lineHeight={1.5}>
           Next-generation bespoke product sourcing with generative AI,
           connecting you to the best manufacturers worldwide
         </Typography>
@@ -266,9 +294,14 @@ function CustomSourcingSection(): JSX.Element {
             want to make a few tweaks to an existing product, USourced can help.
           </Typography>
           <Box sx={{ mt: 2 }}>
-            <Button variant="contained" size="large" sx={{ borderRadius: 12 }}>
-              Chat Now
-            </Button>
+            <Button
+              component={RouterLink}
+              variant="contained"
+              href="/ai-designer"
+              color="primary"
+              children="Chat now"
+              sx={{ fontSize: 20, borderRadius: 12 }}
+            />
             <Box>
               <img
                 src="/home/chat-with-ai.png"
