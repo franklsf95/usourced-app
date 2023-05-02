@@ -15,7 +15,7 @@ export const light: PaletteOptions = {
   },
 
   background: {
-    default: "rgb(240,242,245)",
+    default: "#F8F6F3",
   },
 
   grass: {

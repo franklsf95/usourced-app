@@ -446,7 +446,7 @@ function FooterSection(): JSX.Element {
 
 export default function HomePage(): JSX.Element {
   return (
-    <Box component="main" sx={{ backgroundColor: "white" }}>
+    <Box component="main">
       <TopSection />
       <CatalogSection />
       <ValuesSection />
