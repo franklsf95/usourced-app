@@ -1,6 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
+import { Email, Place } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -321,7 +322,7 @@ function AboutSection(): JSX.Element {
             </Typography>
             <Typography variant="body1" paragraph>
               <b>Our mission</b> is to streamline access to unique, high-quality
-              products across global suppliers and simplify supply change
+              products across global suppliers and simplify supply chain
               management. By harnessing the power of generative AI, we&rsquo;re
               making it easier and faster than ever to bring your brand vision
               into reality.
@@ -360,6 +361,55 @@ function AboutSection(): JSX.Element {
   );
 }
 
+function FooterSection(): JSX.Element {
+  return (
+    <Box
+      component="footer"
+      sx={{
+        backgroundImage: "url(/home/footer-background.svg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        pt: 16,
+      }}
+    >
+      <Container maxWidth="lg" sx={{ color: "white", pb: 8 }}>
+        <Box>
+          <Typography variant="h1" fontSize={64} mb={4}>
+            Sign up for our newsletter
+          </Typography>
+          {/* <NewsletterSignUp2 /> */}
+        </Box>
+        <hr style={{ opacity: 0.25 }} />
+        <Grid container spacing={2} sx={{ mt: 4 }}>
+          <Grid item xs={12} sm={6}>
+            <img src="/usourced-masthead-white.png" height={44} />
+            <Typography variant="h4" mt={2}>
+              <Email fontSize="small" sx={{ mr: 1 }} /> hello@usourced.com
+            </Typography>
+            <Typography variant="h4" mt={1}>
+              <Place fontSize="small" sx={{ mr: 1 }} /> 600 N Broad St, Ste 5
+              #3766, Middletown, DE 19709
+            </Typography>
+          </Grid>
+        </Grid>
+      </Container>
+      <Box
+        sx={{
+          backgroundColor: "#142A2E",
+          color: "#B5B5B5",
+          textAlign: "center",
+          pt: 4,
+          pb: 4,
+        }}
+      >
+        <Container maxWidth="lg">
+          &copy; USourced Inc. 2023. All Rights Reserved.
+        </Container>
+      </Box>
+    </Box>
+  );
+}
+
 export default function HomePage(): JSX.Element {
   return (
     <Box component="main" sx={{ backgroundColor: "white" }}>
@@ -369,6 +419,7 @@ export default function HomePage(): JSX.Element {
       <CustomSourcingSection />
       <AboutSection />
       <TeamSection />
+      <FooterSection />
     </Box>
   );
 }
