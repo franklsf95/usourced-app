@@ -22,9 +22,12 @@ export default function CustomRequestPage(): JSX.Element {
         White-glove VIP service MOQ starts at 1,000 units.
       </Typography>
       <Typography variant="body1" paragraph>
-        This service will be replaced by our AI-powered custom product design
-        tool soon. In the meantime, Please submit your request below and our
-        team will get back to you within 24 &ndash; 48 hours.
+        <b>
+          This service will be replaced by our AI-powered custom product design
+          tool soon.
+        </b>{" "}
+        In the meantime, Please submit your request below and our team will get
+        back to you within 24 &ndash; 48 hours.
       </Typography>
       <Typography variant="h2" mt={4} mb={2}>
         New Client? Fill out this form first:
