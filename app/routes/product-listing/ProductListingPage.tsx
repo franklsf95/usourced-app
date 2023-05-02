@@ -1,7 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { ZoomIn, ZoomOut } from "@mui/icons-material";
+import { Info, ZoomIn, ZoomOut } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -10,15 +10,16 @@ import {
   IconButton,
   Paper,
   Rating,
+  Slider,
   Stack,
   Typography,
 } from "@mui/material";
 import * as React from "react";
 import { ButtonGroupSelector } from "../../common/ButtonGroupSelector.js";
 import { ColorSelector } from "../../common/ColorSelector.js";
-import InputSlider from "../../common/InputSlider.js";
 import { usePageEffect } from "../../core/page.js";
 import { useSnackBar } from "../../layout/components/SnackBarContext.js";
+import { InputSlider } from "./components/InputSlider.js";
 
 type Selection = {
   label: string;
@@ -122,23 +123,73 @@ function getPricePerItem(
     : pricingTiers[pricingTiers.length - 1].pricePerItem;
 }
 
+function getTotalPrice(
+  quantity: number,
+  expressPercentage: number,
+  pricingTiers: PricingTier[],
+): number {
+  const EXPRESS_PRICE_PER_ITEM = 5;
+  const pricePerItem = getPricePerItem(quantity, pricingTiers);
+  const expressPrice = EXPRESS_PRICE_PER_ITEM * quantity * expressPercentage;
+  return pricePerItem * quantity + expressPrice;
+}
+
 function PricingCalculator({
   pricingTiers,
 }: {
   pricingTiers: PricingTier[];
 }): JSX.Element {
   const [quantity, setQuantity] = React.useState<number>(1000);
-  const pricePerItem = getPricePerItem(quantity, pricingTiers);
+  const [expressPercentage, setExpressPercentage] = React.useState<number>(0.1);
+  const handleExpressPercentageChange = (
+    _event: Event,
+    value: number | number[],
+  ) => {
+    setExpressPercentage(value as number);
+  };
+  const totalPrice = getTotalPrice(quantity, expressPercentage, pricingTiers);
+  const { showDemoAlert } = useSnackBar();
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
       <Typography variant="h2" mt={2} mb={2} fontSize="1.5em">
         Bulk Price Calculator
       </Typography>
-      <InputSlider onChange={setQuantity} />
-      <Typography variant="h3" mt={1} mb={1}>
-        ${pricePerItem.toFixed(2)}/item
+      <Typography variant="h5" gutterBottom>
+        Choose quantity:
       </Typography>
-      <Button variant="text" sx={{ fontSize: 12, textDecoration: "underline" }}>
+      <InputSlider onChange={setQuantity} minValue={1000} maxValue={6000} />
+      <Typography variant="h5" gutterBottom>
+        Choose express shipping:
+        <IconButton>
+          <Info />
+        </IconButton>
+      </Typography>
+      <Stack
+        spacing={2}
+        direction="row"
+        sx={{ mb: 1, ml: 1, mr: 2 }}
+        alignItems="center"
+      >
+        <span>0%</span>
+        <Slider
+          value={expressPercentage}
+          onChange={handleExpressPercentageChange}
+          min={0}
+          max={1}
+          step={0.1}
+          valueLabelDisplay="auto"
+          valueLabelFormat={(value) => `${value * 100}%`}
+        />
+        <span>100%</span>
+      </Stack>
+      <Typography variant="h3" mt={2} mb={1} sx={{ fontWeight: 600 }}>
+        Total: ${totalPrice.toFixed(2)}
+      </Typography>
+      <Button
+        variant="text"
+        onClick={() => showDemoAlert()}
+        sx={{ fontSize: 12, textDecoration: "underline" }}
+      >
         View cost breakdown
       </Button>
     </Paper>
@@ -304,7 +355,7 @@ export default function ProductListingPage(): JSX.Element {
   );
 
   return (
-    <Container maxWidth="xl" sx={{ pt: 10, pb: 10 }}>
+    <Container maxWidth="xl" sx={{ pt: 6, pb: 10 }}>
       <Grid container spacing={2}>
         <Grid item xs={2}>
           <ProductVariantsListView productListing={productListing} />
