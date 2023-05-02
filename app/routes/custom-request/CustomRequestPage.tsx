@@ -13,13 +13,18 @@ export default function CustomRequestPage(): JSX.Element {
       <Typography variant="h1" mb={2}>
         White-Glove VIP Service
       </Typography>
-      <Typography variant="body1" mb={1}>
+      <Typography variant="body1" paragraph>
         Our agency provides white-glove service for you to launch custom
-        products - we do everything from design, sampling, production, packaging
-        and quality control, to global fulfillment.
+        products &ndash; we do everything from design, sampling, production,
+        packaging and quality control, to global fulfillment.
       </Typography>
-      <Typography variant="body1">
+      <Typography variant="body1" paragraph>
         White-glove VIP service MOQ starts at 1,000 units.
+      </Typography>
+      <Typography variant="body1" paragraph>
+        This service will be replaced by our AI-powered custom product design
+        tool soon. In the meantime, Please submit your request below and our
+        team will get back to you within 24 &ndash; 48 hours.
       </Typography>
       <Typography variant="h2" mt={4} mb={2}>
         New Client? Fill out this form first:
