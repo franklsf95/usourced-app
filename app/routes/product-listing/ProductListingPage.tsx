@@ -318,8 +318,7 @@ function ProductVariantView({
   return (
     <Box
       sx={{
-        width: 220,
-        height: 220,
+        width: "100%",
         borderRadius: 2,
         overflow: "hidden",
         display: "flex",
@@ -340,7 +339,10 @@ function ProductVariantsListView({
   productListing: ProductListing;
 }): JSX.Element {
   return (
-    <Box height={640} width={236} sx={{ overflowY: "scroll" }}>
+    <Box height={640} sx={{ overflowY: "scroll" }}>
+      <Typography variant="h3" mb={2} fontSize={18}>
+        More Colors
+      </Typography>
       <Stack spacing={2}>
         {productListing.variants.map((variant) => (
           <ProductVariantView key={variant.color} variant={variant} />
@@ -372,15 +374,19 @@ export default function ProductListingPage(): JSX.Element {
   );
 
   return (
-    <Container maxWidth="xl" sx={{ pt: 6, pb: 10 }}>
+    <Container maxWidth="lg" sx={{ pt: 6, pb: 10 }}>
       <Grid container spacing={2}>
-        <Grid item xs={2}>
+        <Grid
+          item
+          md={2}
+          sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+        >
           <ProductVariantsListView productListing={productListing} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item sm={12} md={5}>
           <ProductMockupView selectedVariant={selectedVariant} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item sm={12} md={5}>
           <ProductDetailsView
             productListing={productListing}
             handleSelectColor={handleSelectColor}

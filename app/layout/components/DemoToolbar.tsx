@@ -64,7 +64,11 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         <Stack
           direction="row"
           spacing={2}
-          sx={{ flexGrow: 1, justifyContent: "space-evenly" }}
+          sx={{
+            flexGrow: 1,
+            justifyContent: "space-evenly",
+            display: { xs: "none", sm: "none", md: "block" },
+          }}
         >
           <Button
             component={RouterLink}
@@ -99,29 +103,6 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             sx={buttonSx}
           />
         </Stack>
-        {/* Navigation links for signed-in users */}
-        {/* {me && (
-          <Button
-            component={RouterLink}
-            variant="text"
-            href="/projects"
-            color="inherit"
-            children="Cart"
-            startIcon={<ShoppingCartOutlined />}
-            sx={{ mr: 2 }}
-          />
-        )}
-        {me && (
-          <Button
-            component={RouterLink}
-            variant="text"
-            href="/projects"
-            color="inherit"
-            children="Projects"
-            startIcon={<FolderOutlined />}
-            sx={{ mr: 2 }}
-          />
-        )} */}
         {/* Account related controls (icon buttons) */}
         {me && (
           <IconButton

@@ -11,18 +11,24 @@ import { SnackBarProvider } from "./components/SnackBarContext.js";
 
 function DemoBanner(): JSX.Element {
   return (
-    <Box sx={{ backgroundColor: "#183439", height: 32, py: 1, mt: 12 }}>
-      <Container>
-        <Typography
-          variant="h1"
-          fontSize={16}
-          textTransform="uppercase"
-          color="white"
-          align="center"
-        >
-          Demo site &ndash; we are launching in Q3 2023
-        </Typography>
-      </Container>
+    <Box
+      sx={{
+        backgroundColor: "#183439",
+        height: 32,
+        width: "100%",
+        py: 1,
+        mt: 12,
+      }}
+    >
+      <Typography
+        variant="h1"
+        fontSize={16}
+        textTransform="uppercase"
+        color="white"
+        align="center"
+      >
+        Demo site &ndash; we are launching in Q3 2023
+      </Typography>
     </Box>
   );
 }
@@ -86,7 +92,9 @@ export function DemoLayout(): JSX.Element {
         <React.Suspense>
           <DemoToolbar />
           <DemoBanner />
-          <Outlet />
+          <Box minWidth={800}>
+            <Outlet />
+          </Box>
           <Footer />
         </React.Suspense>
       </SnackBarProvider>
