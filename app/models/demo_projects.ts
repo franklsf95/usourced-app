@@ -132,3 +132,14 @@ export const demo_project_groups: DemoProjectGroup[] = Object.values(
   projectStatus,
   projects: demo_projects[projectStatus],
 }));
+
+export const demo_projects_database: { [key: string]: DemoProject } =
+  Object.assign(
+    {},
+    ...Object.values(demo_projects).map((projects) =>
+      Object.assign(
+        {},
+        ...projects.map((project) => ({ [project.id]: project })),
+      ),
+    ),
+  );
