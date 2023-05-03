@@ -150,7 +150,7 @@ function CatalogSection(): JSX.Element {
           "url(/home/background/orange-1.svg), url(/home/background/orange-2.svg)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "bottom 200px left 0px, top 100px right 0px",
-        backgroundSize: "40vh",
+        backgroundSize: "20vw",
       }}
     >
       <Container maxWidth="md" sx={{ textAlign: "center" }}>
