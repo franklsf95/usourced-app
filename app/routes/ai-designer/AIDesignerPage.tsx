@@ -13,9 +13,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useScene } from "../../common/chat/playbook.js";
+import { ChatWindow } from "../../common/chat/ChatWindow.js";
+import { useScene } from "../../common/chat/playbooks/ai_designer_playbook.js";
 import { usePageEffect } from "../../core/page.js";
-import { AIChat } from "./components/AIChat.js";
 
 function OrderSummaryView(): JSX.Element {
   const { scene } = useScene();
@@ -142,7 +142,7 @@ export default function AIDesignerPage(): JSX.Element {
           <ProductConfiguratorView />
         </Grid>
         <Grid item xs={6}>
-          <AIChat />
+          <ChatWindow />
         </Grid>
       </Grid>
       <DemoControlBar />

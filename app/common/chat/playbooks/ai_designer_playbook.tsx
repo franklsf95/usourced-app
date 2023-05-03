@@ -8,7 +8,7 @@ import {
   CURRENT_USER,
   ChatMessage,
   ChatStateAtom,
-} from "./ChatProvider.js";
+} from "../ChatProvider.js";
 
 type Scene = {
   messages: ChatMessage[];

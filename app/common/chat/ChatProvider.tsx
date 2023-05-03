@@ -37,7 +37,7 @@ export const CURRENT_USER = {
   uid: "__ME__",
   email: "",
   displayName: "",
-  photoURL: "",
+  photoURL: "/demo/jx.jpg",
   phoneNumber: "",
   providerId: "",
 };
