@@ -12,6 +12,7 @@ import {
   Rating,
   Slider,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import * as React from "react";
@@ -160,9 +161,25 @@ function PricingCalculator({
       <InputSlider onChange={setQuantity} minValue={1000} maxValue={6000} />
       <Typography variant="h5" gutterBottom>
         Choose express shipping:
-        <IconButton>
-          <Info />
-        </IconButton>
+        <Tooltip
+          title={
+            <div>
+              <div>Timeline including production:</div>
+              <div>Standard shipping: 4&ndash;5 weeks</div>
+              <div>
+                Express shipping: 2&ndash;3 weeks, at an additional cost.
+              </div>
+              <div>
+                We offer partial express shipping so you can get a portion of
+                your order sooner, and save cost on the remaining items.
+              </div>
+            </div>
+          }
+        >
+          <IconButton>
+            <Info />
+          </IconButton>
+        </Tooltip>
       </Typography>
       <Stack
         spacing={2}
@@ -182,6 +199,10 @@ function PricingCalculator({
         />
         <span>100%</span>
       </Stack>
+      <Typography variant="h6" fontSize={14} sx={{ ml: 1, mr: 2 }}>
+        Express shipping {Math.round(quantity * expressPercentage)} items;
+        standard shipping {Math.round(quantity * (1 - expressPercentage))} items
+      </Typography>
       <Typography variant="h3" mt={2} mb={1} sx={{ fontWeight: 600 }}>
         Total: ${totalPrice.toFixed(2)}
       </Typography>
@@ -319,7 +340,7 @@ function ProductVariantsListView({
   productListing: ProductListing;
 }): JSX.Element {
   return (
-    <Box height={540} width={236} sx={{ overflowY: "scroll" }}>
+    <Box height={640} width={236} sx={{ overflowY: "scroll" }}>
       <Stack spacing={2}>
         {productListing.variants.map((variant) => (
           <ProductVariantView key={variant.color} variant={variant} />
