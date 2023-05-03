@@ -34,11 +34,10 @@ function ChatMessageListView(): JSX.Element {
     });
   }, [messages]);
   return (
-    <List sx={{ height: "calc(100vh - 300px)", overflowY: "auto" }}>
+    <List dense sx={{ height: "calc(100vh - 280px)", overflowY: "auto" }}>
       {messages.map((message) => (
         <React.Fragment key={message.id}>
           <ChatMessageView message={message} />
-          <Divider variant="inset" />
         </React.Fragment>
       ))}
       <div key="endOfList" ref={endOfListRef} />
@@ -77,7 +76,9 @@ function SendMessageInput(): JSX.Element {
 
   return (
     <FormControl sx={{ mx: "2%", width: "96%", mt: 1 }} variant="outlined">
-      <InputLabel htmlFor="send-message-input">{placeholder}</InputLabel>
+      <InputLabel htmlFor="send-message-input" size="small">
+        {placeholder}
+      </InputLabel>
       <OutlinedInput
         id="send-message-input"
         endAdornment={
@@ -92,6 +93,7 @@ function SendMessageInput(): JSX.Element {
         value={inputText}
         onChange={onInputChange}
         onKeyUp={onKeyUp}
+        size="small"
         placeholder="Simply press enter to watch the demo"
       />
     </FormControl>

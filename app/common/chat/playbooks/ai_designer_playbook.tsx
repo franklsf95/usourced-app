@@ -42,9 +42,12 @@ function newImagePayload(url: string): JSX.Element {
   return <img src={url} height={150} />;
 }
 
-function newButtonsPayload(
-  buttons: { title: string; disabled?: boolean }[],
-): JSX.Element {
+function ButtonsPayload({
+  buttons,
+}: {
+  buttons: { title: string; disabled?: boolean }[];
+}): JSX.Element {
+  const { advanceSceneWithSimulatedAIResponse } = useScene();
   return (
     <>
       {buttons.map((button) => (
@@ -52,7 +55,7 @@ function newButtonsPayload(
           key={button.title}
           variant="outlined"
           size="small"
-          disabled={button.disabled}
+          onClick={advanceSceneWithSimulatedAIResponse}
           sx={{ mt: 1, mr: 1, fontSize: 13, letterSpacing: 0 }}
         >
           {button.title}
@@ -110,11 +113,13 @@ const sceneDeltas = [
     message: newMessage(
       "Cute kitty! What is your preferred material for the plushie?",
       true,
-      newButtonsPayload([
-        { title: "1. Long fur" },
-        { title: "2. Short fur", disabled: true },
-        { title: "3. No fur (more like a velvet texture)", disabled: true },
-      ]),
+      <ButtonsPayload
+        buttons={[
+          { title: "1. Long fur" },
+          { title: "2. Short fur", disabled: true },
+          { title: "3. No fur (more like a velvet texture)", disabled: true },
+        ]}
+      />,
     ),
     productName: "Bird Plushie",
   },
@@ -125,11 +130,13 @@ const sceneDeltas = [
     message: newMessage(
       "How would you like it to be stuffed?",
       true,
-      newButtonsPayload([
-        { title: "1. Squishy", disabled: true },
-        { title: "2. Normal PP cotton" },
-        { title: "3. Beans", disabled: true },
-      ]),
+      <ButtonsPayload
+        buttons={[
+          { title: "1. Squishy", disabled: true },
+          { title: "2. Normal PP cotton" },
+          { title: "3. Beans", disabled: true },
+        ]}
+      />,
     ),
     productName: "Bird Plushie",
     summary: [newSummaryItem("Material", "Long fur")],

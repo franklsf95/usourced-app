@@ -21,6 +21,7 @@ export function ButtonGroupSelector({
       {choices.map((choice) => (
         <Button
           key={choice.value}
+          size="small"
           variant={choice.value === selectedValue ? "contained" : "outlined"}
           onClick={() => {
             setSelectedValue(choice.value);
