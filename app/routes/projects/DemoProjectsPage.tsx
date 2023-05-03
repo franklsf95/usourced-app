@@ -1,9 +1,18 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Box, Stack, Typography } from "@mui/material";
+import {
+  CalendarMonth,
+  DoubleArrow,
+  FilterAlt,
+  GridView,
+  Search,
+  ViewKanban,
+} from "@mui/icons-material";
+import { Box, Button, ButtonGroup, Stack, Typography } from "@mui/material";
 import pluralize from "pluralize";
 import { usePageEffect } from "../../core/page.js";
+import { useSnackBar } from "../../layout/components/SnackBarContext.js";
 import {
   DemoProject,
   demo_project_groups,
@@ -55,7 +64,7 @@ function ProjectsKanbanColumnView({
   );
 }
 
-export function ProjectsKanbanView(): JSX.Element {
+function ProjectsKanbanView(): JSX.Element {
   return (
     <Box>
       <Box sx={{ display: "flex" }}>
@@ -71,11 +80,58 @@ export function ProjectsKanbanView(): JSX.Element {
   );
 }
 
+function ProjectsDashboardHeader(): JSX.Element {
+  const { showDemoAlert } = useSnackBar();
+  const buttonSx = { borderRadius: 6, fontSize: 13, letterSpacing: 0 };
+  return (
+    <Box sx={{ mb: 2 }}>
+      <Typography variant="h1">Projects Dashboard</Typography>
+      <ButtonGroup variant="outlined" size="small" sx={{ mt: 2 }}>
+        <Button variant="contained" sx={buttonSx}>
+          Views
+        </Button>
+        <Button startIcon={<GridView />} onClick={showDemoAlert} sx={buttonSx}>
+          Grid
+        </Button>
+        <Button
+          startIcon={<ViewKanban />}
+          onClick={showDemoAlert}
+          sx={buttonSx}
+        >
+          Kanban
+        </Button>
+        <Button
+          startIcon={<CalendarMonth />}
+          onClick={showDemoAlert}
+          sx={buttonSx}
+        >
+          Calendar
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup variant="outlined" size="small" sx={{ mt: 2, ml: 2 }}>
+        <Button variant="contained" sx={buttonSx}>
+          Tools
+        </Button>
+        <Button startIcon={<FilterAlt />} onClick={showDemoAlert} sx={buttonSx}>
+          Filter
+        </Button>
+        <Button startIcon={<DoubleArrow />} sx={buttonSx}>
+          Sort
+        </Button>
+        <Button startIcon={<Search />} onClick={showDemoAlert} sx={buttonSx}>
+          Search
+        </Button>
+      </ButtonGroup>
+    </Box>
+  );
+}
+
 export default function DemoProjectsPage(): JSX.Element {
-  usePageEffect({ title: "My Projects" });
+  usePageEffect({ title: "Projects Dashboard" });
 
   return (
     <Box component="main" sx={{ px: 8, py: 2 }}>
+      <ProjectsDashboardHeader />
       <ProjectsKanbanView />
       <AIChatDialog />
     </Box>
