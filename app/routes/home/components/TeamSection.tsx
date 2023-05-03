@@ -145,7 +145,7 @@ export function TeamSection(): JSX.Element {
           "url(/home/background/green-1.svg),url(/home/background/green-2.svg)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "bottom 200px left 0px, top 100px right 0px",
-        backgroundSize: "50vh",
+        backgroundSize: "20vw",
       }}
     >
       <Container maxWidth="md" sx={{ textAlign: "center" }}>
