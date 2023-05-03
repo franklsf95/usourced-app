@@ -54,7 +54,7 @@ export function DemoNavigationBar(props: AppToolbarProps): JSX.Element {
           href="/ai-designer"
           variant="text"
           color="inherit"
-          children="USourced AI Demo"
+          children="AI Chat Demo"
           sx={buttonSx}
         />
       </Toolbar>

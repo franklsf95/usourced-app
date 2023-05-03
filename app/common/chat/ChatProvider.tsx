@@ -11,8 +11,8 @@ export type ChatMessage = {
   createdAt: Date;
   from: UserInfo;
   isTyping?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  payload?: { [key: string]: any };
+  payload?: JSX.Element;
+  error?: Error;
 };
 
 export const SYSTEM_AGENT = {
@@ -107,7 +107,8 @@ export const ChatStateAtom = atom<ChatState>({
               ],
               incomingMessage: null,
             }));
-          } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (error: any) {
             setSelf(() => ({
               messages: [
                 ...messages,
@@ -116,7 +117,7 @@ export const ChatStateAtom = atom<ChatState>({
                   text: "SYSTEM_ERROR",
                   createdAt: moment().toDate(),
                   from: SYSTEM_AGENT,
-                  payload: { error },
+                  error,
                 },
               ],
               incomingMessage: null,

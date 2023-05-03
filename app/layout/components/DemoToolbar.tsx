@@ -91,7 +91,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             href="/ai-designer"
             variant="text"
             color="inherit"
-            children="USourced AI Demo"
+            children="AI Chat Demo"
             sx={buttonSx}
           />
           <Button

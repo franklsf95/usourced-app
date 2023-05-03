@@ -197,7 +197,7 @@ function ProjectProductionOrderView(): JSX.Element {
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               sx={{ mr: 1, mb: 1 }}
               onClick={showDemoAlert}
             >
@@ -205,7 +205,7 @@ function ProjectProductionOrderView(): JSX.Element {
             </Button>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               sx={{ mr: 1 }}
               onClick={showDemoAlert}
             >

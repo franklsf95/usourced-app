@@ -33,16 +33,12 @@ function MessageTimeView({
   textAlign,
 }: {
   message: ChatMessage;
-  textAlign: string;
+  textAlign: "left" | "right";
 }): JSX.Element {
   return (
-    <Typography
-      variant="body2"
-      color="#999999"
-      sx={{ fontSize: 10, textAlign }}
-    >
+    <span style={{ color: "#999", fontSize: 10, textAlign: textAlign }}>
       {moment(message.createdAt).fromNow()}
-    </Typography>
+    </span>
   );
 }
 
@@ -60,14 +56,11 @@ function MessageView({ message }: { message: ChatMessage }): JSX.Element {
 }
 
 function RichMessageView({ message }: { message: ChatMessage }): JSX.Element {
+  const { advanceSceneWithSimulatedAIResponse } = useScene();
   return (
     <Box>
       <MessageView message={message} />
-      {message.payload?.attachments?.map((attachment: { url: string }) => (
-        <Box key={attachment.url}>
-          <img src={attachment.url} height={150} />
-        </Box>
-      )) ?? null}
+      {message.payload}
     </Box>
   );
 }
@@ -82,9 +75,7 @@ function SystemMessageView({ message }: { message: ChatMessage }): JSX.Element {
       </ListItemAvatar>
       <ListItemText
         primary={
-          <Alert severity="error">
-            System Error: {message.payload?.error.message}
-          </Alert>
+          <Alert severity="error">System Error: {message.error?.message}</Alert>
         }
         secondary={<MessageTimeView message={message} textAlign="left" />}
       />

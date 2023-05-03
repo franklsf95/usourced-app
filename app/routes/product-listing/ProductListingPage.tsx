@@ -96,19 +96,19 @@ const productListing: ProductListing = {
   ],
   pricingTiers: [
     {
-      quantity: 1000,
+      quantity: 100,
       pricePerItem: 5,
     },
     {
-      quantity: 2000,
+      quantity: 200,
       pricePerItem: 4,
     },
     {
-      quantity: 3000,
+      quantity: 300,
       pricePerItem: 3.5,
     },
     {
-      quantity: 5000,
+      quantity: 500,
       pricePerItem: 3,
     },
   ],
@@ -136,7 +136,7 @@ function getTotalPrice(
 }
 
 function PricingCalculator(): JSX.Element {
-  const [quantity, setQuantity] = React.useState<number>(1000);
+  const [quantity, setQuantity] = React.useState<number>(100);
   const [expressPercentage, setExpressPercentage] = React.useState<number>(0.1);
   const handleExpressPercentageChange = (
     _event: Event,
@@ -158,7 +158,7 @@ function PricingCalculator(): JSX.Element {
       <Typography variant="h5" gutterBottom>
         Choose quantity:
       </Typography>
-      <InputSlider onChange={setQuantity} minValue={1000} maxValue={6000} />
+      <InputSlider onChange={setQuantity} minValue={100} maxValue={1000} />
       <Typography variant="h5" gutterBottom>
         Choose express shipping:
         <Tooltip
