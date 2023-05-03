@@ -9,8 +9,8 @@ import {
 } from "./ChatProvider.js";
 
 type PricingEstimatorState = {
-  quantity: number;
-  quantityChoices: number[];
+  quantity: number | null;
+  minQuantity: number;
 };
 
 type Scene = {
@@ -49,7 +49,7 @@ function newMessage(
 const sceneDeltas = [
   {
     message: newMessage(
-      "Welcome to USourced! What is your product sourcing request?",
+      "Welcome to USourced! What would you like to create today?",
       true,
     ),
     productName: "Your New Product",
@@ -63,15 +63,15 @@ const sceneDeltas = [
       true,
     ),
     pricingState: {
-      quantity: 0,
-      quantityChoices: [200, 500, 1000],
+      quantity: null,
+      minQuantity: 200,
     },
   },
   {
     message: newMessage("1000", false),
     pricingState: {
       quantity: 1000,
-      quantityChoices: [200, 500, 1000],
+      minQuantity: 200,
     },
   },
   {
@@ -81,7 +81,7 @@ const sceneDeltas = [
     ),
   },
   {
-    message: newMessage("", false, {
+    message: newMessage("Here is a sketch:", false, {
       attachments: [
         {
           type: "image",
@@ -93,7 +93,7 @@ const sceneDeltas = [
   },
   {
     message: newMessage(
-      "Cute bird! What is your preferred material for the plushie?",
+      "Cute kitty! What is your preferred material for the plushie?",
       true,
       {
         buttons: [
@@ -119,12 +119,12 @@ const sceneDeltas = [
         ],
       },
     ),
-    productName: "Gray Velvet Bird Plushie",
+    productName: "Fluffy White Cat Pushie",
     productMockupState: "/demo/plushie-mockup-1.png",
   },
   {
     message: newMessage(
-      "That's pretty good! Maybe we make the body a bit fatter and eyes a bit bigger? The feet can be a bit fatter too.",
+      "That's pretty good! Maybe we make the body a bit wider and nose a bit flatter?",
       false,
     ),
   },
@@ -140,13 +140,10 @@ const sceneDeltas = [
     productMockupState: "/demo/plushie-mockup-2.png",
   },
   {
-    message: newMessage(
-      "Yes! Maybe the beak a bit smaller and wings a bit bigger?",
-      false,
-    ),
+    message: newMessage("Ok perfect. Can you show me the side too?", false),
   },
   {
-    message: newMessage("How about this one?", true, {
+    message: newMessage("Of course!", true, {
       attachments: [
         {
           type: "image",
@@ -155,6 +152,55 @@ const sceneDeltas = [
       ],
     }),
     productMockupState: "/demo/plushie-mockup-3.png",
+  },
+  {
+    message: newMessage(
+      "Amazing! How much would it be to order 1000 units and when can I get it by?",
+      false,
+    ),
+  },
+  {
+    message: newMessage(
+      "Sampling will take a week and production another 2 weeks. Here is the pricing breakdown:",
+      true,
+      {
+        attachments: [
+          {
+            type: "image",
+            url: "/demo/plushie-mockup-3.png",
+          },
+        ],
+      },
+    ),
+  },
+  {
+    message: newMessage(
+      "I will take the express shipping for the first 100 units and standard shipping for the rest.",
+      false,
+    ),
+  },
+  {
+    message: newMessage(
+      "Okay, no problem! Here is the final pricing breakdown, with timeline and cost estimates. When you are ready, you can place the order by clicking the button below.",
+      true,
+      {
+        attachments: [
+          {
+            type: "image",
+            url: "/demo/plushie-mockup-3.png",
+          },
+        ],
+      },
+    ),
+  },
+  {
+    message: newMessage("Place Order", false),
+  },
+  {
+    message: newMessage(
+      "Thank you for your order! We will be in touch once your sample is ready. Here is a summary of your product sourcing request for your reference.",
+      true,
+    ),
   },
 ];
 
@@ -165,8 +211,8 @@ function getScenesFromDeltas(sceneDeltas: SceneDelta[]): Scene[] {
     productName: "",
     productMockupState: "",
     pricingState: {
-      quantity: 0,
-      quantityChoices: [],
+      quantity: null,
+      minQuantity: 0,
     },
     timelineState: "",
     colorState: "",
@@ -213,9 +259,22 @@ export function useScene() {
       if (newValue < 0 || newValue >= scenes.length) {
         newValue = 0;
       }
-      console.log("incrementSceneNumber", delta, newValue);
       return newValue;
     });
   };
-  return { sceneNumber, scene, incrementSceneNumber };
+  const advanceSceneWithSimulatedAIResponse = () => {
+    incrementSceneNumber(1);
+    if (sceneNumber % 2 === 0) {
+      // Automatically advance to next scene to simulate AI response
+      setTimeout(() => {
+        incrementSceneNumber(1);
+      }, Math.random() * 2000);
+    }
+  };
+  return {
+    sceneNumber,
+    scene,
+    incrementSceneNumber,
+    advanceSceneWithSimulatedAIResponse,
+  };
 }

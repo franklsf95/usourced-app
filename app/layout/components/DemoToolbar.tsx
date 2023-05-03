@@ -67,7 +67,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           sx={{
             flexGrow: 1,
             justifyContent: "space-evenly",
-            display: { xs: "none", sm: "none", md: "block" },
+            display: { xs: "none", sm: "none", md: "flex" },
           }}
         >
           <Button

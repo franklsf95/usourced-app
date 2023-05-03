@@ -19,14 +19,14 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import * as React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useCurrentUser } from "../../core/auth.js";
 import {
   ChatMessage,
   ChatStateAtom,
   ChatWaitingForResponseStateAtom,
-  sendMessage,
 } from "./ChatProvider.js";
+import { useScene } from "./playbook.js";
 
 function MessageTimeView({
   message,
@@ -164,10 +164,14 @@ function ChatMessageListView(): JSX.Element {
   }
   const endOfListRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
-    endOfListRef.current?.scrollIntoView({ behavior: "smooth" });
+    endOfListRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start",
+    });
   }, [messages]);
   return (
-    <List sx={{ height: "636px", overflowY: "auto" }}>
+    <List sx={{ height: "calc(100vh - 300px)", overflowY: "auto" }}>
       {messages.map((message) => (
         <React.Fragment key={message.id}>
           <ChatMessageView message={message} />
@@ -182,16 +186,13 @@ function ChatMessageListView(): JSX.Element {
 function SendMessageInput(): JSX.Element {
   const [inputText, setInputText] = React.useState<string>("");
   const isWaitingForResponse = useRecoilValue(ChatWaitingForResponseStateAtom);
-  const setChatState = useSetRecoilState(ChatStateAtom);
+  const { advanceSceneWithSimulatedAIResponse } = useScene();
 
   const submitMessage = () => {
     if (isWaitingForResponse) {
       return;
     }
-    if (!inputText) {
-      return;
-    }
-    sendMessage(setChatState, inputText);
+    advanceSceneWithSimulatedAIResponse();
     setInputText("");
   };
 
@@ -228,6 +229,7 @@ function SendMessageInput(): JSX.Element {
         value={inputText}
         onChange={onInputChange}
         onKeyUp={onKeyUp}
+        placeholder="Simply press enter to watch the demo"
       />
     </FormControl>
   );
@@ -235,7 +237,11 @@ function SendMessageInput(): JSX.Element {
 
 export function Chat(): JSX.Element {
   return (
-    <Grid container component={Paper} sx={{ width: "100%", height: "80vh" }}>
+    <Grid
+      container
+      component={Paper}
+      sx={{ width: "100%", height: "calc(100vh - 220px)" }}
+    >
       <Grid item xs={12}>
         <ChatMessageListView />
         <Divider />

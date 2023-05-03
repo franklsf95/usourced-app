@@ -135,11 +135,7 @@ function getTotalPrice(
   return pricePerItem * quantity + expressPrice;
 }
 
-function PricingCalculator({
-  pricingTiers,
-}: {
-  pricingTiers: PricingTier[];
-}): JSX.Element {
+function PricingCalculator(): JSX.Element {
   const [quantity, setQuantity] = React.useState<number>(1000);
   const [expressPercentage, setExpressPercentage] = React.useState<number>(0.1);
   const handleExpressPercentageChange = (
@@ -148,7 +144,11 @@ function PricingCalculator({
   ) => {
     setExpressPercentage(value as number);
   };
-  const totalPrice = getTotalPrice(quantity, expressPercentage, pricingTiers);
+  const totalPrice = getTotalPrice(
+    quantity,
+    expressPercentage,
+    productListing.pricingTiers,
+  );
   const { showDemoAlert } = useSnackBar();
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
@@ -286,7 +286,7 @@ function ProductDetailsView({
         <ButtonGroupSelector choices={productListing.printEffectSelections} />
       </Box>
       <Box sx={{ mt: 4, mb: 4 }}>
-        <PricingCalculator pricingTiers={productListing.pricingTiers} />
+        <PricingCalculator />
       </Box>
       <Button variant="contained" color="primary" onClick={showDemoAlert}>
         Customize Now
@@ -379,7 +379,7 @@ export default function ProductListingPage(): JSX.Element {
         <Grid
           item
           md={2}
-          sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+          sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
         >
           <ProductVariantsListView productListing={productListing} />
         </Grid>

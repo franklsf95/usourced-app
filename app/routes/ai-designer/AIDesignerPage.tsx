@@ -1,93 +1,124 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { ArrowCircleLeft, ArrowCircleRight } from "@mui/icons-material";
+import { ArrowCircleLeft, ArrowCircleRight, Info } from "@mui/icons-material";
 import {
   Box,
   Button,
   Chip,
   Container,
-  FormControl,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
+  Slider,
   Snackbar,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import * as React from "react";
 import { useScene } from "../../common/chat/playbook.js";
 import { usePageEffect } from "../../core/page.js";
+import { useSnackBar } from "../../layout/components/SnackBarContext.js";
+import { InputSlider } from "../product-listing/components/InputSlider.js";
 import { AIChat } from "./components/AIChat.js";
 
-function PricingEstimatorView(): JSX.Element {
-  const [quantity, setQuantity] = React.useState(100);
-  const [shippingSpeed, setShippingSpeed] = React.useState(2);
-  const totalPrice = quantity * 5.0 + shippingSpeed * 100;
-  return (
-    <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
-      <Typography variant="h2" mb={4}>
-        Pricing Estimates
-      </Typography>
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel>Quantity</InputLabel>
-        <Select
-          value={quantity}
-          label="Quantity"
-          onChange={(_, value) => setQuantity(value as number)}
-        >
-          <MenuItem value={100}>100</MenuItem>
-          <MenuItem value={250}>250</MenuItem>
-          <MenuItem value={500}>500</MenuItem>
-          <MenuItem value={1000}>1000</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl fullWidth sx={{ mb: 4 }}>
-        <InputLabel>Shipping Speed</InputLabel>
-        <Select
-          value={shippingSpeed}
-          label="Shipping Speed"
-          onChange={(_, value) => setShippingSpeed(value as number)}
-        >
-          <MenuItem value={1}>All Express</MenuItem>
-          <MenuItem value={2}>10% Express, 90% Economy</MenuItem>
-          <MenuItem value={3}>All Economy</MenuItem>
-        </Select>
-      </FormControl>
-      <Typography variant="h3" mb={1}>
-        Total: ${totalPrice}
-      </Typography>
-      <Button variant="text" sx={{ fontSize: 12, textDecoration: "underline" }}>
-        View cost breakdown
-      </Button>
-    </Paper>
-  );
+type PricingEstimatorState = {
+  quantity: number | null;
+  minQuantity: number;
+};
+
+function getTotalPrice(quantity: number, expressPercentage: number): number {
+  const EXPRESS_PRICE_PER_ITEM = 5;
+  const pricePerItem = 5;
+  const expressPrice = EXPRESS_PRICE_PER_ITEM * quantity * expressPercentage;
+  return pricePerItem * quantity + expressPrice;
 }
 
-function TimelineEstimatorView(): JSX.Element {
+function PricingCalculator({
+  pricingState,
+}: {
+  pricingState: PricingEstimatorState;
+}): JSX.Element {
+  const [quantity, setQuantity] = React.useState<number>(
+    pricingState.quantity ?? pricingState.minQuantity,
+  );
+  const [expressPercentage, setExpressPercentage] = React.useState<number>(0.1);
+  const handleExpressPercentageChange = (
+    _event: Event,
+    value: number | number[],
+  ) => {
+    setExpressPercentage(value as number);
+  };
+  const totalPrice = getTotalPrice(quantity, expressPercentage);
+  const { showDemoAlert } = useSnackBar();
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
-      <Typography variant="h2" mb={2}>
-        Timeline Estimates
+      <Typography variant="h2" mb={2} fontSize="1.5em">
+        Bulk Price Calculator
       </Typography>
-      {/* <Typography variant="h4" mb={2}>
-        Production time: <b>7 business days</b>
+      <Typography variant="h5" gutterBottom>
+        Choose quantity:
       </Typography>
-      <Typography variant="h4" mb={2}>
-        Express Shipping:
+      <InputSlider
+        onChange={setQuantity}
+        minValue={pricingState.minQuantity}
+        maxValue={6000}
+      />
+      <Typography variant="h5" gutterBottom>
+        Choose express shipping:
+        <Tooltip
+          title={
+            <div>
+              <div>Timeline including production:</div>
+              <div>Standard shipping: 4&ndash;5 weeks</div>
+              <div>
+                Express shipping: 2&ndash;3 weeks, at an additional cost.
+              </div>
+              <div>
+                We offer partial express shipping so you can get a portion of
+                your order sooner, and save cost on the remaining items.
+              </div>
+            </div>
+          }
+        >
+          <IconButton>
+            <Info />
+          </IconButton>
+        </Tooltip>
       </Typography>
-      <Typography variant="h4" mb={2}>
-        Deliver by <b>May 1, 2023</b>
+      <Stack
+        spacing={2}
+        direction="row"
+        sx={{ mb: 1, ml: 1, mr: 2 }}
+        alignItems="center"
+      >
+        <span>0%</span>
+        <Slider
+          value={expressPercentage}
+          onChange={handleExpressPercentageChange}
+          min={0}
+          max={1}
+          step={0.1}
+          valueLabelDisplay="auto"
+          valueLabelFormat={(value) => `${value * 100}%`}
+        />
+        <span>100%</span>
+      </Stack>
+      <Typography variant="h6" fontSize={14} sx={{ ml: 1, mr: 2 }}>
+        Express shipping {Math.round(quantity * expressPercentage)} items;
+        standard shipping {Math.round(quantity * (1 - expressPercentage))} items
       </Typography>
-      <Typography variant="h4" mb={2}>
-        Economy Shipping:
+      <Typography variant="h3" mt={2} mb={1} sx={{ fontWeight: 600 }}>
+        Total: ${totalPrice.toFixed(2)}
       </Typography>
-      <Typography variant="h4" mb={2}>
-        Deliver by <b>May 20, 2023</b>
-      </Typography> */}
+      <Button
+        variant="text"
+        onClick={showDemoAlert}
+        sx={{ fontSize: 12, textDecoration: "underline" }}
+      >
+        View cost breakdown
+      </Button>
     </Paper>
   );
 }
@@ -107,9 +138,8 @@ function ProductMockupEmptyView(): JSX.Element {
         p: 4,
       }}
     >
-      <Typography variant="h2">
-        product mockup will
-        <br /> show up here
+      <Typography variant="h3" color="#333">
+        product mockup will show up here
       </Typography>
     </Box>
   );
@@ -156,8 +186,7 @@ function ProductConfiguratorView(): JSX.Element {
         </Grid>
         <Grid item xs={6}>
           <Stack spacing={2}>
-            <PricingEstimatorView />
-            <TimelineEstimatorView />
+            <PricingCalculator pricingState={scene.pricingState} />
           </Stack>
         </Grid>
       </Grid>
@@ -166,7 +195,11 @@ function ProductConfiguratorView(): JSX.Element {
 }
 
 function DemoControlBar(): JSX.Element {
-  const { sceneNumber, incrementSceneNumber } = useScene();
+  const {
+    sceneNumber,
+    incrementSceneNumber,
+    advanceSceneWithSimulatedAIResponse,
+  } = useScene();
   return (
     <Snackbar open>
       <div>
@@ -175,17 +208,7 @@ function DemoControlBar(): JSX.Element {
             <ArrowCircleLeft />
           </IconButton>
           <Chip label={sceneNumber} variant="outlined" sx={{ mt: 0.5 }} />
-          <IconButton
-            onClick={() => {
-              incrementSceneNumber(1);
-              if (sceneNumber % 2 === 0) {
-                // Automatically advance to next scene to simulate AI response
-                setTimeout(() => {
-                  incrementSceneNumber(1);
-                }, 1000);
-              }
-            }}
-          >
+          <IconButton onClick={advanceSceneWithSimulatedAIResponse}>
             <ArrowCircleRight />
           </IconButton>
         </Stack>
@@ -198,7 +221,7 @@ export default function AIDesignerPage(): JSX.Element {
   usePageEffect({ title: "AI Designer" });
 
   return (
-    <Container maxWidth="xl" sx={{ pt: 6 }}>
+    <Container maxWidth="xl" sx={{ pt: 6, pb: 10 }}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <ProductConfiguratorView />
