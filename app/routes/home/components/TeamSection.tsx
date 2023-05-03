@@ -1,7 +1,6 @@
 import { Box, Container, Grid, Popover, Typography } from "@mui/material";
-import { getDownloadURL, ref } from "firebase/storage";
 import * as React from "react";
-import { storage } from "../../../core/firebase.js";
+import { useFirestoreImage } from "../../../core/firebase_utils.js";
 
 type MemberProfile = {
   name: string;
@@ -66,31 +65,11 @@ const TEAM_MEMBERS = [
 
 const DEFAULT_PROFILE_IMAGE_URL = "/home/silhouette.png";
 
-async function fetchProfileImageUrl(
-  member: MemberProfile,
-): Promise<string | null> {
-  const path = `/usourced/team/${member.name.split(" ")[0]}.jpg`;
-  try {
-    return await getDownloadURL(ref(storage, path));
-  } catch (e) {
-    return null;
-  }
-}
-
 function TeamMemberCard({ member }: { member: MemberProfile }) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-  const [imageUrl, setImageUrl] = React.useState<string>(
-    DEFAULT_PROFILE_IMAGE_URL,
-  );
-  React.useEffect(() => {
-    async function effect() {
-      const url = await fetchProfileImageUrl(member);
-      if (url) {
-        setImageUrl(url);
-      }
-    }
-    effect();
-  }, [member]);
+  const { image } = useFirestoreImage({
+    path: `/usourced/team/${member.name.split(" ")[0]}.jpg`,
+  });
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -105,7 +84,7 @@ function TeamMemberCard({ member }: { member: MemberProfile }) {
   const profileEl = (
     <Box
       component="img"
-      src={imageUrl}
+      src={image ?? DEFAULT_PROFILE_IMAGE_URL}
       sx={{ height: 160, maxWidth: 160, borderRadius: 80 }}
     />
   );

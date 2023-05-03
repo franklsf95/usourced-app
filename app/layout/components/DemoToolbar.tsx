@@ -76,7 +76,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           />
           <Button
             component={RouterLink}
-            href="/product/1"
+            href="/products/1"
             variant="text"
             color="inherit"
             children="Catalog Demo"
@@ -148,7 +148,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             variant="contained"
             color="primary"
             children="SIGN IN"
-            onClick={() => showDemoAlert()}
+            onClick={showDemoAlert}
             sx={{ ml: 2, borderRadius: 8 }}
           />
         )}

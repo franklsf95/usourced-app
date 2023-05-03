@@ -10,10 +10,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { getDownloadURL, ref } from "firebase/storage";
 import pluralize from "pluralize";
-import * as React from "react";
-import { storage } from "../../core/firebase.js";
+import { RouterLink } from "../../common/RouterLink.js";
+import { useFirestoreImage } from "../../core/firebase_utils.js";
 import { usePageEffect } from "../../core/page.js";
 import {
   DemoProject,
@@ -23,30 +22,10 @@ import { ProjectStatus } from "../../models/projects.js";
 
 const DEFAULT_PROJECT_IMAGE_URL = "/home/box-silhouette.png";
 
-async function fetchProjectImageUrl(
-  project: DemoProject,
-): Promise<string | null> {
-  const path = `/usourced/demo/projects/${project.projectName}.png`;
-  try {
-    return await getDownloadURL(ref(storage, path));
-  } catch (e) {
-    return null;
-  }
-}
-
 function ProjectCardView({ project }: { project: DemoProject }): JSX.Element {
-  const [imageUrl, setImageUrl] = React.useState<string>(
-    DEFAULT_PROJECT_IMAGE_URL,
-  );
-  React.useEffect(() => {
-    async function effect() {
-      const url = await fetchProjectImageUrl(project);
-      if (url) {
-        setImageUrl(url);
-      }
-    }
-    effect();
-  }, [project]);
+  const { image } = useFirestoreImage({
+    path: `/usourced/demo/projects/${project.projectName}.png`,
+  });
   return (
     <Card
       sx={{
@@ -55,8 +34,13 @@ function ProjectCardView({ project }: { project: DemoProject }): JSX.Element {
         my: 1,
       }}
     >
-      <CardActionArea>
-        <CardMedia component="img" image={imageUrl} alt={project.projectName} />
+      <CardActionArea component={RouterLink} href="/projects/1">
+        <CardMedia
+          component="img"
+          image={image ?? DEFAULT_PROJECT_IMAGE_URL}
+          alt={project.projectName}
+          sx={{ p: 2, height: 200, objectFit: "contain" }}
+        />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h3" fontSize={16} fontWeight={600}>
             {project.projectName}
@@ -102,7 +86,7 @@ function ProjectsKanbanColumnView({
 export function ProjectsKanbanView(): JSX.Element {
   return (
     <Box>
-      <Box sx={{ width: 2400, display: "flex" }}>
+      <Box sx={{ display: "flex" }}>
         {demo_project_groups.map(({ projectStatus, projects }) => (
           <ProjectsKanbanColumnView
             key={projectStatus}

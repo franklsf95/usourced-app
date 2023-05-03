@@ -165,7 +165,7 @@ function CatalogSection(): JSX.Element {
           {DEMO_PRODUCT_CATEGORIES.map((category) => (
             <Grid item xs={6} sm={4} md={3} key={category.id}>
               <Box>
-                <Link to="/product/1">
+                <Link to="/products/1">
                   <Box
                     component="img"
                     src={category.imageUrl}

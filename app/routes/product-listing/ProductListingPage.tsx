@@ -187,7 +187,7 @@ function PricingCalculator({
       </Typography>
       <Button
         variant="text"
-        onClick={() => showDemoAlert()}
+        onClick={showDemoAlert}
         sx={{ fontSize: 12, textDecoration: "underline" }}
       >
         View cost breakdown
@@ -267,11 +267,7 @@ function ProductDetailsView({
       <Box sx={{ mt: 4, mb: 4 }}>
         <PricingCalculator pricingTiers={productListing.pricingTiers} />
       </Box>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => showDemoAlert()}
-      >
+      <Button variant="contained" color="primary" onClick={showDemoAlert}>
         Customize Now
       </Button>
     </Container>

@@ -43,7 +43,7 @@ export function DemoNavigationBar(props: AppToolbarProps): JSX.Element {
         />
         <Button
           component={RouterLink}
-          href="/product/1"
+          href="/products/1"
           variant="text"
           color="inherit"
           children="Product Catalog Demo"

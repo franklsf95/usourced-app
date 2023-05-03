@@ -13,7 +13,6 @@ const Privacy = lazy(() => import("./legal/Privacy.js"));
 const Terms = lazy(() => import("./legal/Terms.js"));
 const Home = lazy(() => import("./home/HomePage.js"));
 const AccountSettings = lazy(() => import("./settings/AccountSettingsPage.js"));
-const MyProjects = lazy(() => import("./projects/MyProjectsPage.js"));
 const NewProject = lazy(() => import("./projects/NewProjectPage.js"));
 const AIDesignerPage = lazy(() => import("./ai-designer/AIDesignerPage.js"));
 const CustomRequestPage = lazy(
@@ -23,6 +22,7 @@ const ProductListingPage = lazy(
   () => import("./product-listing/ProductListingPage.js"),
 );
 const DemoProjectsPage = lazy(() => import("./projects/DemoProjectsPage.js"));
+const ProjectDetailPage = lazy(() => import("./projects/ProjectDetailPage.js"));
 
 /**
  * Application routes
@@ -45,7 +45,6 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <RootError />,
     children: [
-      { path: "projects", element: <MyProjects /> },
       { path: "projects/new", element: <NewProject /> },
       {
         path: "settings",
@@ -64,8 +63,9 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "ai-designer", element: <AIDesignerPage /> },
       { path: "custom-request", element: <CustomRequestPage /> },
-      { path: "product/:id", element: <ProductListingPage /> },
+      { path: "products/:id", element: <ProductListingPage /> },
       { path: "projects-dashboard", element: <DemoProjectsPage /> },
+      { path: "projects/:id", element: <ProjectDetailPage /> },
     ],
   },
 ]);
