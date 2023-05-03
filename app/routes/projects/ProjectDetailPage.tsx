@@ -10,16 +10,23 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { RouterLink } from "../../common/RouterLink.js";
 import { useFirestoreImage } from "../../core/firebase_utils.js";
 import { usePageEffect } from "../../core/page.js";
 import { useSnackBar } from "../../layout/components/SnackBarContext.js";
 
 function ProjectOverview(): JSX.Element {
   return (
-    <Box mt={4}>
-      <Typography variant="h1">Fluffy White Cat Plushie</Typography>
-      <Typography variant="h5">Inquiry Date: April, 1, 2023</Typography>
-      <Typography variant="h5">Target Delivery Date: June 1, 2023</Typography>
+    <Box mt={4} mb={2}>
+      <Typography variant="h1" gutterBottom>
+        Fluffy White Cat Plushie
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        <b>Inquiry Date: </b>November 22, 2022
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        <b>Target Delivery Date: </b>June 1, 2023
+      </Typography>
     </Box>
   );
 }
@@ -28,14 +35,7 @@ function ProjectTimelineView(): JSX.Element {
   return (
     <Box>
       <Typography variant="h2">Project Timeline</Typography>
-    </Box>
-  );
-}
-
-function ProjectHighlightsView(): JSX.Element {
-  return (
-    <Box>
-      <Typography variant="h2">Project Timeline</Typography>
+      <img src="/demo/timeline-view.png" width="100%" />
     </Box>
   );
 }
@@ -169,10 +169,9 @@ function ProjectSampleOrderView(): JSX.Element {
 function ProjectProductionOrderView(): JSX.Element {
   const { showDemoAlert } = useSnackBar();
   const properties = [
-    { label: "Sample Production Start", value: "April 15, 2023" },
-    { label: "Sample Production Completion", value: "April 30, 2023" },
-    { label: "Sample Shipped", value: "May 1, 2023" },
-    { label: "Estimated Sample Delivery", value: "May 15, 2023" },
+    { label: "Production Start", value: "May 15, 2023" },
+    { label: "Production Completion", value: "May 30, 2023" },
+    { label: "Production Shipped", value: "June 1, 2023" },
   ];
   return (
     <Card>
@@ -191,10 +190,26 @@ function ProjectProductionOrderView(): JSX.Element {
             <Button
               variant="contained"
               color="primary"
+              sx={{ mr: 1, mb: 1 }}
+              onClick={showDemoAlert}
+            >
+              Track Express Shipment #1
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ mr: 1, mb: 1 }}
+              onClick={showDemoAlert}
+            >
+              Track Regular Shipment #2
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
               sx={{ mr: 1 }}
               onClick={showDemoAlert}
             >
-              Track Shipment
+              View Invoice
             </Button>
           </Grid>
         </Grid>
@@ -207,26 +222,40 @@ export default function ProjectDetailPage(): JSX.Element {
   usePageEffect({ title: "My Projects" });
 
   return (
-    <Box component="main">
+    <Box component="main" pb={10}>
       <Container maxWidth="lg">
+        <Button
+          component={RouterLink}
+          href="/projects-dashboard"
+          variant="contained"
+          color="grass"
+          sx={{
+            ml: 2,
+            height: 56,
+            color: "#222",
+            borderRadius: 10,
+            position: "absolute",
+            top: 160,
+            right: 400,
+          }}
+        >
+          Back to All Projects
+        </Button>
         <ProjectOverview />
         <Grid container spacing={2}>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12}>
             <ProjectTimelineView />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <ProjectHighlightsView />
-          </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <ProjectOriginalRequestView />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <ProjectQuoteView />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <ProjectSampleOrderView />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <ProjectProductionOrderView />
           </Grid>
         </Grid>
