@@ -27,7 +27,6 @@ type SceneDelta = {
 function newMessage(
   text: string,
   is_ai: boolean,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: JSX.Element,
 ): ChatMessage {
   return {

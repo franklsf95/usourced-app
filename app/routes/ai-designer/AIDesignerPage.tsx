@@ -17,18 +17,6 @@ import { useScene } from "../../common/chat/playbook.js";
 import { usePageEffect } from "../../core/page.js";
 import { AIChat } from "./components/AIChat.js";
 
-type PricingEstimatorState = {
-  quantity: number | null;
-  minQuantity: number;
-};
-
-function getTotalPrice(quantity: number, expressPercentage: number): number {
-  const EXPRESS_PRICE_PER_ITEM = 5;
-  const pricePerItem = 5;
-  const expressPrice = EXPRESS_PRICE_PER_ITEM * quantity * expressPercentage;
-  return pricePerItem * quantity + expressPrice;
-}
-
 function OrderSummaryView(): JSX.Element {
   const { scene } = useScene();
   return (

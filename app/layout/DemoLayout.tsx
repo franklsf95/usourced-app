@@ -7,6 +7,7 @@ import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { NewsletterSignUp2 } from "../routes/home/components/NewsletterSignUp2.js";
 import { DemoToolbar } from "./components/DemoToolbar.js";
+import { ScrollToTop } from "./components/ScrollToTop.js";
 import { SnackBarProvider } from "./components/SnackBarContext.js";
 
 function DemoBanner(): JSX.Element {
@@ -90,6 +91,7 @@ export function DemoLayout(): JSX.Element {
     <React.Fragment>
       <SnackBarProvider>
         <React.Suspense>
+          <ScrollToTop />
           <DemoToolbar />
           <DemoBanner />
           <Box minWidth={800}>
