@@ -16,7 +16,6 @@ export default function NewProjectPage(): JSX.Element {
   usePageEffect({ title: "New Sourcing Request" });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
   };
 
   return (
