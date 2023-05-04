@@ -16,17 +16,17 @@ const TEAM_MEMBERS = [
   },
   {
     name: "Frank Luan",
-    title: "CTO",
+    title: "Co-Founder & CTO",
     bio: "Frank is also a final-year PhD student focused on AI systems at UC Berkeley. He has received 2 ACM best paper awards, and holds the current world record for CloudSort, a big data benchmark. Prior to that, he developed generative-AI-based programming assistants at Meta AI Research. He co-founded SketchMe in 2015, a social app company that received $25M venture funding. Frank holds a Bachelor of Science in Computer Science and Statistics dual degree from the University of Chicago.",
   },
   {
     name: "Mandy Chow",
-    title: "COO",
+    title: "Co-Founder & COO",
     bio: "Prior to joining USourced, Mandy was the Corporate Development Associate Director at Airwallex, where she led investments, and was also a core member of the fundraising team across its Series D, Series D2 Extension, and Series E ($5.5B valuation) rounds. Before that, she was in the TMT Investment Banking team at Goldman Sachs. Mandy holds a Bachelor of Science in Economics from The Wharton School of the University of Pennsylvania.",
   },
   {
     name: "Frances Feng",
-    title: "CMO (Manufacturing)",
+    title: "Co-Founder & CMO (Manufacturing)",
     bio: "Frances has 12+ years of experience in the manufacturing industry. She previously held various project leadership roles at Cricut, where she developed new international vendor resources and implemented strategic initiatives that drove significant revenue growth (from $2M to $300M in 3 years). Frances holds a Bachelor of Business English from Guangdong University of Finances and Economics and is an active member of Project Management Professional (PMP).",
   },
   {
