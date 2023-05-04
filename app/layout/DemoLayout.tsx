@@ -1,8 +1,8 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Email, Place } from "@mui/icons-material";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Email, Instagram, LinkedIn, Place } from "@mui/icons-material";
+import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { NewsletterSignUp2 } from "../routes/home/components/NewsletterSignUp2.js";
@@ -54,7 +54,7 @@ function Footer(): JSX.Element {
         </Box>
         <hr style={{ opacity: 0.25 }} />
         <Grid container spacing={2} sx={{ mt: 4 }}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <img src="/usourced-masthead-white.png" height={44} />
             <Typography variant="h4" mt={2}>
               <Email fontSize="small" sx={{ mr: 1 }} /> hello@usourced.com
@@ -63,6 +63,20 @@ function Footer(): JSX.Element {
               <Place fontSize="small" sx={{ mr: 1 }} /> 600 N Broad St, Ste 5
               #3766, Middletown, DE 19709
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <IconButton
+              href="https://www.linkedin.com/company/usourced/"
+              sx={{ color: "white" }}
+            >
+              <LinkedIn fontSize="large" />
+            </IconButton>
+            <IconButton
+              href="https://www.instagram.com/usourced.ai/"
+              sx={{ color: "white" }}
+            >
+              <Instagram fontSize="large" />
+            </IconButton>
           </Grid>
         </Grid>
       </Container>
