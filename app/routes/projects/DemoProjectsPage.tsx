@@ -9,8 +9,17 @@ import {
   Search,
   ViewKanban,
 } from "@mui/icons-material";
-import { Box, Button, ButtonGroup, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  ButtonGroup,
+  Slide,
+  Stack,
+  Typography,
+} from "@mui/material";
 import pluralize from "pluralize";
+import * as React from "react";
 import { usePageEffect } from "../../core/page.js";
 import { useSnackBar } from "../../layout/components/SnackBarContext.js";
 import {
@@ -126,6 +135,31 @@ function ProjectsDashboardHeader(): JSX.Element {
   );
 }
 
+function DemoAlert(): JSX.Element {
+  const [open, setOpen] = React.useState(true);
+  React.useEffect(() => {
+    setTimeout(() => setOpen(false), 10000);
+  }, []);
+  return (
+    <Box
+      sx={{
+        position: "fixed",
+        top: 128,
+        left: "50%",
+        width: 600,
+        transform: "translate(-50%, 0)",
+      }}
+    >
+      <Slide direction="down" in={open}>
+        <Alert severity="info">
+          Click on a project to view its details. Or, click on the chat button
+          to talk to an AI.
+        </Alert>
+      </Slide>
+    </Box>
+  );
+}
+
 export default function DemoProjectsPage(): JSX.Element {
   usePageEffect({ title: "Projects Dashboard" });
 
@@ -136,6 +170,7 @@ export default function DemoProjectsPage(): JSX.Element {
         <ProjectsKanbanView />
       </Box>
       <AIChatDialog />
+      <DemoAlert />
     </Box>
   );
 }

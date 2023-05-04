@@ -23,6 +23,9 @@ const Transition = React.forwardRef(function Transition(
 
 export function AIChatDialog() {
   const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    setTimeout(() => setOpen(true), 10000);
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -39,12 +42,14 @@ export function AIChatDialog() {
           position: "fixed",
           bottom: 24,
           right: 24,
-          border: "2px solid #F5CCB6",
+          border: "2px solid #183439",
           borderRadius: "50%",
+          backgroundColor: "#fff",
         }}
+        className="animate__animated animate__bounce"
       >
-        <IconButton color="secondary" size="large" onClick={handleOpen}>
-          <Chat fontSize="large" />
+        <IconButton onClick={handleOpen} sx={{ p: 2 }}>
+          <Chat sx={{ width: 48, height: 48, color: "#183439" }} />
         </IconButton>
       </Box>
       <Dialog
