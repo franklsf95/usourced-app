@@ -5,7 +5,6 @@ import { ArrowCircleLeft, ArrowCircleRight } from "@mui/icons-material";
 import {
   Alert,
   Box,
-  Chip,
   Container,
   Grid,
   Grow,
@@ -121,14 +120,25 @@ function DemoControlBar(): JSX.Element {
     advanceSceneWithSimulatedAIResponse,
   } = useScene();
   return (
-    <Box sx={{ position: "fixed", left: 32, bottom: 32 }}>
+    <Box
+      sx={{ position: "fixed", left: 32, bottom: 32 }}
+      className={"animate__animated animate__bounceIn"}
+    >
       <Stack direction="row">
         <IconButton onClick={() => incrementSceneNumber(-1)}>
-          <ArrowCircleLeft />
+          <ArrowCircleLeft sx={{ width: 48, height: 48, color: "#183439" }} />
         </IconButton>
-        <Chip label={sceneNumber + 1} variant="outlined" sx={{ mt: 0.5 }} />
+        <Typography
+          variant="h3"
+          fontSize={40}
+          mt={1}
+          mx={1}
+          sx={{ textDecoration: "underline" }}
+        >
+          {sceneNumber + 1}
+        </Typography>
         <IconButton onClick={advanceSceneWithSimulatedAIResponse}>
-          <ArrowCircleRight />
+          <ArrowCircleRight sx={{ width: 48, height: 48, color: "#183439" }} />
         </IconButton>
       </Stack>
     </Box>
@@ -152,8 +162,8 @@ function DemoAlert(): JSX.Element {
     >
       <Slide direction="down" in={open}>
         <Alert severity="info">
-          Welcome to the USourced AI demo! To see the AI Chatbot in action,
-          click on the arrows on the bottom left corner of the page.
+          To see the AI Chatbot in action, click on the arrows on the bottom
+          left corner of the page, or press Enter in the chat window.
         </Alert>
       </Slide>
     </Box>
