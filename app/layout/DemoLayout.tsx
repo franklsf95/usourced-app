@@ -18,11 +18,12 @@ function DemoBanner(): JSX.Element {
         height: 32,
         width: "100%",
         py: 1,
-        mt: 12,
+        position: "fixed",
+        top: 96,
       }}
     >
       <Typography
-        variant="h1"
+        variant="h2"
         fontSize={16}
         textTransform="uppercase"
         color="white"
@@ -94,9 +95,8 @@ export function DemoLayout(): JSX.Element {
           <ScrollToTop />
           <DemoToolbar />
           <DemoBanner />
-          <Box minWidth={800}>
-            <Outlet />
-          </Box>
+          <Box sx={{ height: 128 }} />
+          <Outlet />
           <Footer />
         </React.Suspense>
       </SnackBarProvider>

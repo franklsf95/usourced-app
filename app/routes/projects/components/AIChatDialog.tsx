@@ -62,7 +62,7 @@ export function AIChatDialog() {
         keepMounted
         onClose={handleClose}
       >
-        <DialogTitle>
+        <DialogTitle component="div">
           <Typography variant="h2">USourced AI Chat</Typography>
         </DialogTitle>
         <DialogContent>
