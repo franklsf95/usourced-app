@@ -6,14 +6,13 @@ import { type Palette, type ThemeOptions } from "@mui/material/styles";
 /**
  * Style overrides for Material UI components.
  */
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 export const components = (palette: Palette): ThemeOptions["components"] => ({
   MuiButton: {
     styleOverrides: {
       root: {
         fontFamily: "Karla",
         fontSize: 16,
-        letterSpacing: 1,
+        letterSpacing: 0.5,
         textTransform: "unset",
       },
       contained: {
@@ -29,6 +28,23 @@ export const components = (palette: Palette): ThemeOptions["components"] => ({
     styleOverrides: {
       root: {
         boxShadow: "none",
+      },
+    },
+  },
+
+  MuiAlert: {
+    styleOverrides: {
+      root: {
+        fontFamily: "Karla",
+        fontSize: 18,
+      },
+      standardInfo: {
+        backgroundColor: palette.primary.main,
+        color: palette.primary.contrastText,
+        opacity: 0.8,
+        "& .MuiAlert-icon": {
+          color: palette.primary.contrastText,
+        },
       },
     },
   },

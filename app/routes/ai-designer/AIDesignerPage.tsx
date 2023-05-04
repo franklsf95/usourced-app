@@ -163,7 +163,7 @@ function DemoAlert(): JSX.Element {
       <Slide direction="down" in={open}>
         <Alert severity="info">
           To see the AI Chatbot in action, click on the arrows on the bottom
-          left corner of the page, or press Enter in the chat window.
+          left corner of the page.
         </Alert>
       </Slide>
     </Box>
