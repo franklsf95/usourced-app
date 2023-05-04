@@ -3,6 +3,7 @@
 
 import { Info, ZoomIn, ZoomOut } from "@mui/icons-material";
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -10,6 +11,7 @@ import {
   IconButton,
   Paper,
   Rating,
+  Slide,
   Slider,
   Stack,
   Tooltip,
@@ -352,6 +354,31 @@ function ProductVariantsListView({
   );
 }
 
+function DemoAlert(): JSX.Element {
+  const [open, setOpen] = React.useState(true);
+  React.useEffect(() => {
+    setTimeout(() => setOpen(false), 10000);
+  }, []);
+  return (
+    <Box
+      sx={{
+        position: "fixed",
+        top: 128,
+        left: "50%",
+        width: 600,
+        transform: "translate(-50%, 0)",
+      }}
+    >
+      <Slide direction="down" in={open}>
+        <Alert severity="info">
+          This is a demo of the product customizer. Other products will be
+          available for customization when we launch in Q3 2023.
+        </Alert>
+      </Slide>
+    </Box>
+  );
+}
+
 export default function ProductListingPage(): JSX.Element {
   usePageEffect({ title: productListing.name });
 
@@ -393,6 +420,7 @@ export default function ProductListingPage(): JSX.Element {
           />
         </Grid>
       </Grid>
+      <DemoAlert />
     </Container>
   );
 }
