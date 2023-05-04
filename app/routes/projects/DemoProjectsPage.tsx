@@ -132,7 +132,9 @@ export default function DemoProjectsPage(): JSX.Element {
   return (
     <Box component="main" sx={{ px: 8, py: 2 }}>
       <ProjectsDashboardHeader />
-      <ProjectsKanbanView />
+      <Box sx={{ maxWidth: "100%", overflowX: "scroll" }}>
+        <ProjectsKanbanView />
+      </Box>
       <AIChatDialog />
     </Box>
   );

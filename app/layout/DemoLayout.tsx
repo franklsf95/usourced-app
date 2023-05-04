@@ -18,8 +18,7 @@ function DemoBanner(): JSX.Element {
         height: 32,
         width: "100%",
         py: 1,
-        position: "fixed",
-        top: 96,
+        mt: 12,
       }}
     >
       <Typography
@@ -95,7 +94,6 @@ export function DemoLayout(): JSX.Element {
           <ScrollToTop />
           <DemoToolbar />
           <DemoBanner />
-          <Box sx={{ height: 128 }} />
           <Outlet />
           <Footer />
         </React.Suspense>
