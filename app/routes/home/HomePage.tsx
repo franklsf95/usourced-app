@@ -17,7 +17,7 @@ const DEMO_PRODUCT_CATEGORIES = [
   },
   {
     id: "2",
-    name: "Home Goods",
+    name: "Home & Lifestyle",
     imageUrl: "/home/categories/2.png",
   },
   {
@@ -85,6 +85,7 @@ function TopSection(): JSX.Element {
           display: "flex",
           pt: 44,
           height: 740,
+          color: "white",
         }}
       >
         <Box sx={{ width: 552, mr: 20 }}>
@@ -92,15 +93,21 @@ function TopSection(): JSX.Element {
             <div style={{ color: "primary" }}>YOU DREAM IT,</div>
             <div
               style={{
-                backgroundColor: "#183439",
-                color: "#FFFFFF",
+                backgroundColor: "white",
+                color: "#183439",
                 borderRadius: 60,
                 padding: "0 0 0 20px",
               }}
             >
               WE MAKE IT{" "}
-              <span style={{ display: "inline-block" }}>
-                <img src="/home/smiley.png" height={32} />
+              <span
+                style={{
+                  display: "inline-block",
+                  position: "relative",
+                  bottom: -10,
+                }}
+              >
+                <img src="/home/smiley.svg" height={64} />
               </span>
             </div>
           </Typography>
