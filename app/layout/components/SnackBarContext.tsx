@@ -1,10 +1,17 @@
 import { Close } from "@mui/icons-material";
-import { Alert, AlertColor, IconButton, Snackbar } from "@mui/material";
+import {
+  Alert,
+  AlertColor,
+  AlertTitle,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
 import * as React from "react";
 
 export type AlertSnackBarPropType = {
   message: string;
   severity?: AlertColor;
+  sx?: React.CSSProperties;
 };
 
 export const SnackBarContext = React.createContext({
@@ -17,6 +24,7 @@ export const SnackBarContext = React.createContext({
 function AlertSnackBar({
   message,
   severity,
+  sx,
 }: AlertSnackBarPropType): JSX.Element {
   const [open, setOpen] = React.useState(true);
 
@@ -46,8 +54,8 @@ function AlertSnackBar({
         </IconButton>
       }
     >
-      <Alert onClose={handleClose} severity={severity}>
-        {message}
+      <Alert onClose={handleClose} severity={severity} sx={sx}>
+        <AlertTitle>{message}</AlertTitle>
       </Alert>
     </Snackbar>
   );
