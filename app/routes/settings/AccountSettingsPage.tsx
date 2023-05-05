@@ -66,7 +66,7 @@ export default function AccountSettingsPage(): JSX.Element {
           color="secondary"
           sx={{ mb: 4 }}
         >
-          Welcome to USourced! Please fill in your company&apos;s information
+          Welcome to USourced! Please fill in your company&rsquo;s information
           below so that you can start creating your projects.
         </Alert>
       )}

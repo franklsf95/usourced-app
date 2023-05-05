@@ -14,7 +14,7 @@ const TEAM_MEMBERS = [
   {
     name: "Julia Xu",
     title: "Founder & CEO",
-    bio: "Julia also founded the omni-channel e-commerce lifestyle brand Multitasky (as seen in Good Morning America, Forbes, Cosmopolitan & more), where she gathered deep experience in the e-commerce and supply chain industry. She previously served as the Chief of Staff of Alibaba.com North America, where she led global operations and strategy. Before that, she was part of Disney&apos;s Corporate Strategy team, where she built the global financial model for Disney+. She also founded a McKinsey-Women&apos;s-Impact-Award-winning social enterprise Tink Knit. Julia holds a Bachelor of Business-Economics & Sociology dual degree from Brown University.",
+    bio: "Julia also founded the omni-channel e-commerce lifestyle brand Multitasky (as seen in Good Morning America, Forbes, Cosmopolitan & more), where she gathered deep experience in the e-commerce and supply chain industry. She previously served as the Chief of Staff of Alibaba.com North America, where she led global operations and strategy. Before that, she was part of Disney&rsquo;s Corporate Strategy team, where she built the global financial model for Disney+. She also founded a McKinsey-Women&rsquo;s-Impact-Award-winning social enterprise Tink Knit. Julia holds a Bachelor of Business-Economics & Sociology dual degree from Brown University.",
     linkedin_url: "https://www.linkedin.com/in/julialxu/",
   },
   {

@@ -93,7 +93,7 @@ const sceneDeltas = [
   },
   {
     message: newMessage("1000", false),
-    summary: [newSummaryItem("Quantity", "1000")],
+    summary: [newSummaryItem("Quantity", "1,000")],
   },
   {
     message: newMessage(
@@ -121,7 +121,7 @@ const sceneDeltas = [
         ]}
       />,
     ),
-    productName: "Bird Plushie",
+    productName: "Cat Plushie",
   },
   {
     message: newMessage("1. Long fur", false),
@@ -138,7 +138,7 @@ const sceneDeltas = [
         ]}
       />,
     ),
-    productName: "Bird Plushie",
+    productName: "Cat Plushie",
     summary: [newSummaryItem("Material", "Long fur")],
   },
   {

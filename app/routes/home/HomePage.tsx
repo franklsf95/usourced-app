@@ -275,13 +275,13 @@ function CustomSourcingSection(): JSX.Element {
         <Box
           component="img"
           src="/home/we-source-it.png"
-          sx={{ height: 400, float: "right", ml: 18 }}
+          sx={{ height: 360, float: "right", ml: 18 }}
         />
         <Box>
           <Typography variant="h1" fontSize={48} mb={4}>
             Want it?
             <br />
-            We&apos;ll source it.
+            We&rsquo;ll source it.
           </Typography>
           <Typography variant="h5" fontSize={16} paragraph>
             Can&rsquo;t find exactly what you&rsquo;re looking for? Don&rsquo;t
@@ -306,8 +306,8 @@ function CustomSourcingSection(): JSX.Element {
                 style={{
                   float: "left",
                   position: "relative",
-                  top: -30,
-                  left: 120,
+                  top: -40,
+                  left: 140,
                   height: 90,
                 }}
               />
@@ -325,6 +325,56 @@ function AboutSection(): JSX.Element {
       component="section"
       sx={{
         pt: 16,
+      }}
+    >
+      <Container
+        maxWidth="md"
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h1" fontSize={48} mb={4} color="primary">
+          About USourced
+        </Typography>
+        <Grid container spacing={2} sx={{ textAlign: "left" }}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1" paragraph>
+              USourced is a modern tech platform and marketplace utilizing
+              generative AI to automate custom product sourcing from global
+              manufacturing suppliers and optimize supply chain management.
+            </Typography>
+            <Typography variant="body1" paragraph>
+              We provide 3D and AI design tools for customers to seamlessly
+              customize our catalog products on our platform, and an integrated
+              user dashboard for project management and fulfillment tracking.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1" paragraph>
+              We utilize generative AI to automate customer inquiries for unique
+              and fully customized product sourcing, and provide product
+              recommendations based on customer&rsquo;s website and social
+              links.
+            </Typography>
+            <Typography variant="body1" paragraph>
+              Our vision is to connect businesses with suppliers across the
+              world. We provide an AI driven marketplace that bridges language
+              barriers, synthesizes complex requests, and efficiently matches
+              customers with the most relevant and qualified suppliers.
+            </Typography>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
+}
+
+function OurStorySection(): JSX.Element {
+  return (
+    <Box
+      component="section"
+      sx={{
+        pt: 16,
         backgroundImage: "url(/home/about-background.svg)",
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
@@ -336,21 +386,20 @@ function AboutSection(): JSX.Element {
           textAlign: "center",
         }}
       >
-        <Typography variant="h1" fontSize={48} mb={4}>
-          <span style={{ display: "inline-block" }}>
-            <img src="/home/star.png" height={32} />
-          </span>{" "}
-          About USourced{" "}
-          <span style={{ display: "inline-block" }}>
-            <img src="/home/star.png" height={32} />
+        <Typography variant="h1" fontSize={48} mb={4} color="primary">
+          <span style={{ display: "inline-block", marginRight: 16 }}>
+            <img src="/home/star.png" height={28} />
+          </span>
+          Our Story
+          <span style={{ display: "inline-block", marginLeft: 16 }}>
+            <img src="/home/star.png" height={28} />
           </span>
         </Typography>
         <Grid container spacing={2} sx={{ textAlign: "left" }}>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1" paragraph>
-              Hey there! We&rsquo;re USourced, a product sourcing platform
-              that&rsquo;s ready to transform the world of custom product
-              sourcing.
+              We&rsquo;re USourced, a product sourcing platform that&rsquo;s
+              ready to transform the world of custom product sourcing.
             </Typography>
             <Typography variant="body1" paragraph>
               <b>Our mission</b> is to streamline access to unique, high-quality
@@ -363,11 +412,14 @@ function AboutSection(): JSX.Element {
               It all started when our founder Julia Xu realized how difficult it
               was for small brands to source custom products. By bridging the
               gap between brand and manufacturer, she realized that she could
-              open the door to easy and unlimited customization that&rsquo;s
-              actually intuitive.
+              open the
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
+            <Typography variant="body1" paragraph>
+              door to easy and unlimited customization that&rsquo;s actually
+              intuitive.
+            </Typography>
             <Typography variant="body1" paragraph>
               We launched USourced in 2022, offering white-glove services to
               clients looking to launch their brand via fully custom products.
@@ -398,6 +450,7 @@ export default function HomePage(): JSX.Element {
       <ValuesSection />
       <CustomSourcingSection />
       <AboutSection />
+      <OurStorySection />
       <TeamSection />
     </Box>
   );
