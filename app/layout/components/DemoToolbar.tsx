@@ -48,6 +48,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
 
   return (
     <AppBar
+      component="nav"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         ...sx,

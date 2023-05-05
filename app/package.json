@@ -35,16 +35,18 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.3",
     "react-router-dom": "^6.10.0",
-    "recoil": "^0.7.7"
+    "recoil": "^0.7.7",
+    "scrollreveal": "^4.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
     "@emotion/babel-plugin": "^11.10.6",
-    "@types/he": "^1.2.0",
+    "@types/he": "^1",
     "@types/node": "^18.15.11",
     "@types/pluralize": "^0.0.29",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
+    "@types/scrollreveal": "^0.0.8",
     "@vitejs/plugin-react": "^3.1.0",
     "envars": "^0.4.0",
     "typescript": "^5.0.3",

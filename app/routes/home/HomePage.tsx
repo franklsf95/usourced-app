@@ -3,7 +3,9 @@
 
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { decode } from "he";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import ScrollReveal from "scrollreveal";
 import { RouterLink } from "../../common/RouterLink.js";
 import { usePageEffect } from "../../core/page.js";
 import { NewsletterSignUp } from "./components/NewsletterSignUp.js";
@@ -75,7 +77,7 @@ const COMPANY_VALUES = [
 
 function TopSection(): JSX.Element {
   return (
-    <Box component="section" pt={1}>
+    <Box component="header" pt={1}>
       <Container
         maxWidth="lg"
         sx={{
@@ -98,6 +100,7 @@ function TopSection(): JSX.Element {
                 borderRadius: 60,
                 padding: "0 0 0 20px",
               }}
+              className="animate__animated animate__tada"
             >
               WE MAKE IT{" "}
               <span
@@ -112,7 +115,10 @@ function TopSection(): JSX.Element {
             </div>
           </Typography>
         </Box>
-        <Box sx={{ width: 400 }}>
+        <Box
+          sx={{ width: 400 }}
+          className="animate__animated animate__bounceIn animate__delay-1s"
+        >
           <Typography variant="h3" sx={{ fontSize: 30, fontWeight: 300 }}>
             Next-generation bespoke product sourcing with generative AI,
             connecting you to the best manufacturers worldwide
@@ -147,9 +153,16 @@ function TopSection(): JSX.Element {
 }
 
 function CatalogSection(): JSX.Element {
+  useEffect(() => {
+    ScrollReveal().reveal(".catalog-section", {
+      delay: 300,
+      distance: "100px",
+    });
+  }, []);
   return (
     <Box
       component="section"
+      className="catalog-section"
       sx={{
         pt: 8,
         pb: 12,
@@ -219,7 +232,7 @@ function ValueCard({
 
 function ValuesSection(): JSX.Element {
   return (
-    <Box component="section">
+    <Box component="section" className="values-section">
       <Container
         maxWidth="md"
         sx={{
@@ -443,6 +456,15 @@ export default function HomePage(): JSX.Element {
     title:
       "USourced - Generative AI-powered Global Product Sourcing Platform and Marketplace",
   });
+  useEffect(() => {
+    ScrollReveal().reveal("header", {
+      distance: "100px",
+    });
+    ScrollReveal().reveal("section", {
+      delay: 300,
+      distance: "100px",
+    });
+  }, []);
   return (
     <Box component="main">
       <TopSection />
