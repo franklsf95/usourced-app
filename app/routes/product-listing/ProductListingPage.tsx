@@ -1,7 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft */
 /* SPDX-License-Identifier: MIT */
 
-import { Info, ZoomIn, ZoomOut } from "@mui/icons-material";
+import { ZoomIn, ZoomOut } from "@mui/icons-material";
 import {
   Alert,
   Box,
@@ -17,6 +17,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import moment from "moment";
 import * as React from "react";
 import { ButtonGroupSelector } from "../../common/ButtonGroupSelector.js";
 import { ColorSelector } from "../../common/ColorSelector.js";
@@ -114,6 +115,13 @@ const productListing: ProductListing = {
       pricePerItem: 3,
     },
   ],
+  actual_images: [
+    "/demo/mugs/actual/actual-01.jpg",
+    "/demo/mugs/actual/actual-02.jpg",
+    "/demo/mugs/actual/actual-03.jpg",
+    "/demo/mugs/actual/actual-04.jpg",
+    "/demo/mugs/actual/actual-05.jpg",
+  ],
 };
 
 function getPricePerItem(
@@ -158,30 +166,45 @@ function PricingCalculator(): JSX.Element {
         Bulk Price Calculator
       </Typography>
       <Typography variant="h5" gutterBottom>
-        Choose quantity:
+        How many would you like to order?
       </Typography>
       <InputSlider onChange={setQuantity} minValue={100} maxValue={1000} />
-      <Typography variant="h5" gutterBottom>
-        Choose express shipping:
+      <Typography variant="h5" mt={1} gutterBottom>
+        How many units would you like{" "}
         <Tooltip
+          componentsProps={{
+            tooltip: {
+              sx: {
+                bgcolor: "background.paper",
+                color: "#183439",
+                maxWidth: 400,
+                fontSize: 14,
+                lineHeight: 1.5,
+                p: 2,
+              },
+            },
+          }}
           title={
             <div>
-              <div>Timeline including production:</div>
-              <div>Standard shipping: 4&ndash;5 weeks</div>
               <div>
-                Express shipping: 2&ndash;3 weeks, at an additional cost.
+                We understand the importance of receiving your order quickly,
+                which is why we offer partial express shipping. This means
+                you&rsquo;ll receive a portion of your order sooner while saving
+                on shipping costs for the remaining items.
               </div>
-              <div>
-                We offer partial express shipping so you can get a portion of
-                your order sooner, and save cost on the remaining items.
-              </div>
+              <div>Turnaround time including production & shipping:</div>
+              <ul>
+                <li>Express shipping: 2&ndash;3 weeks</li>
+                <li>Standard shipping: 4&ndash;5 weeks</li>
+              </ul>
             </div>
           }
         >
-          <IconButton>
-            <Info />
-          </IconButton>
-        </Tooltip>
+          <span style={{ textDecoration: "underline dotted" }}>
+            express shipping
+          </span>
+        </Tooltip>{" "}
+        for?
       </Typography>
       <Stack
         spacing={2}
@@ -201,10 +224,22 @@ function PricingCalculator(): JSX.Element {
         />
         <span>100%</span>
       </Stack>
-      <Typography variant="h6" fontSize={14} sx={{ ml: 1, mr: 2 }}>
-        Express shipping {Math.round(quantity * expressPercentage)} items;
-        standard shipping {Math.round(quantity * (1 - expressPercentage))} items
-      </Typography>
+      <ul>
+        <li>
+          <Typography variant="h5" fontSize={14}>
+            Express shipping {Math.round(quantity * expressPercentage)} items:
+            order now to receive by{" "}
+            {moment().add(18, "day").toDate().toLocaleDateString()}
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="h5" fontSize={14}>
+            Standard shipping {Math.round(quantity * (1 - expressPercentage))}{" "}
+            items: order now to receive by{" "}
+            {moment().add(32, "day").toDate().toLocaleDateString()}
+          </Typography>
+        </li>
+      </ul>
       <Typography variant="h3" mt={2} mb={1} sx={{ fontWeight: 600 }}>
         Total: ${totalPrice.toFixed(2)}
       </Typography>
@@ -236,6 +271,21 @@ function ProductMockupImageView({ url }: { url: string }): JSX.Element {
         <IconButton sx={{ position: "absolute", top: 70, left: 10 }}>
           <ZoomOut />
         </IconButton>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 240,
+            left: 162,
+            color: "#333",
+            border: "2px dotted #333",
+            borderRadius: 2,
+            p: 1,
+            opacity: 0.75,
+          }}
+          className="animate__animated animate__pulse animate__repeat-3"
+        >
+          your logo here
+        </Box>
       </Box>
       <Box
         component="img"
@@ -255,7 +305,6 @@ function ProductDetailsView({
   productListing: ProductListing;
   handleSelectColor: (color: string) => void;
 }): JSX.Element {
-  const { showDemoAlert } = useSnackBar();
   return (
     <Container>
       <Typography variant="h2">{productListing.name}</Typography>
@@ -290,9 +339,6 @@ function ProductDetailsView({
       <Box sx={{ mt: 4, mb: 4 }}>
         <PricingCalculator />
       </Box>
-      <Button variant="contained" color="primary" onClick={showDemoAlert}>
-        Customize Now
-      </Button>
     </Container>
   );
 }
@@ -302,21 +348,62 @@ function ProductMockupView({
 }: {
   selectedVariant: ProductVariant;
 }): JSX.Element {
+  const { showDemoAlert } = useSnackBar();
   return (
     <>
       <ProductMockupImageView url={selectedVariant.mockup_url} />
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={showDemoAlert}
+        sx={{ borderRadius: 8, textTransform: "uppercase", mt: 2 }}
+      >
+        Customize Now
+      </Button>
       <Typography variant="h5" mt={2} mb={2} sx={{ fontWeight: 700 }}>
         + Specs & Details
       </Typography>
+      <Box sx={{ pl: 2 }}>
+        <Typography variant="body1" paragraph>
+          Introducing our Cloud-Handled Ceramic Mug in Pastel Colors &ndash; the
+          perfect addition to your morning routine or afternoon tea break! Made
+          with high-quality ceramic material and featuring a unique cloud-shaped
+          handle, this mug is both stylish and functional.
+        </Typography>
+        <Typography variant="body1" paragraph>
+          But that&rsquo;s not all &ndash; with our full 360-degree color print
+          customization option, you can make this mug truly your own. Choose
+          your favorite design or create your own, and we&rsquo;ll bring it to
+          life on your mug with vibrant, fade-resistant colors. And with our
+          pastel color options, your mug will be a soft and calming addition to
+          your collection.
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Not only does this mug look great, but it&rsquo;s also practical. Its
+          generous 9.5-ounce size is perfect for your favorite hot or cold
+          beverage, and its ceramic material provides excellent insulation to
+          keep your drink at the perfect temperature for longer. Plus,
+          it&rsquo;s dishwasher and microwave safe, making it easy to clean and
+          use every day.
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Upgrade your mug game with our Cloud-Handled Ceramic Mug in Pastel
+          Colors, fully customizable to fit your unique style and taste.
+        </Typography>
+        <ul>
+          <li>Material: Porcelain Ceramic</li>
+          <li>Size: 280ml/9.5 oz</li>
+          <li>Dimension: 4 inch (H) x 4.7 inch (W)</li>
+          <li>Weight: 500g</li>
+          <li>Care Instructions: Dishwasher & Microwave safe</li>
+        </ul>
+      </Box>
     </>
   );
 }
 
-function ProductVariantView({
-  variant,
-}: {
-  variant: ProductVariant;
-}): JSX.Element {
+function ProductVariantView({ imageUrl }: { imageUrl: string }): JSX.Element {
   return (
     <Box
       sx={{
@@ -326,11 +413,16 @@ function ProductVariantView({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "white",
-        p: "0px 10px 10px 24px",
       }}
     >
-      <img src={variant.mockup_url} alt={variant.color} width="100%" />
+      <img
+        src={imageUrl}
+        width="100%"
+        style={{
+          aspectRatio: "1/1",
+          objectFit: "cover",
+        }}
+      />
     </Box>
   );
 }
@@ -341,13 +433,13 @@ function ProductVariantsListView({
   productListing: ProductListing;
 }): JSX.Element {
   return (
-    <Box height={640} sx={{ overflowY: "scroll" }}>
+    <Box sx={{ overflowY: "scroll" }}>
       <Typography variant="h3" mb={2} fontSize={18}>
-        More Colors
+        Example Products
       </Typography>
       <Stack spacing={2}>
-        {productListing.variants.map((variant) => (
-          <ProductVariantView key={variant.color} variant={variant} />
+        {productListing.actual_images.map((url) => (
+          <ProductVariantView key={url} imageUrl={url} />
         ))}
       </Stack>
     </Box>
