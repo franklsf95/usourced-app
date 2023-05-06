@@ -24,15 +24,16 @@ import { ColorSelector } from "../../common/ColorSelector.js";
 import { usePageEffect } from "../../core/page.js";
 import { useSnackBar } from "../../layout/components/SnackBarContext.js";
 import { InputSlider } from "./components/InputSlider.js";
+import {
+  PRICING_TIERS,
+  PricingTable,
+  PricingTier,
+  getPricePerItem,
+} from "./components/PriceQuoteTable.js";
 
 type Selection = {
   label: string;
   value: string;
-};
-
-type PricingTier = {
-  quantity: number;
-  pricePerItem: number;
 };
 
 type ProductVariant = {
@@ -49,6 +50,7 @@ type ProductListing = {
   variants: ProductVariant[];
   printEffectSelections: Selection[];
   pricingTiers: PricingTier[];
+  actual_images: string[];
 };
 
 const productListing: ProductListing = {
@@ -97,24 +99,7 @@ const productListing: ProductListing = {
       value: "sublimation",
     },
   ],
-  pricingTiers: [
-    {
-      quantity: 100,
-      pricePerItem: 5,
-    },
-    {
-      quantity: 200,
-      pricePerItem: 4,
-    },
-    {
-      quantity: 300,
-      pricePerItem: 3.5,
-    },
-    {
-      quantity: 500,
-      pricePerItem: 3,
-    },
-  ],
+  pricingTiers: PRICING_TIERS,
   actual_images: [
     "/demo/mugs/actual/actual-01.jpg",
     "/demo/mugs/actual/actual-02.jpg",
@@ -123,16 +108,6 @@ const productListing: ProductListing = {
     "/demo/mugs/actual/actual-05.jpg",
   ],
 };
-
-function getPricePerItem(
-  quantity: number,
-  pricingTiers: PricingTier[],
-): number {
-  const tier = pricingTiers.find((tier) => tier.quantity >= quantity);
-  return tier
-    ? tier.pricePerItem
-    : pricingTiers[pricingTiers.length - 1].pricePerItem;
-}
 
 function getTotalPrice(
   quantity: number,
@@ -159,7 +134,6 @@ function PricingCalculator(): JSX.Element {
     expressPercentage,
     productListing.pricingTiers,
   );
-  const { showDemoAlert } = useSnackBar();
   return (
     <Paper elevation={1} sx={{ px: 2, py: 2, borderRadius: 2 }}>
       <Typography variant="h2" mt={2} mb={2} fontSize="1.5em">
@@ -243,13 +217,7 @@ function PricingCalculator(): JSX.Element {
       <Typography variant="h3" mt={2} mb={1} sx={{ fontWeight: 600 }}>
         Total: ${totalPrice.toFixed(2)}
       </Typography>
-      <Button
-        variant="text"
-        onClick={showDemoAlert}
-        sx={{ fontSize: 12, textDecoration: "underline" }}
-      >
-        View cost breakdown
-      </Button>
+      <PricingTable />
     </Paper>
   );
 }
