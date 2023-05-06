@@ -6,29 +6,29 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@mui/material";
+} from "@mui/material"
 
 export type PricingTier = {
-  quantity: number;
+  minimumQuantity: number;
   pricePerItem: number;
 };
 
 export const PRICING_TIERS = [
   {
-    quantity: 100,
-    pricePerItem: 5,
+    minimumQuantity: 500,
+    pricePerItem: 3,
   },
   {
-    quantity: 200,
-    pricePerItem: 4,
-  },
-  {
-    quantity: 300,
+    minimumQuantity: 300,
     pricePerItem: 3.5,
   },
   {
-    quantity: 500,
-    pricePerItem: 3,
+    minimumQuantity: 200,
+    pricePerItem: 4,
+  },
+  {
+    minimumQuantity: 100,
+    pricePerItem: 5,
   },
 ];
 
@@ -36,15 +36,14 @@ export function getPricePerItem(
   quantity: number,
   pricingTiers: PricingTier[],
 ): number {
-  const tier = pricingTiers.find((tier) => tier.quantity >= quantity);
+  const tier = pricingTiers.find((tier) => quantity >= tier.minimumQuantity);
   return tier
     ? tier.pricePerItem
     : pricingTiers[pricingTiers.length - 1].pricePerItem;
 }
 
 function createData() {
-  // make an array from 100 to 1000 with step 100
-  return Array.from(Array(10), (_, i) => {
+  return Array.from(Array(5), (_, i) => {
     const quantity = (i + 1) * 100;
     return {
       name: quantity,
@@ -67,13 +66,13 @@ export function PricingTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row, i) => (
             <TableRow
               key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.name}{i == rows.length - 1 ? "+" : ""}
               </TableCell>
               <TableCell>
                 ${row.standard_shipping_unit_price.toFixed(2)}

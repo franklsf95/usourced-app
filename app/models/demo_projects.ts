@@ -111,14 +111,14 @@ export const demo_projects: { [key in ProjectStatus]: DemoProject[] } = {
   [ProjectStatus.ProductionShipped]: [
     {
       id: "13",
-      projectName: "Teal Blue USB Charger Keychain",
+      projectName: "Teal Keychain",
       inquiryDate: new Date("2022-11-22"),
       quantity: 500,
       projectStatus: ProjectStatus.ProductionShipped,
     },
     {
       id: "14",
-      projectName: "White V-Neck T-Shirt with Embroidered Flowers",
+      projectName: "White T-Shirt with Flowers",
       inquiryDate: new Date("2022-11-22"),
       quantity: 500,
       projectStatus: ProjectStatus.ProductionShipped,

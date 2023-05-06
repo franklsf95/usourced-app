@@ -143,77 +143,72 @@ function PricingCalculator(): JSX.Element {
         How many would you like to order?
       </Typography>
       <InputSlider onChange={setQuantity} minValue={100} maxValue={1000} />
-      <Typography variant="h5" mt={1} gutterBottom>
-        How many units would you like{" "}
-        <Tooltip
-          componentsProps={{
-            tooltip: {
-              sx: {
-                bgcolor: "background.paper",
-                color: "#183439",
-                maxWidth: 400,
-                fontSize: 14,
-                lineHeight: 1.5,
-                p: 2,
+      <Paper sx={{ p: 2 }}>
+        <Typography variant="h5" gutterBottom>
+          How many would you like{" "}
+          <Tooltip
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  bgcolor: "background.paper",
+                  color: "#183439",
+                  maxWidth: 400,
+                  fontSize: 14,
+                  lineHeight: 1.5,
+                  p: 2,
+                },
               },
-            },
-          }}
-          title={
-            <div>
+            }}
+            title={
               <div>
-                We understand the importance of receiving your order quickly,
-                which is why we offer partial express shipping. This means
-                you&rsquo;ll receive a portion of your order sooner while saving
-                on shipping costs for the remaining items.
+                <div>
+                  We understand the importance of receiving your order quickly,
+                  which is why we offer partial express shipping. This means
+                  you&rsquo;ll receive a portion of your order sooner while
+                  saving on shipping costs for the remaining items.
+                </div>
+                <div>Turnaround time including production & shipping:</div>
+                <ul>
+                  <li>Express shipping: 2&ndash;3 weeks</li>
+                  <li>Standard shipping: 4&ndash;5 weeks</li>
+                </ul>
               </div>
-              <div>Turnaround time including production & shipping:</div>
-              <ul>
-                <li>Express shipping: 2&ndash;3 weeks</li>
-                <li>Standard shipping: 4&ndash;5 weeks</li>
-              </ul>
-            </div>
-          }
+            }
+          >
+            <span style={{ textDecoration: "underline dotted" }}>
+              express shipping
+            </span>
+          </Tooltip>{" "}
+          for?
+        </Typography>
+        <Stack
+          spacing={2}
+          direction="row"
+          sx={{ mb: 1, ml: 1, mr: 2 }}
+          alignItems="center"
         >
-          <span style={{ textDecoration: "underline dotted" }}>
-            express shipping
-          </span>
-        </Tooltip>{" "}
-        for?
-      </Typography>
-      <Stack
-        spacing={2}
-        direction="row"
-        sx={{ mb: 1, ml: 1, mr: 2 }}
-        alignItems="center"
-      >
-        <span>0%</span>
-        <Slider
-          value={expressPercentage}
-          onChange={handleExpressPercentageChange}
-          min={0}
-          max={1}
-          step={0.1}
-          valueLabelDisplay="auto"
-          valueLabelFormat={(value) => `${value * 100}%`}
-        />
-        <span>100%</span>
-      </Stack>
-      <ul>
-        <li>
-          <Typography variant="h5" fontSize={14}>
-            Express shipping {Math.round(quantity * expressPercentage)} items:
-            order now to receive by{" "}
-            {moment().add(18, "day").toDate().toLocaleDateString()}
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="h5" fontSize={14}>
-            Standard shipping {Math.round(quantity * (1 - expressPercentage))}{" "}
-            items: order now to receive by{" "}
-            {moment().add(32, "day").toDate().toLocaleDateString()}
-          </Typography>
-        </li>
-      </ul>
+          <span>0%</span>
+          <Slider
+            value={expressPercentage}
+            onChange={handleExpressPercentageChange}
+            min={0}
+            max={1}
+            step={0.1}
+            valueLabelDisplay="auto"
+            valueLabelFormat={(value) => `${value * 100}%`}
+          />
+          <span>100%</span>
+        </Stack>
+        <Typography variant="h5" fontSize={14}>
+          Express shipping {Math.round(quantity * expressPercentage)} items:
+          delivery by {moment().add(18, "day").toDate().toLocaleDateString()}
+        </Typography>
+        <Typography variant="h5" fontSize={14}>
+          Standard shipping {Math.round(quantity * (1 - expressPercentage))}{" "}
+          items: delivery by{" "}
+          {moment().add(32, "day").toDate().toLocaleDateString()}
+        </Typography>
+      </Paper>
       <Typography variant="h3" mt={2} mb={1} sx={{ fontWeight: 600 }}>
         Total: ${totalPrice.toFixed(2)}
       </Typography>
@@ -223,6 +218,7 @@ function PricingCalculator(): JSX.Element {
 }
 
 function ProductMockupImageView({ url }: { url: string }): JSX.Element {
+  const { showDemoAlert } = useSnackBar();
   return (
     <Paper elevation={1}>
       <Box sx={{ position: "relative" }}>
@@ -239,6 +235,22 @@ function ProductMockupImageView({ url }: { url: string }): JSX.Element {
         <IconButton sx={{ position: "absolute", top: 70, left: 10 }}>
           <ZoomOut />
         </IconButton>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={showDemoAlert}
+          sx={{ position: "absolute", top: 420, left: 16, borderRadius: 8 }}
+        >
+          Add text
+        </Button>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={showDemoAlert}
+          sx={{ position: "absolute", top: 420, left: 108, borderRadius: 8 }}
+        >
+          Upload logo
+        </Button>
         <Box
           sx={{
             position: "absolute",
@@ -287,7 +299,8 @@ function ProductDetailsView({
         </Typography>
       </Box>
       <Typography variant="h5" mt={7} fontWeight={600}>
-        Ships as early as {productListing.earliestShippingDate}
+        Ships as early as{" "}
+        {moment().add(10, "day").toDate().toLocaleDateString()}
       </Typography>
       <Box sx={{ mt: 2 }}>
         <Typography variant="h5" my={1}>
