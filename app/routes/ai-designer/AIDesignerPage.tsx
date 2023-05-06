@@ -122,19 +122,13 @@ function DemoControlBar(): JSX.Element {
   return (
     <Box
       sx={{ position: "fixed", left: 32, bottom: 32 }}
-      className={"animate__animated animate__bounceIn"}
+      className={"animate__animated animate__bounceInUp animate__delay-1s"}
     >
       <Stack direction="row">
         <IconButton onClick={() => incrementSceneNumber(-1)}>
           <ArrowCircleLeft sx={{ width: 48, height: 48, color: "#183439" }} />
         </IconButton>
-        <Typography
-          variant="h3"
-          fontSize={40}
-          mt={1}
-          mx={1}
-          sx={{ textDecoration: "underline" }}
-        >
+        <Typography variant="h3" fontSize={40} mt={1} mx={1}>
           {sceneNumber + 1}
         </Typography>
         <IconButton onClick={advanceSceneWithSimulatedAIResponse}>
