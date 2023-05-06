@@ -119,9 +119,12 @@ function TopSection(): JSX.Element {
           sx={{ width: 400 }}
           className="animate__animated animate__bounceIn animate__delay-1s"
         >
-          <Typography variant="h3" sx={{ fontSize: 30, fontWeight: 300 }}>
-            Next-generation bespoke product sourcing with generative AI,
-            connecting you to the best manufacturers worldwide
+          <Typography
+            variant="h3"
+            sx={{ fontSize: 30, fontWeight: 300, mt: 2 }}
+          >
+            Bespoke product sourcing with generative AI, connecting you to the
+            best manufacturers worldwide
           </Typography>
         </Box>
       </Container>
