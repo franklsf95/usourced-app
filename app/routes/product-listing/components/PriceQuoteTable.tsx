@@ -6,7 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from "@mui/material"
+} from "@mui/material";
 
 export type PricingTier = {
   minimumQuantity: number;
@@ -60,7 +60,7 @@ export function PricingTable() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Quantity</TableCell>
+            <TableCell width={120}>Quantity</TableCell>
             <TableCell>Unit Price (Standard)</TableCell>
             <TableCell>Unit Price (Express)</TableCell>
           </TableRow>
@@ -72,7 +72,8 @@ export function PricingTable() {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}{i == rows.length - 1 ? "+" : ""}
+                {row.name}
+                {i == rows.length - 1 ? "+" : ""}
               </TableCell>
               <TableCell>
                 ${row.standard_shipping_unit_price.toFixed(2)}

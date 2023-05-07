@@ -14,6 +14,12 @@ import {
   Slide,
   Slider,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -120,6 +126,50 @@ function getTotalPrice(
   return pricePerItem * quantity + expressPrice;
 }
 
+function ShippingTable({
+  quantity,
+  expressPercentage,
+}: {
+  quantity: number;
+  expressPercentage: number;
+}): JSX.Element {
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Shipping</TableCell>
+            <TableCell>Amount</TableCell>
+            <TableCell>Delivery by</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell component="th" scope="row">
+              Express
+            </TableCell>
+            <TableCell>{Math.round(quantity * expressPercentage)}</TableCell>
+            <TableCell>
+              {moment().add(18, "day").toDate().toLocaleDateString()}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row">
+              Standard
+            </TableCell>
+            <TableCell>
+              {Math.round(quantity * (1 - expressPercentage))}
+            </TableCell>
+            <TableCell>
+              {moment().add(32, "day").toDate().toLocaleDateString()}
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
 function PricingCalculator(): JSX.Element {
   const [quantity, setQuantity] = React.useState<number>(100);
   const [expressPercentage, setExpressPercentage] = React.useState<number>(0.1);
@@ -143,72 +193,65 @@ function PricingCalculator(): JSX.Element {
         How many would you like to order?
       </Typography>
       <InputSlider onChange={setQuantity} minValue={100} maxValue={1000} />
-      <Paper sx={{ p: 2 }}>
-        <Typography variant="h5" gutterBottom>
-          How many would you like{" "}
-          <Tooltip
-            componentsProps={{
-              tooltip: {
-                sx: {
-                  bgcolor: "background.paper",
-                  color: "#183439",
-                  maxWidth: 400,
-                  fontSize: 14,
-                  lineHeight: 1.5,
-                  p: 2,
-                },
+      <Typography variant="h5" mt={1} gutterBottom>
+        How many would you like to{" "}
+        <Tooltip
+          componentsProps={{
+            tooltip: {
+              sx: {
+                bgcolor: "background.paper",
+                color: "#183439",
+                maxWidth: 400,
+                fontSize: 14,
+                lineHeight: 1.5,
+                p: 2,
               },
-            }}
-            title={
+            },
+          }}
+          title={
+            <div>
               <div>
-                <div>
-                  We understand the importance of receiving your order quickly,
-                  which is why we offer partial express shipping. This means
-                  you&rsquo;ll receive a portion of your order sooner while
-                  saving on shipping costs for the remaining items.
-                </div>
-                <div>Turnaround time including production & shipping:</div>
-                <ul>
-                  <li>Express shipping: 2&ndash;3 weeks</li>
-                  <li>Standard shipping: 4&ndash;5 weeks</li>
-                </ul>
+                We understand the importance of receiving your order quickly,
+                which is why we offer partial express shipping. This means
+                you&rsquo;ll receive a portion of your order sooner while saving
+                on shipping costs for the remaining items.
               </div>
-            }
-          >
-            <span style={{ textDecoration: "underline dotted" }}>
-              express shipping
-            </span>
-          </Tooltip>{" "}
-          for?
-        </Typography>
-        <Stack
-          spacing={2}
-          direction="row"
-          sx={{ mb: 1, ml: 1, mr: 2 }}
-          alignItems="center"
+              <div>Turnaround time including production & shipping:</div>
+              <ul>
+                <li>Express shipping: 2&ndash;3 weeks</li>
+                <li>Standard shipping: 4&ndash;5 weeks</li>
+              </ul>
+            </div>
+          }
         >
-          <span>0%</span>
-          <Slider
-            value={expressPercentage}
-            onChange={handleExpressPercentageChange}
-            min={0}
-            max={1}
-            step={0.1}
-            valueLabelDisplay="auto"
-            valueLabelFormat={(value) => `${value * 100}%`}
-          />
-          <span>100%</span>
-        </Stack>
-        <Typography variant="h5" fontSize={14}>
-          Express shipping {Math.round(quantity * expressPercentage)} items:
-          delivery by {moment().add(18, "day").toDate().toLocaleDateString()}
-        </Typography>
-        <Typography variant="h5" fontSize={14}>
-          Standard shipping {Math.round(quantity * (1 - expressPercentage))}{" "}
-          items: delivery by{" "}
-          {moment().add(32, "day").toDate().toLocaleDateString()}
-        </Typography>
-      </Paper>
+          <span style={{ textDecoration: "underline dotted" }}>
+            express ship
+          </span>
+        </Tooltip>
+        ?
+      </Typography>
+      <Stack
+        spacing={2}
+        direction="row"
+        sx={{ mb: 1, ml: 1, mr: 2 }}
+        alignItems="center"
+      >
+        <span>0%</span>
+        <Slider
+          value={expressPercentage}
+          onChange={handleExpressPercentageChange}
+          min={0}
+          max={1}
+          step={0.1}
+          valueLabelDisplay="auto"
+          valueLabelFormat={(value) => `${value * 100}%`}
+        />
+        <span>100%</span>
+      </Stack>
+      <ShippingTable
+        quantity={quantity}
+        expressPercentage={expressPercentage}
+      />
       <Typography variant="h3" mt={2} mb={1} sx={{ fontWeight: 600 }}>
         Total: ${totalPrice.toFixed(2)}
       </Typography>
@@ -254,13 +297,15 @@ function ProductMockupImageView({ url }: { url: string }): JSX.Element {
         <Box
           sx={{
             position: "absolute",
-            top: 240,
-            left: 162,
+            top: 236,
+            left: 154,
             color: "#333",
             border: "2px dotted #333",
             borderRadius: 2,
-            p: 1,
+            px: 2,
+            py: 4,
             opacity: 0.75,
+            backgroundColor: "rgba(255, 255, 255, 0.25)",
           }}
           className="animate__animated animate__pulse animate__repeat-3"
         >
