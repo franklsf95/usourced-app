@@ -47,6 +47,12 @@ const TEAM_MEMBERS = [
     linkedin_url: "https://www.linkedin.com/in/frances-feng-b815896a/",
   },
   {
+    name: "Hugo Pakula",
+    title: "Technical & Strategic Advisor",
+    bio: "Hugo is the Technical and Strategic Advisor to USourced. He brings a background of deep expertise in taking scalable, modern, and successful products to market and delivering results. With his strong background in Software Development, Hugo has built B2B solutions for industry-leading companies like Universal Music and PepsiCo. Additionally, he has founded and advised several successful companies, raising over USD$75m in funding and assembling impactful and skilled tech teams. Hugo's success in product development is rooted in his customer-centric approach. He believes that building great products requires a deep understanding of the problem at hand, which allows for the emergence of real solutions. This mindset is what has led to his ability to drive strategic product development, and rollouts that achieve tangible results.",
+    linkedin_url: "https://www.linkedin.com/in/hugopakula",
+  },
+  {
     name: "Kelly Luc",
     title: "Marketing Director",
     bio: "Kelly Luc is the Marketing Director of Usourced. Prior to this role, she was a Senior Content Marketing Manager at Culture Amp, and the Chief Creative Officer at Multitasky. She also served as a teaching fellow in Tokyo, Japan through the Princeton in Asia fellowship program. Kelly graduated from Brown University with a B.A. in Public Health and Visual Arts.",
