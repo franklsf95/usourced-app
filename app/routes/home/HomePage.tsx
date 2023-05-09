@@ -287,6 +287,7 @@ function CustomSourcingSection(): JSX.Element {
         maxWidth="md"
         sx={{
           mt: 10,
+          mb: 4,
         }}
       >
         <Box
