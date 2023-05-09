@@ -19,6 +19,8 @@
     "@babel/runtime": "^7.21.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.17",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.16",
@@ -36,7 +38,8 @@
     "react-error-boundary": "^4.0.3",
     "react-router-dom": "^6.10.0",
     "recoil": "^0.7.7",
-    "scrollreveal": "^4.0.9"
+    "scrollreveal": "^4.0.9",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
