@@ -61,7 +61,12 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
       {...other}
     >
       <Toolbar sx={{ mx: 8, height: 88, mt: 1 }}>
-        <Link color="inherit" underline="none" href="/" component={RouterLink}>
+        <Link
+          color="inherit"
+          underline="none"
+          href="https://usourced.com"
+          component={RouterLink}
+        >
           <Box component="img" src="/usourced-logo.png" height={56} />
         </Link>
         <div style={{ flexGrow: 1 }} />
