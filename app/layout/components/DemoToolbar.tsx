@@ -42,7 +42,10 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
     setAnchorEl((x) => ({ ...x, userMenu: null }));
   }
 
-  const buttonSx = {};
+  const buttonSx = {
+    color: "rgb(75, 85, 99)",
+    fontWeight: 500,
+  };
 
   const { showDemoAlert } = useSnackBar();
 
@@ -84,7 +87,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             href="https://usourced.com/products/1"
             variant="text"
             color="inherit"
-            children="Catalog Demo"
+            children="Catalog Product Demo"
             sx={buttonSx}
           />
           <Button
@@ -92,7 +95,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             href="https://usourced.com/ai-sourcing-agent"
             variant="text"
             color="inherit"
-            children="AI Chat Demo"
+            children="AI Sourcing Agent Demo"
             sx={buttonSx}
           />
           <Button
@@ -100,7 +103,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
             href="https://usourced-platform.web.app/projects-dashboard"
             variant="text"
             color="inherit"
-            children="Client Dashboard Demo"
+            children="Project Dashboard Demo"
             sx={buttonSx}
           />
         </Stack>
