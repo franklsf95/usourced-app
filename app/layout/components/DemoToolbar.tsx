@@ -100,7 +100,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           />
           <Button
             component={RouterLink}
-            href="https://usourced-platform.web.app/projects-dashboard"
+            href="/projects-dashboard"
             variant="text"
             color="inherit"
             children="Project Dashboard Demo"
