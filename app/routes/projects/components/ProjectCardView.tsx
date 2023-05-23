@@ -27,7 +27,10 @@ export function ProjectCardView({
         my: 1,
       }}
     >
-      <CardActionArea component={RouterLink} href={`/projects/${project.id}`}>
+      <CardActionArea
+        component={RouterLink}
+        href={`https://usourced-platform.web.app/projects/${project.id}`}
+      >
         <CardMedia
           component="img"
           image={image ?? DEFAULT_PROJECT_IMAGE_URL}

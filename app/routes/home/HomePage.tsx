@@ -313,7 +313,7 @@ function CustomSourcingSection(): JSX.Element {
             <Button
               component={RouterLink}
               variant="contained"
-              href="/ai-designer"
+              href="/ai-sourcing-agent"
               color="primary"
               children="Chat now"
               sx={{ fontSize: 20, borderRadius: 12 }}

@@ -73,7 +73,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
         >
           <Button
             component={RouterLink}
-            href="/custom-request"
+            href="https://usourced.com/custom-request"
             variant="text"
             color="inherit"
             children="Custom Request"
@@ -81,7 +81,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           />
           <Button
             component={RouterLink}
-            href="/products/1"
+            href="https://usourced.com/products/1"
             variant="text"
             color="inherit"
             children="Catalog Demo"
@@ -89,7 +89,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           />
           <Button
             component={RouterLink}
-            href="/ai-designer"
+            href="https://usourced.com/ai-sourcing-agent"
             variant="text"
             color="inherit"
             children="AI Chat Demo"
@@ -97,7 +97,7 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           />
           <Button
             component={RouterLink}
-            href="/projects-dashboard"
+            href="https://usourced-platform.web.app/projects-dashboard"
             variant="text"
             color="inherit"
             children="Client Dashboard Demo"
@@ -129,9 +129,9 @@ export function DemoToolbar(props: AppToolbarProps): JSX.Element {
           <Button
             variant="contained"
             color="primary"
-            children="SIGN IN"
+            children="Sign In"
             onClick={showDemoAlert}
-            sx={{ ml: 2, borderRadius: 8 }}
+            sx={{ ml: 2, borderRadius: 8, fontWeight: 600 }}
           />
         )}
       </Toolbar>

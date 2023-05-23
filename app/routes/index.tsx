@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
     errorElement: <RootError />,
     children: [
       { index: true, element: <Home /> },
-      { path: "ai-designer", element: <AIDesignerPage /> },
+      { path: "ai-sourcing-agent", element: <AIDesignerPage /> },
       { path: "custom-request", element: <CustomRequestPage /> },
       { path: "products/:id", element: <ProductListingPage /> },
       { path: "projects-dashboard", element: <DemoProjectsPage /> },

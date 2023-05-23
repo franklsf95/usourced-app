@@ -79,7 +79,7 @@ export const messages = [
           {demo_projects[ProjectStatus.InBulkProduction].map((project) => (
             <Typography key={project.id} variant="body2" gutterBottom>
               <RouterLink
-                href={`/projects/{project.id}`}
+                href={`https://usourced-platform.web.app/projects/{project.id}`}
                 style={{ fontWeight: 600, color: "black" }}
               >
                 {project.projectName}
@@ -104,7 +104,7 @@ export const messages = [
           {demo_projects[ProjectStatus.ProductionShipped].map((project) => (
             <Typography key={project.id} variant="body2" gutterBottom>
               <RouterLink
-                href={`/projects/{project.id}`}
+                href={`https://usourced-platform.web.app/projects/{project.id}`}
                 style={{ fontWeight: 600, color: "black" }}
               >
                 {project.projectName}
